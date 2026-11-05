@@ -1,3 +1,5 @@
+import type { AreaId } from './areas-data';
+export type { AreaId } from './areas-data';
 /**
  * FUKUI DINO CITY fictional operational model.
  * This is NOT a live venue, weather report, transportation timetable or reservation system.
@@ -5,7 +7,6 @@
  */
 export const SCHEDULE_START = '2027-04-01';
 export const SCHEDULE_END = '2027-06-30';
-export type AreaId = 'fukui' | 'katsuyama' | 'wakasa' | 'echizen' | 'komatsu';
 export type AreaStatus = 'scheduled' | 'suspended';
 export type PassId = 'day' | 'two' | 'night';
 export interface AreaSchedule {

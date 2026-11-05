@@ -59,8 +59,7 @@ function renderDay(day:DaySchedule|null):void {
   const note = el('p','',day.show.note);
   const weather = el('p','schedule-weather-note',day.show.weatherNote);
   const detailLink = el('a','schedule-show-link','ショーの体験内容を見る') as HTMLAnchorElement;
-  // #2 will add a standalone detail URL; the existing attraction detail modal works now.
-  detailLink.href = '/park/attractions.html?attraction=night';
+  detailLink.href = '/park/attractions/night.html';
   showPanel.append(eyebrow,showTitle,showHours,note,weather,detailLink);
   ticketLink.hidden = closed;
 }
