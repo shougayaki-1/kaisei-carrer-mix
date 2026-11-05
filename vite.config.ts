@@ -1,20 +1,63 @@
 import { defineConfig } from 'vite';
 import { cloudflare } from '@cloudflare/vite-plugin';
+import { readdirSync } from 'node:fs';
+import { join, relative, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { renderParkHeader, renderParkFooter } from './park/navigation';
+
+const root = fileURLToPath(new URL('.', import.meta.url));
+
+/**
+ * Include every park HTML page (also nested attraction details) without editing
+ * this file for each new route. The concept landing page stays separate.
+ */
+function parkHtmlFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true })
+    .flatMap((entry) => {
+      const file = join(directory, entry.name);
+      if (entry.isDirectory()) return parkHtmlFiles(file);
+      return entry.isFile() && entry.name.endsWith('.html')
+        ? [relative(root, file).split(sep).join('/')] : [];
+    }).sort();
+}
+
+const parkInputs = Object.fromEntries(
+  parkHtmlFiles(join(root, 'park')).map((path) => ['park-' + path.slice(5).replace(/[^a-z0-9]+/gi, '-'), path]),
+);
+
+/** A missing or legacy shell must fail CI, never silently ship old navigation. */
+function renderParkShell(html: string, pathname: string): string {
+  const headerMarker = '<!-- PARK_HEADER -->';
+  const footerMarker = '<!-- PARK_FOOTER -->';
+  if (html.split(headerMarker).length !== 2 || html.split(footerMarker).length !== 2) {
+    throw new Error('[park navigation] ' + pathname + ': one PARK_HEADER and PARK_FOOTER placeholder is required');
+  }
+  if (/<header\b[^>]*class=["'][^"']*\bpark-header\b/i.test(html) ||
+      /<footer\b[^>]*class=["'][^"']*\bsite-footer\b/i.test(html)) {
+    throw new Error('[park navigation] ' + pathname + ': legacy park header/footer remains');
+  }
+  const rendered = html.replace(headerMarker, renderParkHeader(pathname))
+    .replace(footerMarker, renderParkFooter());
+  if (!/<\/head\s*>/i.test(rendered)) {
+    throw new Error('[park navigation] ' + pathname + ': missing head element');
+  }
+  // Inject the shared JS/CSS entry even on pages that do not import app.ts.
+  return rendered.replace(/<\/head\s*>/i,
+    '<script type="module" src="/park/navigation-entry.ts"></script>\n</head>');
+}
 
 export default defineConfig({
   plugins: [
     {
       name: 'park-shared-navigation',
       enforce: 'pre',
-      transformIndexHtml(html, context) {
-        if (!html.includes('<!-- PARK_HEADER -->')) return html;
-        if (!html.includes('<!-- PARK_FOOTER -->')) {
-          throw new Error('Park page is missing PARK_FOOTER placeholder: ' + context.path);
-        }
-        return html
-          .replace('<!-- PARK_HEADER -->', renderParkHeader(context.path))
-          .replace('<!-- PARK_FOOTER -->', renderParkFooter());
+      transformIndexHtml: {
+        order: 'pre',
+        handler(html, context) {
+          const filename = context.filename.replaceAll('\\', '/');
+          const isPark = /\/park\/.*\.html$/.test(filename) || /^\/park\//.test(context.path);
+          return isPark ? renderParkShell(html, context.path) : html;
+        },
       },
     },
     cloudflare(),
@@ -23,11 +66,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         concept: 'index.html',
-        park: 'park/index.html',
-        attractions: 'park/attractions.html',
-        tickets: 'park/tickets.html',
-        access: 'park/access.html',
-        guide: 'park/guide.html',
+        ...parkInputs,
       },
     },
   },
