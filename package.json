@@ -8,7 +8,8 @@
     "build": "npm run typecheck && cf build",
     "deploy": "cf deploy",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:schedule": "node --experimental-strip-types --test tests/schedule-data.test.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",
