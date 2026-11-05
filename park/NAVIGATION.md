@@ -61,3 +61,10 @@ fail CI when integrated, instead of silently leaving duplicate headers.
   `park/icons.ts` set.
 
 For future optional accessibility review, check Tab/Shift+Tab, Escape, outside-pointer click, focus, and visual overflow. These are **not** automated in this PR. Native `<details>` preserves menu links without JavaScript.
+
+
+## Issue #3 / PR #16 integration (2026-11-05)
+- `/park/dining.html` and `/park/shops.html` now use shared shell markers. Navigation entries are in `park/navigation.ts`.
+- `park/food-data.ts` exports `venueHref`, `venuesByArea`, `venuesForAttraction` for future venue crosslinks.
+- Food venue geographic IDs are a subset of the canonical `AreaId` in `park/areas-data.ts`. Fictional zone labels remain separate from geography labels.
+- The food area links in `park/access.html` and the detail page anchors must stay synchronized.

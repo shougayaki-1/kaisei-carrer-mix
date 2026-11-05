@@ -25,6 +25,8 @@ export const parkNavGroups: readonly ParkNavGroup[] = [
     english: 'EXPLORE',
     links: [
       { label: 'アトラクション', href: '/park/attractions.html', description: '7つの冒険を探す', activePrefixes: ['/park/attractions/'] },
+      { label: 'レストラン・カフェ', href: '/park/dining.html', description: '3つの食事スポット' },
+      { label: 'ショップ・グッズ', href: '/park/shops.html', description: '2つのお土産ショップ' },
       { label: 'エリアガイド', href: '/park/access.html#area-fukui', description: '県全域の5つのエリア' },
     ],
   },

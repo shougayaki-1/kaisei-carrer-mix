@@ -1,5 +1,6 @@
 import { renderIcons } from './icons';
 import './styles.css';
+import './food.css';
 import './schedule.css';
 import './schedule-page';
 import { getTicketScheduleStatus, isISODate, SCHEDULE_START } from './schedule-data';

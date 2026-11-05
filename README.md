@@ -57,3 +57,12 @@ npm run deploy
 - **#2 アトラクション**: `attractionIds` は既存の `park/attractions-data.ts` と同じID。#2の詳細ページがmainに統合されるまでは未作成URLへリンクしません。
 - **#3 フード＆ショップ**: `fukui` / `katsuyama` / `wakasa` は #3 の `FoodArea` と一致。未マージの店舗詳細ページはリンクせず、現時点では構想として名称のみ表示します。
 - **#4 モデルコース / #6 交通**: 共通エリアIDと代表位置を利用できます。現在の「周遊アイデア」はモデルコースの代替ではありません。交通時刻・所要時間・運賃の確定情報は掲載していません。
+
+
+## Dining & retail pages
+
+- `/park/dining.html`: three fictional restaurants with menu concepts, tax-inclusive planning prices, and area filters.
+- `/park/shops.html`: two fictional shops and merchandise concepts.
+- `park/food-data.ts`, `park/food-pages.ts`, `park/food.css`: common venue content and UI.
+- `park/assets/dining-*.svg`, `park/assets/shop-*.svg`: original concept illustrations rather than photo-realistic artwork; future image replacement remains open.
+- Displayed food and merchandise cannot be bought. There is no reservation, real payment, or personal information collection.
