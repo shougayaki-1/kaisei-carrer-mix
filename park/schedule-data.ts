@@ -125,6 +125,9 @@ export function getTicketScheduleStatus(date:string, pass:PassId):TicketSchedule
   if (confirmed.some(day => day.areas.find(area => area.id === 'fukui')?.status !== 'scheduled')) {
     return {allowed:false, message:'福井駅メインエリアが休止予定のため、この券種のデモ発行はできません。', warnings:[]};
   }
+  if (pass === 'night' && confirmed[0].show.status === 'suspended') {
+    return {allowed:false, message:'ナイトショー休演予定のため、NIGHTパスはデモ発行の対象外です。', warnings:[]};
+  }
   const warnings:string[] = [];
   for (const day of confirmed) {
     for (const area of day.areas) {

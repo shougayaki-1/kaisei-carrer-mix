@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "test:areas": "node --test scripts/check-area-map.mjs",
     "check:links": "node scripts/check-park-links.mjs",
-    "test:schedule": "node --experimental-strip-types --test tests/schedule-data.test.mjs"
+    "test:schedule": "node --experimental-strip-types --test tests/schedule-data.test.mjs",
+    "test:tickets": "node --experimental-strip-types --test tests/ticket-data.test.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",

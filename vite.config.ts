@@ -5,6 +5,7 @@ import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderParkHeader, renderParkFooter } from './park/navigation';
 import { renderEventCards, renderEventDetails, renderNewsHeadline } from './park/events-data';
+import { renderTicketOptions, renderTicketComparison } from './park/ticket-data';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 
@@ -41,7 +42,9 @@ function renderParkShell(html: string, pathname: string): string {
     .replace(footerMarker, renderParkFooter())
     .replace('<!-- NEWS_HEADLINE -->', renderNewsHeadline())
     .replace('<!-- EVENT_CARDS -->', renderEventCards(3))
-    .replace('<!-- EVENT_DETAILS -->', renderEventDetails());
+    .replace('<!-- EVENT_DETAILS -->', renderEventDetails())
+    .replace('<!-- TICKET_OPTIONS -->', renderTicketOptions())
+    .replace('<!-- TICKET_COMPARISON -->', renderTicketComparison());
   if (!/<\/head\s*>/i.test(rendered)) {
     throw new Error('[park navigation] ' + pathname + ': missing head element');
   }

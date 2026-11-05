@@ -49,8 +49,8 @@ test('partial closures and nighttime show cancellation are shown as warnings', (
   assert.equal(day.allowed, true);
   assert.ok(day.warnings.some(text=>text.includes('勝山')));
   const night = getTicketScheduleStatus('2027-06-04','night');
-  assert.equal(night.allowed, true);
-  assert.ok(night.warnings.some(text=>text.includes('ナイトショー')));
+  assert.equal(night.allowed, false);
+  assert.match(night.message, /ナイトショー休演/);
   const two = getTicketScheduleStatus('2027-04-13','two');
   assert.ok(two.warnings.some(text=>text.includes('4月14日')));
 });
