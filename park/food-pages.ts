@@ -55,7 +55,7 @@ function detail(venue: Venue,index:number): string {
     </a></div>
     <div class="food-gallery">
       <figure class="food-gallery-scene"><img src="${escapeHtml(venue.sceneImage)}" alt="${escapeHtml(venue.sceneAlt)}" loading="lazy" decoding="async"><figcaption>${isDining?'店舗内装の構想イメージ':'販売エリアのコンセプトイメージ'}（実際の施設写真ではありません）</figcaption></figure>
-      <figure class="food-gallery-focus"><img src="${escapeHtml(venue.focusImage)}" alt="${escapeHtml(venue.focusAlt)}" loading="lazy" decoding="async"><figcaption>${isDining?'メニュー':'商品の'}コンセプトイラスト（実物写真ではありません）</figcaption></figure>
+      <figure class="food-gallery-focus"><img src="${escapeHtml(venue.focusImage)}" alt="${escapeHtml(venue.focusAlt)}" loading="lazy" decoding="async"><figcaption>${isDining?'メニュー':'商品の'}写真調AI生成イメージ（実物写真ではありません）</figcaption></figure>
     </div>
     <div class="food-venue-content">
       <div class="food-venue-menu">
