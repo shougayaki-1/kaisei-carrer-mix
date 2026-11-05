@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "cf dev",
-    "build": "npm run typecheck && cf build",
+    "build": "npm run typecheck && npm run check:links && cf build",
     "deploy": "cf deploy",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:links": "node scripts/check-park-links.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",
