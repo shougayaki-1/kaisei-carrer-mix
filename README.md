@@ -40,7 +40,14 @@ npm run deploy
 - `park/assets/dining-*.svg` / `park/assets/shop-*.svg`：店舗内装・料理・グッズのオリジナル構想イラスト（**実際の店舗・商品の写真ではありません**）
 - `park/app.ts`：検索・詳細モーダル・チケット・アクセスの操作
 - `park/assets/scene.svg`：オリジナルの恐竜パノラマ
-- `vite.config.ts`：8つのHTMLエントリを同時ビルド
+- `vite.config.ts`：すべての `park/**/*.html` を自動検出するマルチページビルドと共通ナビ挿入
 - `cloudflare.config.ts`：Cloudflare Workersの設定
 
 実在の大型パークのWebサイトにおける、チケット情報・利用条件・アクセス・営業時間の案内構成を参考に、完全に架空のコンテンツとして実装しています。一部の既存ページには外部のUnsplash画像指定が残っています。追加した飲食・物販ページの画像は、リポジトリ内のオリジナル構想イラストと既存のローカル画像のみを使います。
+
+## PR #16 / 他Issue統合メモ
+
+- PR #18 の共通テンプレートを取り込み済み。すべてのパークHTMLは `<!-- PARK_HEADER -->` と `<!-- PARK_FOOTER -->` を使い、リンクは `park/navigation.ts` で管理します。
+- PR #19 の `AreaId`（`komatsu`・`fukui`・`katsuyama`・`wakasa`・`echizen`）と店舗エリアIDは整合しています。PR #19 がマージされるまで型を直接importしません。
+- PR #15 のアトラクション詳細から `venuesForAttraction(id)` と `venueHref(venue)` で飲食・ショップへ接続できます。
+- 今回追加した店舗内装や商品の画像はオリジナルSVGの**構想イラスト**であり、写真調AI生成のWebPではありません。実際の施設写真との混同を避けるためキャプションに明記しています。

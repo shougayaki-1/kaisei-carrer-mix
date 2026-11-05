@@ -1,7 +1,7 @@
 import './app';
 import './food.css';
 import { renderIcons } from './icons';
-import { restaurants, shops, type FoodArea, type Venue } from './food-data';
+import { restaurants, shops, venueHref, type FoodArea, type Venue } from './food-data';
 
 const page = document.body.dataset.catalog;
 const venues: Venue[] = page === 'dining' ? restaurants : page === 'shops' ? shops : [];
@@ -20,7 +20,7 @@ function card(venue:Venue):string {
   const name=escapeHtml(venue.name);
   const id=escapeHtml(venue.id);
   return `<article class="food-card" data-area="${escapeHtml(venue.area)}">
-    <a class="food-card-visual" href="#venue-${id}" aria-label="${name} の詳細を見る">
+    <a class="food-card-visual" href="${escapeHtml(venueHref(venue))}" aria-label="${name} の詳細を見る">
       <img src="${escapeHtml(venue.sceneImage)}" alt="${escapeHtml(venue.sceneAlt)}" loading="lazy" decoding="async">
       <span class="food-card-area">${escapeHtml(venue.areaLabel)}</span>
     </a>

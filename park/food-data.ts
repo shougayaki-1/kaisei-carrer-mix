@@ -88,7 +88,7 @@ export const shops: Venue[] = [
     tagline:'持ち帰るのは、お土産だけじゃない。',
     description:'発掘の感動を学びにつなげる知育ショップ。化石のレプリカや地層ノートなど、帰宅後も地球の歴史を調べたくなる商品を想定しています。実物の化石標本の販売は設定していません。',
     hours:'10:00–18:00（企画上の設定）', style:'学び・知育グッズ',
-    sceneImage:'/park/assets/fossil-ai.webp',sceneAlt:'勝山エリアの恐竜・化石発掘体験のコンセプトビジュアル',
+    sceneImage:'/park/assets/shop-fossil-interior.svg',sceneAlt:'化石・地層の知育グッズを並べた架空のショップ内装の構想イラスト',
     focusImage:'/park/assets/shop-fossil-kit.svg',focusAlt:'化石レプリカ学習キットと地層ノートのコンセプトイラスト',
     items:[
       {name:'化石レプリカ探究キット',price:2400,description:'レプリカ標本と学習カードを組み合わせた知育セット。',label:'人気商品案'},
@@ -104,7 +104,7 @@ export const shops: Venue[] = [
     tagline:'福井をめぐった記憶を、日常へ。',
     description:'福井駅周辺のメインストア。街・山・海の広域パークを表現したロゴグッズや旅の相棒になるアイテムを揃える想定です。地域の土産品との連携も今後の検討テーマです。',
     hours:'10:00–21:00（企画上の設定）', style:'オリジナルパークグッズ',
-    sceneImage:'/park/assets/inside-ai.webp',sceneAlt:'福井駅周辺のシティゾーンのコンセプトビジュアル',
+    sceneImage:'/park/assets/shop-city-interior.svg',sceneAlt:'恐竜をテーマにした架空の大型オフィシャルショップ内装の構想イラスト',
     focusImage:'/park/assets/shop-city-goods.svg',focusAlt:'ロゴ入りフィールドボトルやTシャツ等のコンセプトイラスト',
     items:[
       {name:'DINO CITY フィールドボトル',price:2600,description:'旅先でも使いやすい携帯ボトル。',label:'人気商品案'},
@@ -115,3 +115,28 @@ export const shops: Venue[] = [
     related:'インサイド・ザ・ダイナソー'
   }
 ];
+
+/**
+ * Integration contract for PR #19 park/areas-data.ts.
+ * These three IDs are a strict subset of its five AreaId values:
+ * komatsu | fukui | katsuyama | wakasa | echizen.
+ * Do not import areas-data.ts until PR #19 is merged.
+ */
+export const foodAreaIds = ['fukui', 'katsuyama', 'wakasa'] as const satisfies readonly FoodArea[];
+export const allVenues: readonly Venue[] = [...restaurants, ...shops];
+export const venueHref = (venue: Pick<Venue, 'id' | 'type'>): string =>
+  '/park/' + (venue.type === 'dining' ? 'dining' : 'shops') + '.html#venue-' + encodeURIComponent(venue.id);
+export const venuesByArea = (area: FoodArea): readonly Venue[] => allVenues.filter(venue => venue.area === area);
+
+/** PR #15 attraction IDs; use these related venues when rendering detail pages. */
+export const relatedVenueIdsByAttraction: Readonly<Record<string, readonly string[]>> = {
+  skyport: [], inside: ['ancient-forest-grill', 'dino-city-store'],
+  flight: ['ancient-forest-grill', 'dino-city-store'],
+  ocean: ['ocean-blue-cafe'],
+  fossil: ['fossil-lab-kitchen', 'fossil-market'],
+  coast: [], night: ['ancient-forest-grill', 'dino-city-store'],
+};
+export const venuesForAttraction = (attractionId: string): readonly Venue[] => {
+  const ids = relatedVenueIdsByAttraction[attractionId] ?? [];
+  return ids.map(id => allVenues.find(venue => venue.id === id)).filter((venue): venue is Venue => Boolean(venue));
+};

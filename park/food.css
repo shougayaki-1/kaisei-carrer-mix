@@ -104,7 +104,6 @@ body[data-catalog="shops"] .food-card-grid{grid-template-columns:repeat(2,minmax
 .food-related p:not(.eyebrow){font-size:13px;line-height:1.9;color:#5c7380;margin-bottom:0}
 .food-related .guide-food-links{flex-shrink:0;flex-direction:column;align-items:start}
 @media(max-width:820px){.food-related{flex-direction:column;align-items:start}.food-related .guide-food-links{flex-direction:row}}
-@media(max-width:1240px){.header-links{display:none}.header-ticket{margin-left:auto}.menu-button{display:grid;place-items:center}}
 @media(max-width:940px){.food-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.food-venue-content{grid-template-columns:1fr}.food-lead-grid{grid-template-columns:1fr}.food-venue-heading{align-items:start;flex-direction:column}}
 @media(max-width:700px){.food-card-grid,body[data-catalog="shops"] .food-card-grid,.food-home-feature-grid{grid-template-columns:1fr}
 .food-subpage-hero .wrap{padding:55px 0}
@@ -125,3 +124,9 @@ body[data-catalog="shops"] .food-card-grid{grid-template-columns:repeat(2,minmax
 .food-lead-grid{padding:28px 0}
 }
 @media(prefers-reduced-motion:reduce){.food-card img,.food-home-feature-card img{transition:none}}
+
+/* Use the shared Issue #12 navigation; do not style its desktop/mobile shell here. */
+.food-page-lead,.food-catalog,.food-details,.food-venue{min-width:0}
+.food-venue-heading,.food-venue-content,.food-gallery,.food-card-copy{overflow-wrap:anywhere}
+.food-category-nav a:focus-visible,.food-map-link:focus-visible,.food-card a:focus-visible,.food-aside-link:focus-visible{outline:3px solid #b47e21;outline-offset:4px}
+@media (max-width:430px){.food-venue-aside{padding:20px 16px}.food-card-copy{padding:20px}.food-lead-aside{padding:20px}}
