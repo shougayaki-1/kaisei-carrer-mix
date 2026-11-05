@@ -1,4 +1,5 @@
 /* Issue #12: shared, responsive park navigation. Loaded after styles.css. */
+.site-footer { background: #071f36; }
 .park-header { isolation: isolate; }
 .park-header .header-inner { gap: clamp(12px, 1.5vw, 22px); }
 .park-header .brand { flex-shrink: 0; }
