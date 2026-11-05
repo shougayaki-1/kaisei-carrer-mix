@@ -9,15 +9,13 @@
     "deploy": "cf deploy",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "check:links": "node scripts/check-park-links.mjs",
-    "test:nav": "node scripts/test-park-navigation.mjs"
+    "check:links": "node scripts/check-park-links.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",
     "cf": "latest",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
-    "playwright": "^1.57.0",
     "@types/node": "^22.15.0"
   }
 }

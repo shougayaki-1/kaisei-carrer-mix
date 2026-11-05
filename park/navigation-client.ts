@@ -74,3 +74,38 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 940) closeMobile();
   desktopMenus.forEach((menu) => { menu.open = false; });
 });
+
+// The served path can be an extensionless URL even when Vite built a .html file.
+// Resolve active links against the browser URL, independent of the HTML transform's
+// route metadata. Keep server-rendered links usable when JavaScript is disabled.
+function currentParkPage(path: string): string {
+  const pathname = path.split('?')[0].split('#')[0];
+  if (/^\/park(?:\/|\/index(?:\.html)?)?$/.test(pathname)) return '/park/';
+  if (pathname.startsWith('/park/') && !pathname.endsWith('/') && !/\.[^/]+$/.test(pathname)) {
+    return pathname + '.html';
+  }
+  return pathname;
+}
+
+const activePath = currentParkPage(window.location.pathname);
+const navigationRoot = document.querySelector('.park-header');
+navigationRoot?.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((anchor) => {
+  const href = anchor.getAttribute('href') || '';
+  // Fragment links represent sections, not the current page.
+  if (!href.startsWith('/park/') || href.includes('#')) return;
+  const current = currentParkPage(anchor.pathname) === activePath;
+  if (current) anchor.setAttribute('aria-current', 'page');
+  else anchor.removeAttribute('aria-current');
+});
+navigationRoot?.querySelectorAll<HTMLDetailsElement>('.park-nav-category, .park-mobile-category').forEach((group) => {
+  const current = Array.from(group.querySelectorAll('a[href]')).some((anchor) => {
+    const target = anchor.getAttribute('href') || '';
+    return target.startsWith('/park/') && !target.includes('#') &&
+      currentParkPage((anchor as HTMLAnchorElement).pathname) === activePath;
+  }) || (activePath.startsWith('/park/attractions/') &&
+    Boolean(group.querySelector('a[href="/park/attractions.html"]')));
+  group.classList.toggle('is-current', current);
+  const summary = group.querySelector('summary');
+  if (current) summary?.setAttribute('aria-current', 'location');
+  else summary?.removeAttribute('aria-current');
+});

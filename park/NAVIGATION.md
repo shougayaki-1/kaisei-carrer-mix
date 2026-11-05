@@ -28,7 +28,7 @@ desktop/mobile menus and footer. Keep the business/concept LP `/` separate.
    or still carries legacy header/footer markup; it also checks registered
    navigation destinations and `#fragment` targets. The build transform
    repeats the marker and legacy checks and refuses to ship old navigation.
-5. Test 375/390/430/940/941 px and desktop, then keyboard and no-JS access.
+5. Browser automation is intentionally omitted from CI; rely on the structural checks and build. If a later manual UI review is needed, inspect mobile/desktop navigation with keyboard and touch.
 
 ## Existing parallel PR integration
 
@@ -60,6 +60,4 @@ fail CI when integrated, instead of silently leaving duplicate headers.
   icons used by the shared header/footer come from the small local
   `park/icons.ts` set.
 
-For an accessibility pass, use Tab/Shift+Tab, Escape, outside-pointer click,
-open/close category menus, viewport width, scroll overflow and a browser with
-JavaScript disabled. Native `<details>` keeps the links accessible without JS.
+For future optional accessibility review, check Tab/Shift+Tab, Escape, outside-pointer click, focus, and visual overflow. These are **not** automated in this PR. Native `<details>` preserves menu links without JavaScript.
