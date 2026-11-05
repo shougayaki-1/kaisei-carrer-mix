@@ -57,7 +57,7 @@ qs<HTMLElement>('#category-filters')?.querySelectorAll<HTMLButtonElement>('butto
 search?.addEventListener('input',renderAttractions);
 renderAttractions();
 
-// Ticket demo: no customer information, payment processing, or booking is sent.
+// Client-side checkout simulation; no payment, booking or personal data is transmitted.
 const passes = {
   day:{label:'1DAY DINO PASS',adult:12800,junior:8800,child:6400},
   two:{label:'2DAY EXPLORER PASS',adult:21800,junior:14800,child:10800},
@@ -128,6 +128,15 @@ qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data
   routeResult.innerHTML='<p class="eyebrow">'+esc(route.title)+'</p><h3>'+esc(route.route)+'</h3><p>'+esc(route.description)+'</p><div class="access-tip">'+esc(route.tip)+'</div>';
 }));
 
+qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',()=>{
+ const date=dateField?.value||'';
+ if(!date||Object.values(quantity).every(v=>v===0))return;
+ const code='FDC-'+Math.random().toString(36).slice(2,10).toUpperCase();
+ const order=byId('ticket-order-number');if(order)order.textContent='受付番号 '+code;
+ const details=byId('ticket-order-details');if(details)details.textContent=passes[activePass].label+' / '+date+' / '+Object.values(quantity).reduce((a,b)=>a+b,0)+'名 / '+yen.format(ticketTotal())+'円';
+ qs<HTMLDialogElement>('#ticket-dialog')?.close();qs<HTMLDialogElement>('#ticket-success')?.showModal();
+});
+qs<HTMLButtonElement>('#ticket-success-close')?.addEventListener('click',()=>qs<HTMLDialogElement>('#ticket-success')?.close());
 const year=byId('park-year');
 if(year)year.textContent=String(new Date().getFullYear());
 
@@ -136,3 +145,7 @@ const renderIcons=()=>{(window as Window & {lucide?:LucideLibrary}).lucide?.crea
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',renderIcons);}
 else{renderIcons();}
 window.addEventListener('load',renderIcons);
+
+// Initialize the Lucide icon preset once the CDN script has loaded.
+declare global { interface Window { lucide?: { createIcons: () => void } } }
+window.addEventListener('load',()=>window.lucide?.createIcons());
