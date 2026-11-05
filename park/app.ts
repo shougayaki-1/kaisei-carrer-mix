@@ -70,7 +70,7 @@ type AgeType='adult'|'junior'|'child';
 let activePass:PassType='day';
 const quantity:Record<AgeType,number>={adult:1,junior:0,child:0};
 const dateField=qs<HTMLInputElement>('#visit-date');
-const validDate=():boolean=>!!dateField?.value && dateField.value >= (dateField.min || '0000-00-00');
+const validDate=():boolean=>dateField !== null && dateField.value !== '' && dateField.value >= (dateField.min || '0000-00-00');
 if(dateField){
   const today=new Date();today.setHours(0,0,0,0);
   const start=new Date(Math.max(today.getTime(),new Date(2027,3,1).getTime()));
