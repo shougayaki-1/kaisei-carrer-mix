@@ -2,7 +2,7 @@ import { renderIcons } from './icons';
 import './styles.css';
 import './schedule.css';
 import './schedule-page';
-import { getTicketScheduleStatus, isISODate } from './schedule-data';
+import { getTicketScheduleStatus, isISODate, SCHEDULE_START } from './schedule-data';
 import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);
@@ -82,12 +82,10 @@ const dateField=qs<HTMLInputElement>('#visit-date');
 const ticketSchedule = () => getTicketScheduleStatus(dateField?.value || '', activePass);
 const validDate=():boolean=>dateField !== null && isISODate(dateField.value) && dateField.value >= (dateField.min || '0000-00-00') && ticketSchedule().allowed;
 if(dateField){
-  const today=new Date();today.setHours(0,0,0,0);
-  const start=new Date(Math.max(today.getTime(),new Date(2027,3,1).getTime()));
-  const dateStr=(d:Date):string=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
-  dateField.min=dateStr(start); dateField.value=dateStr(start);
+  // The simulator uses fictional model dates, independent of the visitor's current date.
+  dateField.value = SCHEDULE_START;
   const linkedDate = new URLSearchParams(window.location.search).get('date') || '';
-  if (isISODate(linkedDate) && linkedDate >= dateField.min) dateField.value = linkedDate;
+  if (isISODate(linkedDate)) dateField.value = linkedDate;
 }
 function ticketTotal():number{
   return (Object.keys(quantity) as AgeType[]).reduce((sum,k)=>sum+quantity[k]*passes[activePass][k],0);

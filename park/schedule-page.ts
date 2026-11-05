@@ -16,7 +16,7 @@ const today = new Date();
 const todayISO = [today.getFullYear(), String(today.getMonth()+1).padStart(2,'0'), String(today.getDate()).padStart(2,'0')].join('-');
 const params = new URLSearchParams(window.location.search);
 const requestDate = params.get('date') || '';
-let selected = isISODate(requestDate) ? requestDate : todayISO < SCHEDULE_START ? SCHEDULE_START : todayISO;
+let selected = isISODate(requestDate) ? requestDate : todayISO < SCHEDULE_START || todayISO > SCHEDULE_END ? SCHEDULE_START : todayISO;
 let [year, month] = selected.split('-').map(Number);
 const el = (tag:string, className?:string, text?:string):HTMLElement => {
   const node = document.createElement(tag);
@@ -34,13 +34,15 @@ function renderDay(day:DaySchedule|null):void {
   if (!day) {
     status.textContent = '日程未発表';
     status.className = 'schedule-status unpublished';
-    areaGrid.append(el('p','schedule-unpublished','この日付の営業時間・ショー予定はまだ設定されていません。未発表は休園・満席を意味しません。'));
+    areaGrid.append(el('p','schedule-unpublished','この日付の営業時間・ショー予定は未発表のため、デモチケットを選べません。モデル日程は2027年4月1日〜6月30日です。未発表は休園・満席を意味しません。'));
     ticketLink.hidden = true;
     return;
   }
   const closed = day.areas.every(a => a.status === 'suspended');
   status.textContent = closed ? '全エリア休止予定（モデル設定）' : '日別モデルスケジュール';
   status.className = 'schedule-status ' + (closed ? 'suspended' : 'scheduled');
+  if (closed) areaGrid.append(el('p','schedule-day-note','全エリア休止予定のため、この日のデモチケットは発行できません。'));
+  else if (day.areas.some(area => area.status === 'suspended')) areaGrid.append(el('p','schedule-day-note','一部エリアは休止予定です。各エリアの案内をご確認ください。'));
   if(day.note) areaGrid.append(el('p','schedule-day-note',day.note));
   for (const area of day.areas) {
     const card = el('article','schedule-area-card' + (area.status === 'suspended' ? ' is-suspended' : ''));
@@ -93,7 +95,7 @@ function render():void {
   }
   calendar.replaceChildren(body);
   monthInfo.textContent = (iso(year,month,1)>SCHEDULE_END || iso(year,month,last)<SCHEDULE_START)
-    ? 'この月の予定は未発表です。' : '日付を選ぶと5エリアとショーの予定を表示します。';
+    ? 'この月は日程未発表です。モデル公開期間は2027年4月1日〜6月30日です。日付を選んで案内を確認できます。' : '日付を選ぶと5エリアとショーの予定を表示します。矢印キー、Home、Endでも移動できます。';
   renderDay(getDaySchedule(selected));
 }
 function selectDate(date:string, focus=false):void {
@@ -115,7 +117,7 @@ function changeMonth(amount:number):void {
 if(calendar){
   calendar.addEventListener('click',event=>{
     const target=(event.target as HTMLElement).closest<HTMLButtonElement>('button[data-date]');
-    if(target?.dataset.date)selectDate(target.dataset.date);
+    if(target?.dataset.date)selectDate(target.dataset.date,true);
   });
   calendar.addEventListener('keydown',event=>{
     const target=(event.target as HTMLElement).closest<HTMLButtonElement>('button[data-date]');

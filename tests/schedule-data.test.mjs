@@ -54,3 +54,14 @@ test('partial closures and nighttime show cancellation are shown as warnings', (
   const two = getTicketScheduleStatus('2027-04-13','two');
   assert.ok(two.warnings.some(text=>text.includes('4月14日')));
 });
+
+test('all pass types enforce the same published and closure boundaries', () => {
+  for (const pass of ['day', 'two', 'night']) {
+    assert.equal(getTicketScheduleStatus('2027-04-01', pass).allowed, true);
+    assert.equal(getTicketScheduleStatus('2027-03-31', pass).allowed, false);
+    assert.equal(getTicketScheduleStatus('2027-05-12', pass).allowed, false);
+  }
+  assert.match(getTicketScheduleStatus('2027-05-11', 'two').message, /全エリア休止/);
+  assert.match(getTicketScheduleStatus('2027-06-30', 'two').message, /翌日/);
+  assert.deepEqual([...PARK_AREAS.map(area => area.id)].sort(), ['echizen', 'fukui', 'katsuyama', 'komatsu', 'wakasa']);
+});
