@@ -59,7 +59,12 @@ const escapeHtml = (value: string): string =>
 
 function normalizePage(path: string): string {
   const pathname = path.split('?')[0].split('#')[0];
-  if (pathname.endsWith('/park/') || pathname.endsWith('/park/index.html')) return '/park/';
+  // Cloudflare/Vite serves /park/attractions.html at the clean URL /park/attractions.
+  // Treat both forms as the same page for current-location highlighting.
+  if (/^\/park(?:\/|\/index(?:\.html)?)?$/.test(pathname)) return '/park/';
+  if (pathname.startsWith('/park/') && !pathname.endsWith('/') && !/\.[^/]+$/.test(pathname)) {
+    return pathname + '.html';
+  }
   return pathname;
 }
 
