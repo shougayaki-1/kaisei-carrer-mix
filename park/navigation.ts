@@ -49,10 +49,11 @@ export const parkNavGroups: readonly ParkNavGroup[] = [
 ];
 
 /** No browser APIs: this is rendered at build time and by the Vite dev server. */
+const htmlEntities: Record<string, string> = {
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+};
 const escapeHtml = (value: string): string =>
-  value.replace(/[&<>"']/g, (char) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-  }[char] || char));
+  value.replace(/[&<>"']/g, (char) => htmlEntities[char] || char);
 
 function normalizePage(path: string): string {
   const pathname = path.split('?')[0].split('#')[0];
