@@ -1,0 +1,19 @@
+{
+  "name": "kaisei-carrer-mix",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cf dev",
+    "build": "cf build",
+    "deploy": "cf deploy",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "beta",
+    "cf": "latest",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0"
+  }
+}
