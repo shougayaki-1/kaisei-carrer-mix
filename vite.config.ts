@@ -56,8 +56,8 @@ export default defineConfig({
         handler(html, context) {
           const filename = context.filename.replaceAll('\\', '/');
           const isPark = /\/park\/.*\.html$/.test(filename) || /^\/park\//.test(context.path);
-          const pagePath = '/' + relative(root, context.filename).split(sep).join('/');
-          return isPark ? renderParkShell(html, pagePath) : html;
+          // Vite may serve a clean URL without .html; normalizePage handles both forms.
+          return isPark ? renderParkShell(html, context.path) : html;
         },
       },
     },
