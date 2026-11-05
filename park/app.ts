@@ -1,6 +1,6 @@
 import { renderIcons } from './icons';
 import './styles.css';
-import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
+import { attractions, categoryLabels, attractionDetailHref, type Attraction, type AttractionCategory } from './attractions-data';
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);
 const byId = (id:string):HTMLElement|null => document.getElementById(id);
@@ -23,6 +23,7 @@ const modalDescription = byId('modal-description');
 const modalZone = byId('modal-zone');
 const modalDuration = byId('modal-duration');
 const modalCondition = byId('modal-condition');
+const modalPageLink = qs<HTMLAnchorElement>('#modal-page-link');
 function showAttraction(a:Attraction):void{
   if (!openModal) return;
   if(modalTitle)modalTitle.textContent=a.title;
@@ -30,6 +31,7 @@ function showAttraction(a:Attraction):void{
   if(modalZone)modalZone.textContent=a.zone;
   if(modalDuration)modalDuration.textContent=a.duration;
   if(modalCondition)modalCondition.textContent=a.condition;
+  if(modalPageLink)modalPageLink.href=attractionDetailHref(a);
   openModal.showModal();
 }
 qs<HTMLButtonElement>('#modal-close')?.addEventListener('click',()=>openModal?.close());
@@ -43,7 +45,7 @@ function renderAttractions():void{
   if(!grid)return;
   const q=search?.value.trim().toLocaleLowerCase('ja-JP')||'';
   const results=attractions.filter(a=>(category==='all'||a.category===category) && (a.title+' '+a.en+' '+a.zone+' '+a.description).toLocaleLowerCase('ja-JP').includes(q));
-  grid.innerHTML=results.map(a=>'<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(a)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p><div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+'の詳細を見る">詳細を見る ↗</button></div></div></article>').join('')||'<p class="no-results">該当するアトラクションがありません。条件を変更してください。</p>';
+  grid.innerHTML=results.map(a=>'<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(a)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p><div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+'の詳細を見る">概要を見る</button></div><a class="card-page-link" href="'+attractionDetailHref(a)+'">体験の詳細・利用条件を見る <span aria-hidden="true">↗</span></a></div></article>').join('')||'<p class="no-results">該当するアトラクションがありません。条件を変更してください。</p>';
   if(count)count.textContent=String(results.length)+'つのアトラクション';
   grid.querySelectorAll<HTMLButtonElement>('[data-attr]').forEach(button=>button.addEventListener('click',()=>{
     const a=attractions.find(x=>x.id===button.dataset.attr);if(a)showAttraction(a);
