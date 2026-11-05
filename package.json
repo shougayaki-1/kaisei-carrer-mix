@@ -13,7 +13,8 @@
     "check:links": "node scripts/check-park-links.mjs",
     "test:schedule": "node --experimental-strip-types --test tests/schedule-data.test.mjs",
     "test:tickets": "node --experimental-strip-types --test tests/ticket-data.test.mjs",
-    "test:services": "node --experimental-strip-types --test tests/services-data.test.mjs"
+    "test:services": "node --experimental-strip-types --test tests/services-data.test.mjs",
+    "test:events": "node --experimental-strip-types --test tests/events-data.test.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",
