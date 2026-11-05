@@ -13,7 +13,7 @@ export const attractions: Attraction[] = [
     id:'skyport', title:'ダイナソー・スカイポート', en:'DINOSAUR SKYPORT',
     zone:'小松空港・エントランス', category:'ride',
     tagline:'空港に着いた瞬間、冒険が始まる。',
-    description:'小松空港と福井をつなぐ、巨大な恐竜の背中に乗って移動する専用空中トランスファー。離陸から福井へのアプローチまで、壮大な映像と可動ライドで旅の幕開けを演出。',
+    description:'小松空港から福井へ向かう旅を、巨大な恐竜の背中に乗っているかのように演出する架空のライド。離陸から福井へのアプローチまで、壮大な映像と可動ライドで旅の幕開けを演出。',
     condition:'身長110cm以上', duration:'約20分',
     visual:'skyport', tag:'シグネチャー',
     detail: {
