@@ -70,7 +70,7 @@ if (explorer) {
       document.querySelector('#geo-explorer')?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
       pins.find(pin=>pin.dataset.geoPin===area.id)?.focus({preventScroll:true});
     });
-  }));
+  });
   window.addEventListener('hashchange',()=>{
     const id=idFromHash();
     if(id)select(areaById[id]);
