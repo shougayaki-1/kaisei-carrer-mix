@@ -60,3 +60,4 @@
 @media(max-width:390px){.schedule-calendar-panel,.schedule-detail-panel{padding:12px}.schedule-month-nav button{padding:8px;font-size:11px}.schedule-day{height:44px}.schedule-calendar td{height:38px}}
 
 .ticket-panel .input-hint a{color:#165975;text-decoration:underline;text-underline-offset:3px;font-weight:800}
+.ticket-comparison-scroll{overflow-x:auto;max-width:100%;margin:1.25rem 0}.ticket-comparison{min-width:650px}.ticket-comparison caption{text-align:left;font-weight:700;padding:.5rem}.ticket-comparison th,.ticket-comparison td{text-align:left;vertical-align:top;white-space:normal}.ticket-comparison th[scope=row]{min-width:110px}.ticket-comparison-scroll:focus-visible{outline:3px solid #b9944f;outline-offset:3px}#ticket-breakdown{font-size:.8rem;line-height:1.8;margin:1rem 0;color:#fff}

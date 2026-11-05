@@ -3,7 +3,8 @@ import './styles.css';
 import './food.css';
 import './schedule.css';
 import './schedule-page';
-import { getTicketScheduleStatus, isISODate, SCHEDULE_START } from './schedule-data';
+import { getTicketScheduleStatus, isISODate, SCHEDULE_START, type PassId } from './schedule-data';
+import { passes, calculateTicketTotal, ageLabels, type AgeType } from './ticket-data';
 import { attractions, categoryLabels, attractionDetailHref, type Attraction, type AttractionCategory } from './attractions-data';
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);
@@ -61,13 +62,7 @@ if (linkedAttraction === 'night' && grid) {
 }
 
 // Client-side checkout simulation; no payment, booking or personal data is transmitted.
-const passes = {
-  day:{label:'1DAY DINO PASS',adult:12800,junior:8800,child:6400},
-  two:{label:'2DAY EXPLORER PASS',adult:21800,junior:14800,child:10800},
-  night:{label:'NIGHT DINO PASS',adult:6800,junior:4800,child:3400}
-} as const;
-type PassType=keyof typeof passes;
-type AgeType='adult'|'junior'|'child';
+type PassType = PassId;
 let activePass:PassType='day';
 const quantity:Record<AgeType,number>={adult:1,junior:0,child:0};
 const dateField=qs<HTMLInputElement>('#visit-date');
@@ -80,7 +75,7 @@ if(dateField){
   if (isISODate(linkedDate)) dateField.value = linkedDate;
 }
 function ticketTotal():number{
-  return (Object.keys(quantity) as AgeType[]).reduce((sum,k)=>sum+quantity[k]*passes[activePass][k],0);
+  return calculateTicketTotal(activePass, quantity);
 }
 function updateTickets():void{
   (Object.keys(quantity) as AgeType[]).forEach(type=>{
@@ -95,6 +90,8 @@ function updateTickets():void{
   if(byId('selected-date'))byId('selected-date')!.textContent=dateField?.value||'日付未選択';
   if(byId('total-price'))byId('total-price')!.textContent=yen.format(ticketTotal())+'円';
   if(byId('selected-count'))byId('selected-count')!.textContent=String(Object.values(quantity).reduce((a,b)=>a+b,0))+'名';
+  const breakdown=byId('ticket-breakdown');
+  if(breakdown)breakdown.textContent=(Object.keys(quantity) as AgeType[]).filter(age=>quantity[age]>0).map(age=>`${ageLabels[age]} ${yen.format(current.prices[age])}円 × ${quantity[age]}名 = ${yen.format(current.prices[age]*quantity[age])}円`).join(' / ') || '人数を選択してください。';
   const schedule = ticketSchedule();
   const scheduleNotice = byId('ticket-schedule-notice');
   if (scheduleNotice) {
@@ -123,7 +120,7 @@ qs<HTMLButtonElement>('#demo-purchase')?.addEventListener('click',()=>{
   if(total<1||!validDate())return;
   const dialog=qs<HTMLDialogElement>('#ticket-dialog');
   const content=byId('ticket-confirmation');
-  if(content)content.textContent=passes[activePass].label+'｜'+(dateField?.value ?? '')+'｜'+total+'名｜合計 '+yen.format(ticketTotal())+'円';
+  if(content)content.textContent=passes[activePass].label+'｜'+(dateField?.value ?? '')+'｜'+total+'名｜'+(byId('ticket-breakdown')?.textContent || '')+'｜合計 '+yen.format(ticketTotal())+'円。'+ticketSchedule().warnings.join(' ／ ');
   dialog?.showModal();
 });
 qs<HTMLButtonElement>('#ticket-close')?.addEventListener('click',()=>qs<HTMLDialogElement>('#ticket-dialog')?.close());
