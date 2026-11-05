@@ -1,3 +1,4 @@
+import { createIcons, Accessibility, ArrowRight, ArrowUpRight, Baby, Check, CheckCircle2, Clock, CloudRain, GraduationCap, Info, LifeBuoy, Map as MapIcon, Menu, Mountain, Ticket, TrainFront, UtensilsCrossed } from 'lucide';
 import './styles.css';
 import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
 
@@ -149,12 +150,10 @@ qs<HTMLButtonElement>('#ticket-success-close')?.addEventListener('click',()=>qs<
 const year=byId('park-year');
 if(year)year.textContent=String(new Date().getFullYear());
 
-type LucideLibrary={createIcons:()=>void};
-const renderIcons=()=>{(window as Window & {lucide?:LucideLibrary}).lucide?.createIcons();};
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',renderIcons);}
-else{renderIcons();}
-window.addEventListener('load',renderIcons);
-
-// Initialize the Lucide icon preset once the CDN script has loaded.
-declare global { interface Window { lucide?: { createIcons: () => void } } }
-window.addEventListener('load',()=>window.lucide?.createIcons());
+const iconRegistry = {Accessibility, ArrowRight, ArrowUpRight, Baby, Check, CheckCircle2, Clock, CloudRain, GraduationCap, Info, LifeBuoy, Map:MapIcon, Menu, Mountain, Ticket, TrainFront, UtensilsCrossed};
+const renderIcons=():void=>createIcons({icons:iconRegistry});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderIcons);
+else renderIcons();
+// Attraction cards are updated dynamically when filters or search change.
+const legacyRenderAttractions=renderAttractions;
+void legacyRenderAttractions;

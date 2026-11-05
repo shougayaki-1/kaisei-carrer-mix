@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cf dev",
-    "build": "cf build",
+    "build": "npm run typecheck && cf build",
     "deploy": "cf deploy",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
@@ -15,5 +15,8 @@
     "cf": "latest",
     "typescript": "^5.9.3",
     "vite": "^7.3.0"
+  },
+  "dependencies": {
+    "lucide": "0.468.0"
   }
 }
