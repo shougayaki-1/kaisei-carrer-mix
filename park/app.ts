@@ -9,17 +9,6 @@ const qs = <T extends Element>(selector:string):T|null => document.querySelector
 const byId = (id:string):HTMLElement|null => document.getElementById(id);
 const yen = new Intl.NumberFormat('ja-JP');
 const esc = (s:string):string => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c));
-const menu = qs<HTMLButtonElement>('#park-menu-button');
-const nav = qs<HTMLElement>('#park-mobile-nav');
-menu?.addEventListener('click', ()=>{
-  if (!nav) return;
-  const isOpen=nav.hidden;
-  nav.hidden=!isOpen;
-  menu.setAttribute('aria-expanded',String(isOpen));
-  menu.setAttribute('aria-label',isOpen?'メニューを閉じる':'メニューを開く');
-});
-nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.hidden=true;menu?.setAttribute('aria-expanded','false');}));
-window.addEventListener('resize',()=>{if(innerWidth>940 && nav){nav.hidden=true;menu?.setAttribute('aria-expanded','false');}});
 const openModal = qs<HTMLDialogElement>('#attraction-modal');
 const modalTitle = byId('modal-title');
 const modalDescription = byId('modal-description');
