@@ -1,4 +1,5 @@
 import './app';
+import { favoriteButton } from './favorites';
 import './food.css';
 import { renderIcons } from './icons';
 import { restaurants, shops, venueHref, type FoodArea, type Venue } from './food-data';
@@ -27,7 +28,7 @@ function card(venue:Venue):string {
     <div class="food-card-copy">
       <p class="eyebrow">${escapeHtml(venue.en)}</p>
       <h3><a href="#venue-${id}">${name}</a></h3>
-      <p>${escapeHtml(venue.tagline)}</p>
+      <p>${escapeHtml(venue.tagline)}</p>${venue.type==='dining'?favoriteButton(`venue:${venue.id}`,venue.name):''}
       <div class="food-card-bottom">
         <span>${escapeHtml(venue.hours.replace('（企画上の設定）',''))}</span>
         <a href="#venue-${id}">店舗の詳細を見る <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
