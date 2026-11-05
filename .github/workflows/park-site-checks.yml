@@ -7,13 +7,14 @@ on:
       - 'vite.config.ts'
       - 'package.json'
       - 'scripts/check-park-links.mjs'
+      - 'scripts/test-park-navigation.mjs'
       - '.github/workflows/park-site-checks.yml'
   workflow_dispatch:
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,3 +24,11 @@ jobs:
       - run: npm run typecheck
       - run: npm run check:links
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:nav
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: park-navigation-viewports
+          path: artifacts/navigation-*.png
+          if-no-files-found: ignore
