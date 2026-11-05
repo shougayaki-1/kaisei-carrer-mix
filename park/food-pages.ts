@@ -99,5 +99,11 @@ window.addEventListener('hashchange',()=>{
   const id=window.location.hash.slice(1);
   const venue=venues.find(item=>'venue-'+item.id===id);
   if(venue&&activeArea!=='all'&&venue.area!==activeArea){activeArea='all';render();}
+  if(venue)requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({block:'start'}));
 });
 render();
+// A link from an area guide can open this page with a venue fragment.
+if(window.location.hash.startsWith('#venue-')){
+  const id=window.location.hash.slice(1);
+  requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({block:'start'}));
+}
