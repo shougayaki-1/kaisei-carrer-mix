@@ -9,6 +9,7 @@
     "deploy": "cf deploy",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "test:areas": "node --test scripts/check-area-map.mjs",
     "check:links": "node scripts/check-park-links.mjs"
   },
   "devDependencies": {
