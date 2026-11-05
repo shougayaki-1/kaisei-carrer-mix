@@ -1,7 +1,7 @@
 /**
  * Single source of truth for the park header, mobile menu and footer.
  * Only register routes after the matching page and links are available.
- * All park/**/*.html entries are discovered by vite.config.ts automatically.
+ * All park HTML entries, including nested directories, are discovered by Vite.
  */
 export interface ParkNavLink {
   label: string;
