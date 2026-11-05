@@ -24,6 +24,7 @@ export const parkNavGroups: readonly ParkNavGroup[] = [
     title: '楽しむ',
     english: 'EXPLORE',
     links: [
+      { label: 'ニュース・イベント', href: '/park/news.html', description: '最新の物語と企画' },
       { label: 'アトラクション', href: '/park/attractions.html', description: '7つの冒険を探す', activePrefixes: ['/park/attractions/'] },
       { label: 'レストラン・カフェ', href: '/park/dining.html', description: '3つの食事スポット' },
       { label: 'ショップ・グッズ', href: '/park/shops.html', description: '2つのお土産ショップ' },

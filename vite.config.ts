@@ -4,6 +4,7 @@ import { readdirSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderParkHeader, renderParkFooter } from './park/navigation';
+import { renderEventCards, renderEventDetails, renderNewsHeadline } from './park/events-data';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 
@@ -37,7 +38,10 @@ function renderParkShell(html: string, pathname: string): string {
     throw new Error('[park navigation] ' + pathname + ': legacy park header/footer remains');
   }
   const rendered = html.replace(headerMarker, renderParkHeader(pathname))
-    .replace(footerMarker, renderParkFooter());
+    .replace(footerMarker, renderParkFooter())
+    .replace('<!-- NEWS_HEADLINE -->', renderNewsHeadline())
+    .replace('<!-- EVENT_CARDS -->', renderEventCards(3))
+    .replace('<!-- EVENT_DETAILS -->', renderEventDetails());
   if (!/<\/head\s*>/i.test(rendered)) {
     throw new Error('[park navigation] ' + pathname + ': missing head element');
   }
