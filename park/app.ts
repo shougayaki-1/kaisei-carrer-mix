@@ -1,7 +1,5 @@
 import { renderIcons } from './icons';
 import './styles.css';
-import './navigation.css';
-import './navigation-client';
 import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);

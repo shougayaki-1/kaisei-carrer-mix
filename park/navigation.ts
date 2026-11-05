@@ -1,12 +1,14 @@
 /**
  * Single source of truth for the park header, mobile menu and footer.
- * Only register routes after their corresponding page is available on main.
- * A new route also needs to be added to vite.config.ts rollupOptions.input.
+ * Only register routes after the matching page and links are available.
+ * All park/**/*.html entries are discovered by vite.config.ts automatically.
  */
 export interface ParkNavLink {
   label: string;
   href: string;
   description?: string;
+  /** Highlight this group on nested detail pages without marking the list link as current. */
+  activePrefixes?: readonly string[];
 }
 
 export interface ParkNavGroup {
@@ -22,7 +24,7 @@ export const parkNavGroups: readonly ParkNavGroup[] = [
     title: '楽しむ',
     english: 'EXPLORE',
     links: [
-      { label: 'アトラクション', href: '/park/attractions.html', description: '7つの冒険を探す' },
+      { label: 'アトラクション', href: '/park/attractions.html', description: '7つの冒険を探す', activePrefixes: ['/park/attractions/'] },
       { label: 'エリアガイド', href: '/park/access.html#area-fukui', description: '県全域の5つのエリア' },
     ],
   },
@@ -83,10 +85,11 @@ export function renderParkHeader(path: string): string {
   const current = normalizePage(path);
   const homeCurrent = current === '/park/' ? ' aria-current="page"' : '';
   const desktopCategories = parkNavGroups.map((group) => {
-    const isCurrent = group.links.some((link) => normalizePage(link.href) === current);
+    const isCurrent = group.links.some((link) =>
+      normalizePage(link.href) === current || link.activePrefixes?.some((prefix) => current.startsWith(prefix)));
     return '<details class="park-nav-category' + (isCurrent ? ' is-current' : '') + '">' +
-      '<summary><span>' + escapeHtml(group.title) +
-      '</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>' +
+      '<summary' + (isCurrent ? ' aria-current="location"' : '') + '><span>' + escapeHtml(group.title) +
+      '</span><span class="park-nav-chevron" aria-hidden="true"></span></summary>' +
       '<div class="park-nav-popover">' +
       '<p class="park-nav-eyebrow">' + escapeHtml(group.english) + '</p>' +
       '<p class="park-nav-heading">' + escapeHtml(group.title) + '</p>' +
@@ -94,7 +97,9 @@ export function renderParkHeader(path: string): string {
   }).join('');
   const mobileCategories = parkNavGroups.map((group) =>
     '<details class="park-mobile-category">' +
-    '<summary>' + escapeHtml(group.title) +
+    '<summary' + (group.links.some((link) => normalizePage(link.href) === current ||
+      link.activePrefixes?.some((prefix) => current.startsWith(prefix))) ? ' aria-current="location"' : '') +
+    '>' + escapeHtml(group.title) +
     '<span aria-hidden="true" class="park-mobile-chevron"></span></summary>' +
     linksForGroup(group, current, 'mobile') + '</details>'
   ).join('');
