@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 880" preserveAspectRatio="xMidYMid slice">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#172e25"/><stop offset=".55" stop-color="#304c3c"/><stop offset="1" stop-color="#0b1a15"/></linearGradient><radialGradient id="glow" cx=".75" cy=".4" r=".6"><stop stop-color="#e4e0a8" stop-opacity=".8"/><stop offset=".28" stop-color="#9cae77" stop-opacity=".24"/><stop offset="1" stop-color="#071b13" stop-opacity="0"/></radialGradient><linearGradient id="earth" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1c392d"/><stop offset="1" stop-color="#071b13"/></linearGradient></defs>
+<rect width="1440" height="880" fill="url(#sky)"/><rect width="1440" height="880" fill="url(#glow)"/>
+<circle cx="1010" cy="338" r="182" fill="#d0d29d" opacity=".17"/>
+<path d="M0 531 131 444 235 484 381 382 530 471 710 398 851 501 989 400 1116 457 1256 353 1440 445V880H0Z" fill="#1b3a30" opacity=".82"/>
+<path d="M0 620 150 573 283 602 447 523 598 595 780 529 927 592 1074 533 1222 572 1440 504V880H0Z" fill="#102a21"/>
+<path d="M0 713Q150 651 335 674T658 666Q814 642 1030 674T1440 621V880H0Z" fill="#10231b"/>
+<!-- distant pterosaur -->
+<g fill="#0d241b" opacity=".72"><path d="m999 227 41 9 22-12 38 7-31 6-12 21-11-18-42-5-40 18 22-24Z"/><path d="m746 196 26 10 17-8 34 7-25 4-11 15-9-14-29-5-26 11 13-17Z"/></g>
+<!-- sauropod figure -->
+<g fill="#071710"><path d="M1042 621c-53-16-101-17-137-12-31 4-57 23-89 35-36 14-81 13-122-6-27-12-69-29-106-28-37 1-68 18-94 43 29-11 58-12 91-3 32 9 47 23 67 34l-21 114 24 19h43l2-16-24-12 13-92c20 4 42 6 63 6l-11 92 27 18h40l4-15-24-14 21-100c26-9 48-25 64-49 26-36 42-73 53-112l27-126c7-38 20-73 39-84 21-12 46-9 62 3l35 13-13 18-40-2c-13 12-20 38-25 71l-16 113c-12 90-37 141-72 167z"/><path d="M501 644c-65-31-115-61-151-103 39 64 80 102 133 135z"/></g>
+<!-- plant silhouette -->
+<g fill="#061711"><path d="M0 880V591c29 31 61 70 80 138-6-108-21-171-54-233 52 27 85 86 104 143 3-77 23-149 59-193-14 92-8 154 10 203 20-63 48-94 76-118-30 75-44 168-35 349Z"/><path d="M1440 880V542c-37 48-58 103-69 181-12-111-42-173-81-215 13 90 5 150-14 202-19-84-47-131-82-172 26 105 27 207 11 342Z"/></g>
+<path d="M0 791Q350 744 720 774T1440 745V880H0Z" fill="#06150f" opacity=".85"/>
+</svg>
