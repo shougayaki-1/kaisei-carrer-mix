@@ -1,4 +1,4 @@
-import { createIcons, Accessibility, ArrowRight, ArrowUpRight, Baby, Check, CheckCircle2, Clock, CloudRain, GraduationCap, Info, LifeBuoy, Map as MapIcon, Menu, Mountain, Ticket, TrainFront, UtensilsCrossed } from 'lucide';
+import { renderIcons } from './icons';
 import './styles.css';
 import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
 
@@ -150,9 +150,7 @@ qs<HTMLButtonElement>('#ticket-success-close')?.addEventListener('click',()=>qs<
 const year=byId('park-year');
 if(year)year.textContent=String(new Date().getFullYear());
 
-const iconRegistry = {Accessibility, ArrowRight, ArrowUpRight, Baby, Check, CheckCircle2, Clock, CloudRain, GraduationCap, Info, LifeBuoy, Map:MapIcon, Menu, Mountain, Ticket, TrainFront, UtensilsCrossed};
-const renderIcons=():void=>createIcons({icons:iconRegistry});
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderIcons);
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => renderIcons());
 else renderIcons();
 // Attraction cards are updated dynamically when filters or search change.
 const legacyRenderAttractions=renderAttractions;
