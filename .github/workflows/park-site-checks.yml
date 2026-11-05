@@ -1,0 +1,25 @@
+name: Park site checks
+
+on:
+  pull_request:
+    paths:
+      - 'park/**'
+      - 'vite.config.ts'
+      - 'package.json'
+      - 'scripts/check-park-links.mjs'
+      - '.github/workflows/park-site-checks.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run check:links
+      - run: npm run build

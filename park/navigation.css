@@ -1,0 +1,175 @@
+/* Issue #12: shared, responsive park navigation. Loaded after styles.css. */
+.site-footer { background: #071f36; }
+.park-header { isolation: isolate; --park-nav-header-height: 74px; }
+.park-header .header-inner { gap: clamp(12px, 1.5vw, 22px); }
+.park-header .brand { flex-shrink: 0; }
+.park-desktop-nav { display: flex; align-items: center; gap: clamp(5px, .9vw, 13px); margin-left: auto; }
+.park-home-link,
+.park-nav-category > summary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  min-height: 44px; padding: 9px clamp(7px, .8vw, 12px);
+  color: #e9f0f6; font-size: 12px; font-weight: 800; white-space: nowrap;
+  border-radius: 5px;
+}
+.park-home-link:hover,
+.park-nav-category > summary:hover,
+.park-home-link[aria-current="page"],
+.park-nav-category[open] > summary,
+.park-nav-category.is-current > summary { color: var(--mint); background: #ffffff0c; }
+.park-nav-category { position: relative; }
+.park-nav-category > summary { cursor: pointer; list-style: none; }
+.park-nav-category > summary::-webkit-details-marker,
+.park-mobile-menu > summary::-webkit-details-marker,
+.park-mobile-category > summary::-webkit-details-marker { display: none; }
+.park-nav-chevron {
+  display: block; width: 9px; height: 9px; flex-shrink: 0;
+  margin-left: 4px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg); transition: transform .2s ease;
+}
+.park-nav-category[open] .park-nav-chevron { transform: translateY(2px) rotate(225deg); }
+.park-nav-category > summary:focus-visible,
+.park-mobile-menu > summary:focus-visible,
+.park-mobile-category > summary:focus-visible {
+  outline: 3px solid var(--mint); outline-offset: 3px;
+}
+.park-nav-popover {
+  position: absolute; top: calc(100% + 13px); left: 0;
+  z-index: 30; width: 300px; max-width: calc(100vw - 32px);
+  padding: 23px; background: #fff; color: #17344c;
+  border: 1px solid #dce5ec; border-top: 3px solid var(--mint);
+  border-radius: 0 0 12px 12px; box-shadow: 0 18px 45px #00152255;
+}
+.park-nav-category:last-child .park-nav-popover { left: auto; right: 0; }
+.park-nav-eyebrow {
+  margin: 0 0 5px; color: #93743e; font: 800 11px "Barlow Condensed", sans-serif;
+  letter-spacing: .13em;
+}
+.park-nav-heading { margin: 0 0 13px; font-size: 20px; font-weight: 900; }
+.park-nav-items,
+.park-footer-column ul { list-style: none; margin: 0; padding: 0; }
+.park-nav-popover .park-nav-items { border-top: 1px solid #e6edf1; }
+.park-nav-popover .park-nav-items a {
+  display: flex; flex-direction: column; gap: 3px; padding: 12px 5px;
+  border-bottom: 1px solid #e6edf1; font-size: 13px; font-weight: 800; line-height: 1.6;
+}
+.park-nav-popover .park-nav-items a small {
+  color: #657d8d; font-size: 11px; font-weight: 500;
+}
+.park-nav-popover .park-nav-items a:hover,
+.park-nav-popover .park-nav-items a[aria-current="page"] { color: #996d21; background: #fbf6e9; }
+.park-header .header-ticket {
+  padding: 12px 11px; border-color: #bd9a58; border-radius: 5px;
+  background: #eac575; color: #142d42; font-size: 12px; gap: 7px; flex-shrink: 0;
+}
+.park-header .header-ticket:hover { background: #ffe19c; }
+.park-header .header-ticket svg { width: 17px; height: 17px; }
+
+.park-mobile-menu { display: none; }
+.park-footer-grid {
+  display: grid; grid-template-columns: minmax(220px, 1.6fr) repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2.7vw, 38px); padding: 59px 0 45px;
+}
+.park-footer-about .brand { width: fit-content; }
+.park-footer-about p {
+  margin: 21px 0 0; color: #c8d8e0; font-size: 12px; line-height: 2;
+}
+.park-footer-column h2 {
+  margin: 0 0 17px; font-size: 13px; font-weight: 900; color: #edc777; letter-spacing: .02em;
+}
+.park-footer-column li + li { margin-top: 12px; }
+.park-footer-column a {
+  color: #d3dfe7; font-size: 12px; line-height: 1.6; font-weight: 600;
+}
+.park-footer-column a:hover { color: #fff1bd; text-decoration: underline; text-underline-offset: 4px; }
+.park-footer-bottom {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 25px; padding: 19px 0 28px; border-top: 1px solid #365165;
+  color: #a7bbc8; font-size: 11px; line-height: 1.9;
+}
+.park-footer-bottom p { margin: 0; }
+.park-footer-notice { max-width: 700px; }
+
+@media (max-width: 1100px) and (min-width: 941px) {
+  .park-header .brand-name { font-size: 21px; }
+  .park-header .brand-name small { font-size: 7px; }
+  .park-header .header-ticket { font-size: 11px; }
+  .park-desktop-nav { gap: 2px; }
+}
+@media (max-width: 940px) {
+  .park-desktop-nav,
+  .park-header .header-ticket { display: none; }
+  .park-mobile-menu { display: block; margin-left: auto; flex-shrink: 0; }
+  .park-mobile-toggle {
+    position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 9px;
+    min-height: 44px; padding: 9px 12px; cursor: pointer; list-style: none;
+    color: #fff; font-weight: 800; font-size: 12px; border: 1px solid #637b8e; border-radius: 5px;
+    user-select: none;
+  }
+  .park-mobile-menu[open] .park-mobile-toggle { color: var(--mint); border-color: var(--mint); }
+  .park-hamburger,
+  .park-hamburger::before,
+  .park-hamburger::after {
+    display: block; width: 19px; height: 2px; background: currentColor;
+    border-radius: 2px; transition: transform .2s ease;
+  }
+  .park-hamburger { position: relative; }
+  .park-hamburger::before, .park-hamburger::after {
+    content: ""; position: absolute; left: 0;
+  }
+  .park-hamburger::before { top: -6px; }
+  .park-hamburger::after { top: 6px; }
+  .park-mobile-menu[open] .park-hamburger { background: transparent; }
+  .park-mobile-menu[open] .park-hamburger::before { transform: translateY(6px) rotate(45deg); }
+  .park-mobile-menu[open] .park-hamburger::after { transform: translateY(-6px) rotate(-45deg); }
+  .park-mobile-menu[open]::before {
+    content: ""; position: fixed; inset: var(--park-nav-header-height) 0 0; background: #001321a6; z-index: 0;
+  }
+  .park-mobile-nav {
+    position: fixed; z-index: 1; top: var(--park-nav-header-height); left: 0; right: 0;
+    max-height: calc(100dvh - var(--park-nav-header-height)); overflow-y: auto; overscroll-behavior: contain;
+    padding: 15px max(22px, calc((100vw - 800px) / 2)) 34px;
+    background: #071f36; border-top: 1px solid #4a667c;
+    box-shadow: 0 25px 48px #0006;
+  }
+  .park-mobile-home,
+  .park-mobile-category > summary {
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; padding: 17px 2px; border-bottom: 1px solid #31516a;
+    color: #f2f6f9; font-size: 15px; font-weight: 800; line-height: 1.4;
+  }
+  .park-mobile-home[aria-current="page"] { color: var(--mint); }
+  .park-mobile-category > summary { cursor: pointer; list-style: none; }
+  .park-mobile-chevron { width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .2s ease; margin-right: 7px; }
+  .park-mobile-category[open] .park-mobile-chevron { transform: rotate(225deg); }
+  .park-mobile-category .park-nav-items { padding: 5px 0 15px 14px; border-bottom: 1px solid #31516a; }
+  .park-mobile-category .park-nav-items a {
+    display: block; padding: 12px 6px; color: #d3e2eb; font-size: 13px;
+    font-weight: 700; line-height: 1.5;
+  }
+  .park-mobile-category .park-nav-items a[aria-current="page"],
+  .park-mobile-category .park-nav-items a:hover { color: var(--mint); }
+  .park-mobile-ticket {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-top: 20px; padding: 16px; background: var(--mint); color: #112f45;
+    border-radius: 5px; font-size: 13px; font-weight: 900;
+  }
+  .park-mobile-ticket svg { width: 17px; height: 17px; }
+  body.park-menu-open { overflow: hidden; }
+  .park-footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .park-footer-about { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .park-header { --park-nav-header-height: 62px; }
+  .park-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 16px; padding: 43px 0 34px; }
+  .park-footer-about { grid-column: 1 / -1; }
+  .park-footer-about-links { grid-column: 1 / -1; }
+  .park-footer-bottom { flex-direction: column; gap: 8px; padding: 20px 0 30px; }
+}
+@media (max-width: 390px) {
+  .park-mobile-toggle { gap: 7px; padding: 9px 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .park-nav-chevron,
+  .park-hamburger, .park-hamburger::before, .park-hamburger::after,
+  .park-mobile-chevron { transition: none; }
+}

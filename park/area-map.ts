@@ -54,11 +54,14 @@ if (explorer) {
     event.preventDefault();
     select(areaById[id]);
     // Keep a shareable area URL while leaving focus on the map controls.
-    history.replaceState(null,'','#area-'+id);
+    if (location.hash !== '#area-'+id) history.pushState(null,'','#area-'+id);
   }));
-  indexLinks.forEach(link=>link.addEventListener('click',()=>{
+  indexLinks.forEach(link=>link.addEventListener('click',event=>{
     const area=areaById[link.dataset.geoIndex as AreaId];
-    if(area)select(area);
+    if(!area)return;
+    event.preventDefault();
+    select(area);
+    if (location.hash !== '#area-'+area.id) history.pushState(null,'','#area-'+area.id);
   }));
   document.querySelectorAll<HTMLAnchorElement>('[data-geo-select]').forEach(link=>{
     link.addEventListener('click',event=>{
@@ -66,14 +69,14 @@ if (explorer) {
       if(!area)return;
       event.preventDefault();
       select(area);
-      history.replaceState(null,'','#area-'+area.id);
+      if (location.hash !== '#area-'+area.id) history.pushState(null,'','#area-'+area.id);
       document.querySelector('#geo-explorer')?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
       pins.find(pin=>pin.dataset.geoPin===area.id)?.focus({preventScroll:true});
     });
   });
   window.addEventListener('hashchange',()=>{
     const id=idFromHash();
-    if(id)select(areaById[id]);
+    select(areaById[id ?? 'komatsu']);
   });
   select(areaById[idFromHash() ?? 'komatsu']);
   // IDs are a stable data contract for attraction/venue/itinerary/transit modules.
