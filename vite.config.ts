@@ -4,6 +4,7 @@ import { readdirSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderParkHeader, renderParkFooter } from './park/navigation';
+import { renderServices, renderFAQs, renderFAQIndex } from './park/services-data';
 import { renderTicketOptions, renderTicketComparison } from './park/ticket-data';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -40,7 +41,10 @@ function renderParkShell(html: string, pathname: string): string {
   const rendered = html.replace(headerMarker, renderParkHeader(pathname))
     .replace(footerMarker, renderParkFooter())
     .replace('<!-- TICKET_OPTIONS -->', renderTicketOptions())
-    .replace('<!-- TICKET_COMPARISON -->', renderTicketComparison());
+    .replace('<!-- TICKET_COMPARISON -->', renderTicketComparison())
+    .replace('<!-- SERVICE_DETAILS -->', renderServices())
+    .replace('<!-- SERVICE_FAQS -->', renderFAQs())
+    .replace('<!-- FAQ_INDEX -->', renderFAQIndex());
   if (!/<\/head\s*>/i.test(rendered)) {
     throw new Error('[park navigation] ' + pathname + ': missing head element');
   }

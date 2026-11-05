@@ -47,8 +47,8 @@ export const parkNavGroups: readonly ParkNavGroup[] = [
     title: 'サポート',
     english: 'GUEST SUPPORT',
     links: [
-      { label: 'ゲストサービス', href: '/park/guide.html#guest-services', description: '設備と安心のサポート' },
-      { label: 'よくある質問', href: '/park/guide.html#faq', description: '疑問を解決する' },
+      { label: 'ゲストサービス', href: '/park/services.html', description: '設備と安心のサポート' },
+      { label: 'よくある質問', href: '/park/services.html#faq', description: '疑問を解決する' },
       { label: '学校団体向け', href: '/park/guide.html#school-program', description: '学びを深める体験' },
     ],
   },
