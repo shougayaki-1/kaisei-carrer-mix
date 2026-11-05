@@ -58,3 +58,5 @@
 @media(max-width:940px){.schedule-layout{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:700px){.schedule-section{padding-bottom:65px}.schedule-section .section-head{margin-bottom:18px}.schedule-calendar-panel,.schedule-detail-panel{padding:17px}.schedule-calendar{border-spacing:2px}.schedule-calendar td{height:40px}.schedule-day{height:39px;font-size:12px}.schedule-month-nav h3{font-size:20px}.schedule-area-grid{grid-template-columns:minmax(0,1fr)}.schedule-area-card{padding:14px}.schedule-legend{gap:8px;font-size:10px}}
 @media(max-width:390px){.schedule-calendar-panel,.schedule-detail-panel{padding:12px}.schedule-month-nav button{padding:8px;font-size:11px}.schedule-day{height:37px}.schedule-calendar td{height:38px}}
+
+.ticket-panel .input-hint a{color:#165975;text-decoration:underline;text-underline-offset:3px;font-weight:800}

@@ -17,6 +17,28 @@
 <main>
 <section class="subpage-hero"><div class="wrap"><p class="eyebrow">PARK HOURS & GUEST SERVICES</p><h1>営業時間・パークガイド</h1><p>冒険を自由に楽しむための、営業時間とゲストサービスをご紹介します。</p></div></section><div class="wrap breadcrumb"><a href="/park/">パークTOP</a> / 営業時間・パークガイド</div>
 <section class="wrap" style="padding:18px 0 60px"><div class="hours-grid"><article class="hours-card"><p class="eyebrow">STANDARD OPERATING HOURS</p><h2>基本営業時間</h2><div class="big-hour">09:00 – 21:00</div><p>福井駅周辺のダイノシティ・メインゲートの通常営業時間です。季節やイベントにより変更になる場合があります。</p></article><article class="hours-card dark"><p class="eyebrow">SPECIAL ZONE HOURS</p><h2>エリア別営業時間</h2><div class="big-hour">10:00 – 18:00</div><p>化石体験・海洋エリアは10:00〜18:00。ナイトショーは20:00開演、上演時間は約15分です。</p></article></div></section>
+
+<section class="wrap schedule-section" id="operating-calendar" aria-labelledby="schedule-heading">
+  <div class="section-head"><div><p class="eyebrow highlight">DAILY OPERATING CALENDAR</p><h2 id="schedule-heading">営業・ショーカレンダー</h2></div><p>日付ごとのエリア営業時間、設備点検の休止予定、ナイトショーの演出予定をご案内します。</p></div>
+  <p class="schedule-intro">2027年4月1日〜6月30日の<strong>架空パーク運営モデル</strong>です。実在施設の営業・運行・天候・予約状況ではありません。日程未発表は休園を意味しません。以下の予定はすべて構想上の設定です。</p>
+  <div class="schedule-layout">
+    <div class="schedule-calendar-panel">
+      <div class="schedule-month-nav"><button type="button" id="schedule-prev" aria-label="前の月を表示">前月</button><h3 id="schedule-month-label" aria-live="polite">2027年4月</h3><button type="button" id="schedule-next" aria-label="次の月を表示">翌月</button></div>
+      <table class="schedule-calendar" aria-label="営業予定の日付選択カレンダー">
+        <thead><tr><th scope="col">日</th><th scope="col">月</th><th scope="col">火</th><th scope="col">水</th><th scope="col">木</th><th scope="col">金</th><th scope="col">土</th></tr></thead>
+        <tbody id="schedule-days"><tr><td colspan="7">日別カレンダーを表示するにはJavaScriptが必要です。</td></tr></tbody>
+      </table>
+      <div class="schedule-legend" aria-label="カレンダーの凡例"><span><i aria-hidden="true"></i>予定あり</span><span><i class="partial" aria-hidden="true"></i>一部変更</span><span><i class="closed" aria-hidden="true"></i>全域休止</span><span><i class="unknown" aria-hidden="true"></i>未発表</span></div>
+      <p class="schedule-month-info" id="schedule-month-info">日付を選ぶと各エリアの予定を確認できます。日付の移動には矢印キーも使えます。</p>
+    </div>
+    <div class="schedule-detail-panel" aria-label="選択日の運営情報">
+      <p class="eyebrow">YOUR VISIT / DAILY HOURS</p><h3 id="schedule-selected-date" aria-live="polite">選択日の営業予定</h3><p id="schedule-status" class="schedule-status">日程を確認中</p>
+      <div id="schedule-areas" class="schedule-area-grid"><p>基本営業時間は上記をご覧ください。</p></div>
+      <article id="schedule-show" class="schedule-show"><p class="eyebrow">NIGHT SHOW</p><h4>ナイト・オブ・ザ・ジャイアンツ</h4><p>通常設定 20:00開演・約15分。悪天候時には変更の可能性があります。</p></article>
+      <a id="schedule-ticket-link" class="button button-bright schedule-ticket-link" href="/park/tickets.html">この日付でデモチケットを選ぶ</a>
+    </div>
+  </div>
+</section>
 <section class="wrap"><div class="section-head"><div><p class="eyebrow highlight">GUEST SERVICES</p><h2>快適な冒険を、<br>すべてのゲストに。</h2></div><p>小さなお子さまから大人まで、誰もが自分のペースで冒険できるように。移動、食事、休憩、アクセシビリティ、学びのサポートを各エリアに整えています。</p></div>
 <div class="guide-grid service-grid"><article class="service-card"><div class="service-top"><span class="guide-icon"><i data-lucide="utensils-crossed" aria-hidden="true"></i></span><span class="service-label">DINING & SHOPPING</span></div><h3>レストラン・ショップ</h3><p>福井駅のメインダイニング、海を望む若狭湾カフェなど、地域ごとに異なる食を楽しめます。</p><p class="service-points">キッズメニュー／限定グッズ</p></article>
 <article class="service-card"><div class="service-top"><span class="guide-icon"><i data-lucide="baby" aria-hidden="true"></i></span><span class="service-label">FAMILY CARE</span></div><h3>ファミリーサービス</h3><p>授乳室・おむつ交換台・ベビーカー貸出を想定。小さなお子さまとの周遊をサポートします。</p><p class="service-points">授乳／ベビーカー／迷子対応</p></article>

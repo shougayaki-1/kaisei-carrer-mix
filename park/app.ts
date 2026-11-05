@@ -1,5 +1,8 @@
 import { renderIcons } from './icons';
 import './styles.css';
+import './schedule.css';
+import './schedule-page';
+import { getTicketScheduleStatus, isISODate } from './schedule-data';
 import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);
@@ -58,6 +61,12 @@ qs<HTMLElement>('#category-filters')?.querySelectorAll<HTMLButtonElement>('butto
 });
 search?.addEventListener('input',renderAttractions);
 renderAttractions();
+// Allow a direct link to the existing detail modal until #2 adds a separate page.
+const linkedAttraction = new URLSearchParams(window.location.search).get('attraction');
+if (linkedAttraction === 'night' && grid) {
+  const night = attractions.find(a => a.id === 'night');
+  if (night) showAttraction(night);
+}
 
 // Client-side checkout simulation; no payment, booking or personal data is transmitted.
 const passes = {
@@ -70,12 +79,15 @@ type AgeType='adult'|'junior'|'child';
 let activePass:PassType='day';
 const quantity:Record<AgeType,number>={adult:1,junior:0,child:0};
 const dateField=qs<HTMLInputElement>('#visit-date');
-const validDate=():boolean=>dateField !== null && dateField.value !== '' && dateField.value >= (dateField.min || '0000-00-00');
+const ticketSchedule = () => getTicketScheduleStatus(dateField?.value || '', activePass);
+const validDate=():boolean=>dateField !== null && isISODate(dateField.value) && dateField.value >= (dateField.min || '0000-00-00') && ticketSchedule().allowed;
 if(dateField){
   const today=new Date();today.setHours(0,0,0,0);
   const start=new Date(Math.max(today.getTime(),new Date(2027,3,1).getTime()));
   const dateStr=(d:Date):string=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
   dateField.min=dateStr(start); dateField.value=dateStr(start);
+  const linkedDate = new URLSearchParams(window.location.search).get('date') || '';
+  if (isISODate(linkedDate) && linkedDate >= dateField.min) dateField.value = linkedDate;
 }
 function ticketTotal():number{
   return (Object.keys(quantity) as AgeType[]).reduce((sum,k)=>sum+quantity[k]*passes[activePass][k],0);
@@ -93,6 +105,14 @@ function updateTickets():void{
   if(byId('selected-date'))byId('selected-date')!.textContent=dateField?.value||'日付未選択';
   if(byId('total-price'))byId('total-price')!.textContent=yen.format(ticketTotal())+'円';
   if(byId('selected-count'))byId('selected-count')!.textContent=String(Object.values(quantity).reduce((a,b)=>a+b,0))+'名';
+  const schedule = ticketSchedule();
+  const scheduleNotice = byId('ticket-schedule-notice');
+  if (scheduleNotice) {
+    scheduleNotice.textContent = schedule.message + (schedule.warnings.length ? ' 注意：' + schedule.warnings.join(' ／ ') : '');
+    scheduleNotice.classList.toggle('is-unavailable', !schedule.allowed);
+  }
+  const scheduleLink = qs<HTMLAnchorElement>('#ticket-schedule-link');
+  if (scheduleLink && dateField) scheduleLink.href = '/park/guide.html?date=' + encodeURIComponent(dateField.value) + '#operating-calendar';
   const purchaseButton=qs<HTMLButtonElement>('#demo-purchase');
   if(purchaseButton)purchaseButton.disabled=Object.values(quantity).every(x=>x===0)||!validDate();
 }
