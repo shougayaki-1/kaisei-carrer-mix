@@ -35,6 +35,7 @@ export const parkNavGroups: readonly ParkNavGroup[] = [
     title: '計画する',
     english: 'PLAN YOUR VISIT',
     links: [
+      { label: 'モデルコース', href: '/park/plans.html', description: '旅の順路を考える' },
       { label: 'チケット・料金', href: '/park/tickets.html', description: '券種と料金シミュレーション' },
       { label: 'アクセス・エリアマップ', href: '/park/access.html', description: '旅の始まりと移動の案内' },
       { label: 'エリア間の交通', href: '/park/transport.html', description: '実際の移動を計画する' },
