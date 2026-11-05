@@ -224,3 +224,17 @@ body{overflow-x:clip;background:#f5f7fa}
  .stepper output{min-width:18px}.map-pin{font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.destination-card,.destination-image img{transition:none}}
+
+/* Dedicated AI-generated attraction artwork; bundled local WebP assets. */
+.park-hero:before{background:linear-gradient(90deg,#061e33 0%,rgba(6,30,51,.85) 38%,rgba(6,30,51,.22) 100%),url("/park/assets/world-map-ai.webp") center/cover}
+.photo-main{--photo:url("/park/assets/inside-ai.webp")}
+.photo-skyport{--photo:url("/park/assets/skyport-ai.webp")}
+.photo-ocean{--photo:url("/park/assets/ocean-ai.webp")}
+.visual-skyport{--bg:url("/park/assets/skyport-ai.webp")}
+.visual-inside{--bg:url("/park/assets/inside-ai.webp")}
+.visual-flight{--bg:url("/park/assets/flight-ai.webp")}
+.visual-ocean{--bg:url("/park/assets/ocean-ai.webp")}
+.visual-fossil{--bg:url("/park/assets/fossil-ai.webp")}
+.visual-coast{--bg:url("/park/assets/coast-ai.webp")}
+.visual-night{--bg:url("/park/assets/night-ai.webp")}
+.map-stage>.illustrated-map{object-position:center}
