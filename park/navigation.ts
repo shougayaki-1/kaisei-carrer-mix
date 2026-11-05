@@ -147,7 +147,7 @@ export function renderParkFooter(): string {
     '<nav class="park-footer-column park-footer-about-links" aria-label="パークについて">' +
     '<h2>パークについて</h2><ul>' +
     '<li><a href="/park/">パークTOP</a></li>' +
-    '<li><a href="/park/guide.html#guest-services">アクセシビリティ</a></li>' +
+    '<li><a href="/park/services.html">アクセシビリティ</a></li>' +
     '<li><a href="/">事業構想について</a></li>' +
     '</ul></nav></div>' +
     '<div class="wrap park-footer-bottom">' +
