@@ -72,8 +72,18 @@ async function inspectWidth(width) {
       assert.notEqual(await category.getAttribute('open'), null, width + ': category opens');
       assert.ok(await category.locator('a[href="/park/attractions.html"]').isVisible(),
         width + ': submenu item visible');
-      assert.equal(await category.locator('a[href="/park/attractions.html"]').getAttribute('aria-current'),
-        'page', width + ': mobile aria-current');
+      const activeValue = await category.locator('a[href="/park/attractions.html"]').getAttribute('aria-current');
+      if (activeValue !== 'page') {
+        console.log('Current-page diagnostic', JSON.stringify(await page.evaluate(() => ({
+          pathname: location.pathname,
+          title: document.title,
+          heading: document.querySelector('main h1')?.textContent,
+          selectedLinks: [...document.querySelectorAll('.park-header [aria-current]')].map((link) => ({
+            text: link.textContent, href: link.getAttribute('href'), current: link.getAttribute('aria-current'),
+          })),
+        }))));
+      }
+      assert.equal(activeValue, 'page', width + ': mobile aria-current');
 
       await summary.focus();
       await page.keyboard.press('Tab');
