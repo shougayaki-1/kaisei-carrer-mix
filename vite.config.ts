@@ -56,7 +56,8 @@ export default defineConfig({
         handler(html, context) {
           const filename = context.filename.replaceAll('\\', '/');
           const isPark = /\/park\/.*\.html$/.test(filename) || /^\/park\//.test(context.path);
-          return isPark ? renderParkShell(html, context.path) : html;
+          const pagePath = '/' + relative(root, context.filename).split(sep).join('/');
+          return isPark ? renderParkShell(html, pagePath) : html;
         },
       },
     },
