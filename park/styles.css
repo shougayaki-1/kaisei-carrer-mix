@@ -111,3 +111,116 @@ body{background:#f4f8fa;color:#132b3a}.park-header{background:#06233a;box-shadow
  .access-table article .area-image{height:195px}
  .guide-grid article{padding:24px}
 }
+
+
+/* Visual system and responsive audit: 2026-11-05 */
+:root{--night:#071f36;--ink:#102b42;--sea:#164761;--mint:#f0c66d;--sand:#f5f7fa;--line:#d9e2e9}
+body{overflow-x:clip;background:#f5f7fa}
+.wrap{max-width:1220px}
+.park-header{background:#071e34f5}
+.header-inner{min-height:74px;gap:14px}
+.brand{min-width:0;flex-shrink:0}
+.brand-name{font-size:clamp(20px,2vw,26px)}
+.header-links{gap:clamp(8px,1.2vw,18px)}
+.header-links a{font-size:11px}
+.section-space{padding:clamp(64px,7vw,105px) 0}
+.section-head h2{line-height:1.33;letter-spacing:-.025em}
+.subpage-hero{background:linear-gradient(90deg,#071f36f2,#0e3a56b5),url("/park/assets/hero.webp") center/cover}
+.photo-main{--photo:url("/park/assets/inside.webp")}
+.photo-skyport{--photo:url("/park/assets/city.webp")}
+.photo-ocean{--photo:url("/park/assets/ocean.webp")}
+.visual-skyport{--bg:url("/park/assets/city.webp")}
+.visual-inside{--bg:url("/park/assets/inside.webp")}
+.visual-flight{--bg:url("/park/assets/flight.webp")}
+.visual-ocean{--bg:url("/park/assets/ocean.webp")}
+.visual-fossil{--bg:url("/park/assets/fossil.webp")}
+.visual-coast{--bg:url("/park/assets/coast.webp")}
+.visual-night{--bg:url("/park/assets/city.webp")}
+.visual-coast:before{background-position:center 52%}
+.destination-section{padding-bottom:clamp(70px,8vw,105px)}
+.destination-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.destination-card{background:#fff;border:1px solid #dce5ed;border-radius:16px;overflow:hidden;min-width:0;box-shadow:0 12px 30px #0b344412;transition:transform .2s,box-shadow .2s}
+.destination-card:hover{transform:translateY(-3px);box-shadow:0 18px 38px #0b344423}
+.destination-image{display:block;aspect-ratio:16/10;overflow:hidden;background:#153c51}
+.destination-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.destination-card:hover img{transform:scale(1.04)}
+.destination-body{padding:22px 22px 26px}
+.destination-body .eyebrow{font-size:10px;letter-spacing:.1em;margin:0 0 12px}
+.destination-body h3{font-size:21px;line-height:1.4;color:#15344b;margin:0 0 12px}
+.destination-body>p:not(.eyebrow){font-size:13px;line-height:1.85;color:#5b7280;margin:0 0 20px}
+.destination-link{display:inline-flex;gap:5px;align-items:center;font-size:12px;font-weight:800;color:#0c506d}
+.destination-link svg{width:16px;height:16px}
+.home-destinations{background:#eaf1f6}
+.home-destination-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.home-destination-grid .destination-image{aspect-ratio:1}
+.home-destination-grid .destination-body{padding:18px 16px 22px}
+.home-destination-grid .destination-body h3{font-size:18px}
+.home-destination-grid .destination-body>p:not(.eyebrow){font-size:12px}
+.home-destination-grid .destination-link{font-size:11px}
+.destination-action{text-align:center;margin-top:30px}
+.map-panel{padding:12px;border:1px solid #d5e2ea;background:#e8f0f6}
+.map-stage{position:relative;isolation:isolate;overflow:hidden;border-radius:12px;min-height:390px;background:#0a2e47}
+.map-stage>.illustrated-map{display:block;width:100%;height:100%;min-height:390px;object-fit:cover;filter:saturate(.9)}
+.map-stage:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#06203466,transparent 40%);pointer-events:none}
+.map-overlay{position:absolute;inset:0;z-index:2}
+.map-pin{position:absolute;display:block;padding:8px 10px;background:#071f36e8;color:#fff;border:1px solid #f4ce79a8;border-radius:9px;font-size:11px;font-weight:800;box-shadow:0 4px 18px #001b3099}
+.map-pin:hover,.map-pin:focus-visible{background:#164764;color:#fff}
+.pin-komatsu{top:10%;right:7%}.pin-katsuyama{top:31%;right:2%}.pin-fukui{top:50%;right:23%}.pin-echizen{top:40%;left:4%}.pin-wakasa{bottom:9%;left:12%}
+.map-compass{position:absolute;top:15px;left:15px;z-index:3;padding:7px 9px;border-radius:6px;background:#fff;color:#183b52;font-size:11px;font-weight:900}
+.map-footnote{display:flex;gap:8px;margin:12px 6px 5px;color:#536c7b;font-size:11px;line-height:1.75}
+.map-footnote svg{width:16px;height:16px;flex-shrink:0}
+.service-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.service-card{display:flex;flex-direction:column;min-width:0;border:1px solid #dfebf0}
+.service-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}
+.service-label{font:700 11px "Barlow Condensed",sans-serif;color:#997948;letter-spacing:.05em}
+.service-card h3{margin:0 0 12px;font-size:19px;color:#15344b}
+.service-card>p:not(.service-points){flex:1;color:#526878;line-height:1.95}
+.service-points{margin:19px 0 0;padding-top:13px;border-top:1px solid #e7edf1;color:#24526a;font-size:12px;font-weight:700}
+.ticket-layout,.ticket-layout>div,.ticket-panel,.summary-box,.pass-option,.pass-top,.qty-row{min-width:0;max-width:100%;box-sizing:border-box}
+.ticket-layout{grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr)}
+.pass-option,.pass-option.selected{border-radius:11px}
+.pass-option.selected{border-color:#bd933e;background:#fff8e9}
+.pass-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.pass-top>span:first-child{min-width:0}
+.pass-option strong{overflow-wrap:anywhere}
+.pass-option .price{color:#164561}
+.date-input{display:block;width:100%;max-width:100%;min-width:0;min-height:50px;font-size:16px;background:#fff;color:#102d43;appearance:auto;-webkit-appearance:auto}
+.input-hint{margin:8px 0 18px;color:#6b7e8a;font-size:11px}
+.qty-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
+.stepper{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.stepper button{display:grid;place-items:center;border-radius:8px;width:40px;height:40px;flex-shrink:0}
+.stepper output{min-width:22px;text-align:center;font-variant-numeric:tabular-nums}
+.summary-disclaimer{display:flex;gap:8px;line-height:1.8;font-size:11px!important}
+.summary-disclaimer svg{flex-shrink:0;width:16px;height:16px}
+.checkout-notice{padding:13px 15px;background:#fff5df;border-left:3px solid #c2973d;color:#69532c!important;font-size:12px!important;line-height:1.8}
+.ticket-demo-stamp{font-size:10px;letter-spacing:.15em;font-weight:900;color:#9f6328;margin:0 auto 15px}
+.checkout-dialog #ticket-order-number{overflow-wrap:anywhere;letter-spacing:.02em}
+@media(max-width:1080px){.home-destination-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:940px){.ticket-layout{grid-template-columns:minmax(0,1fr)}.destination-grid,.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){
+ .park-header .header-inner{min-height:62px}
+ .park-header .brand-icon{width:34px;height:34px}
+ .park-header .brand-icon svg{width:32px;height:32px}
+ .brand-name{font-size:20px}.brand-name small{font-size:7px;letter-spacing:.05em}
+ .header-ticket{display:none}.mobile-nav{background:#092c46;padding:10px 22px 20px}
+ .section-space{padding:58px 0}.section-head h2{font-size:clamp(26px,7vw,39px)}
+ .hero-inner{padding-top:50px;padding-bottom:75px}.hero-buttons{flex-wrap:wrap}
+ .zone-deck .feature-card:first-child,.feature-card{min-height:295px}
+ .home-destination-grid,.destination-grid,.service-grid{grid-template-columns:1fr}
+ .destination-grid{gap:16px}.destination-image{aspect-ratio:16/9}.destination-body{padding:19px 19px 22px}
+ .map-stage,.map-stage>.illustrated-map{min-height:320px}
+ .map-pin{padding:6px;font-size:10px}.pin-fukui{right:22%}.pin-echizen{left:2%}
+ .service-card{padding:22px}
+ .ticket-panel,.summary-box{padding:20px 17px}
+ .pass-option{padding:17px 13px}.pass-option.selected{padding:16px 12px}
+ .pass-option .price{font-size:22px}.qty-row{padding:16px 0}
+ .stepper{gap:6px}.stepper button{width:35px;height:38px}
+ .checkout-actions{flex-direction:column}.checkout-actions .button{width:100%}
+}
+@media(max-width:390px){
+ .park-header .brand-name{font-size:19px}.park-header .brand-name small{font-size:6px}
+ .pass-option strong{font-size:14px}.pass-option .price{font-size:20px}
+ .qty-row small{font-size:10px}.stepper button{width:32px;height:36px}
+ .stepper output{min-width:18px}.map-pin{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.destination-card,.destination-image img{transition:none}}

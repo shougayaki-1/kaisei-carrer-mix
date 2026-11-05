@@ -12,6 +12,7 @@ menu?.addEventListener('click', ()=>{
   const isOpen=nav.hidden;
   nav.hidden=!isOpen;
   menu.setAttribute('aria-expanded',String(isOpen));
+  menu.setAttribute('aria-label',isOpen?'メニューを閉じる':'メニューを開く');
 });
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.hidden=true;menu?.setAttribute('aria-expanded','false');}));
 window.addEventListener('resize',()=>{if(innerWidth>940 && nav){nav.hidden=true;menu?.setAttribute('aria-expanded','false');}});
@@ -68,6 +69,7 @@ type AgeType='adult'|'junior'|'child';
 let activePass:PassType='day';
 const quantity:Record<AgeType,number>={adult:1,junior:0,child:0};
 const dateField=qs<HTMLInputElement>('#visit-date');
+const validDate=():boolean=>!!dateField?.value && dateField.value >= (dateField.min || '0000-00-00');
 if(dateField){
   const today=new Date();today.setHours(0,0,0,0);
   const start=new Date(Math.max(today.getTime(),new Date(2027,3,1).getTime()));
@@ -91,7 +93,7 @@ function updateTickets():void{
   if(byId('total-price'))byId('total-price')!.textContent=yen.format(ticketTotal())+'円';
   if(byId('selected-count'))byId('selected-count')!.textContent=String(Object.values(quantity).reduce((a,b)=>a+b,0))+'名';
   const purchaseButton=qs<HTMLButtonElement>('#demo-purchase');
-  if(purchaseButton)purchaseButton.disabled=Object.values(quantity).every(x=>x===0)||!(dateField?.value);
+  if(purchaseButton)purchaseButton.disabled=Object.values(quantity).every(x=>x===0)||!validDate();
 }
 qs<HTMLElement>('#pass-options')?.querySelectorAll<HTMLButtonElement>('[data-pass]').forEach(b=>b.addEventListener('click',()=>{
   activePass=b.dataset.pass as PassType;
@@ -107,7 +109,7 @@ dateField?.addEventListener('change',updateTickets);
 updateTickets();
 qs<HTMLButtonElement>('#demo-purchase')?.addEventListener('click',()=>{
   const total=Object.values(quantity).reduce((a,b)=>a+b,0);
-  if(total<1||!dateField?.value)return;
+  if(total<1||!validDate())return;
   const dialog=qs<HTMLDialogElement>('#ticket-dialog');
   const content=byId('ticket-confirmation');
   if(content)content.textContent=passes[activePass].label+'｜'+dateField.value+'｜'+total+'名｜合計 '+yen.format(ticketTotal())+'円';
@@ -130,10 +132,10 @@ qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data
 
 qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',()=>{
  const date=dateField?.value||'';
- if(!date||Object.values(quantity).every(v=>v===0))return;
+ if(!validDate()||Object.values(quantity).every(v=>v===0))return;
  const numbers=new Uint8Array(5);crypto.getRandomValues(numbers);
- const code='FDC-'+Array.from(numbers,n=>n.toString(16).padStart(2,'0')).join('').toUpperCase();
- const order=byId('ticket-order-number');if(order)order.textContent='受付番号 '+code;
+ const code='DEMO-FDC-'+Array.from(numbers,n=>n.toString(16).padStart(2,'0')).join('').toUpperCase();
+ const order=byId('ticket-order-number');if(order)order.textContent='体験用受付番号 '+code;
  const details=byId('ticket-order-details');
  const guests=Object.values(quantity).reduce((a,b)=>a+b,0);
  if(details)details.textContent=passes[activePass].label+' / '+date+' / '+guests+'名 / '+yen.format(ticketTotal())+'円';
