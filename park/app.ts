@@ -113,7 +113,7 @@ qs<HTMLButtonElement>('#demo-purchase')?.addEventListener('click',()=>{
   if(total<1||!validDate())return;
   const dialog=qs<HTMLDialogElement>('#ticket-dialog');
   const content=byId('ticket-confirmation');
-  if(content)content.textContent=passes[activePass].label+'｜'+dateField.value+'｜'+total+'名｜合計 '+yen.format(ticketTotal())+'円';
+  if(content)content.textContent=passes[activePass].label+'｜'+(dateField?.value ?? '')+'｜'+total+'名｜合計 '+yen.format(ticketTotal())+'円';
   dialog?.showModal();
 });
 qs<HTMLButtonElement>('#ticket-close')?.addEventListener('click',()=>qs<HTMLDialogElement>('#ticket-dialog')?.close());
