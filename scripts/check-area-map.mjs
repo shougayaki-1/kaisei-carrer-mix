@@ -28,7 +28,7 @@ test('all five geo map pins, text fallbacks and detailed cards agree on IDs', ()
 test('map is geographical, locally bundled and distinguishes concept illustration', () => {
   assert.match(map, /viewBox="0 0 780 750"/);
   assert.match(map, /<title id="map-title">福井県と小松空港周辺の位置図/);
-  assert.match(map, /<path d="M[0-9.,LZ]+"/); // actual coastline geometry
+  assert.match(map, /<path d="M[0-9.,LMZ-]{100,}"/); // polygon coordinates, including negative off-canvas values
   assert.match(html, /src="\/park\/assets\/fukui-geography\.svg"/);
   assert.match(html, /src="\/park\/assets\/world-map-ai\.webp"/);
   assert.match(html, /小松空港は石川県/);
