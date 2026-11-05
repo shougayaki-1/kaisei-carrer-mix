@@ -99,6 +99,11 @@ body[data-catalog="shops"] .food-card-grid{grid-template-columns:repeat(2,minmax
 .guide-food-links a,.area-food-links a{font-size:12px;font-weight:800;color:#125879;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:4px}
 .guide-food-links a:hover,.area-food-links a:hover{color:#9a6a25}
 .area-food-links{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0!important}
+.food-related{display:flex;align-items:center;justify-content:space-between;gap:30px;padding:52px 0 65px;border-top:1px solid #dce6eb}
+.food-related h2{font-size:clamp(24px,3vw,34px);line-height:1.4;margin:8px 0 11px}
+.food-related p:not(.eyebrow){font-size:13px;line-height:1.9;color:#5c7380;margin-bottom:0}
+.food-related .guide-food-links{flex-shrink:0;flex-direction:column;align-items:start}
+@media(max-width:820px){.food-related{flex-direction:column;align-items:start}.food-related .guide-food-links{flex-direction:row}}
 @media(max-width:1240px){.header-links{display:none}.header-ticket{margin-left:auto}.menu-button{display:grid;place-items:center}}
 @media(max-width:940px){.food-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.food-venue-content{grid-template-columns:1fr}.food-lead-grid{grid-template-columns:1fr}.food-venue-heading{align-items:start;flex-direction:column}}
 @media(max-width:700px){.food-card-grid,body[data-catalog="shops"] .food-card-grid,.food-home-feature-grid{grid-template-columns:1fr}
