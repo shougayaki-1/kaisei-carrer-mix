@@ -1,5 +1,6 @@
 import { renderIcons } from './icons';
 import './styles.css';
+import './food.css';
 import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);
@@ -16,7 +17,7 @@ menu?.addEventListener('click', ()=>{
   menu.setAttribute('aria-label',isOpen?'メニューを閉じる':'メニューを開く');
 });
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.hidden=true;menu?.setAttribute('aria-expanded','false');}));
-window.addEventListener('resize',()=>{if(innerWidth>940 && nav){nav.hidden=true;menu?.setAttribute('aria-expanded','false');}});
+window.addEventListener('resize',()=>{if(innerWidth>1240 && nav){nav.hidden=true;menu?.setAttribute('aria-expanded','false');}});
 const openModal = qs<HTMLDialogElement>('#attraction-modal');
 const modalTitle = byId('modal-title');
 const modalDescription = byId('modal-description');
