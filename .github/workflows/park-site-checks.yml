@@ -24,7 +24,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run check:links
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install chromium
       - run: npm run test:nav
       - uses: actions/upload-artifact@v4
         if: always()
