@@ -15,7 +15,7 @@
 - `park/assets/shop-fossil-kit.jpg`
 - `park/assets/shop-city-goods.jpg`
 
-All images are concept renderings, not actual photographs of existing venues, goods or food.
+All images are concept renderings, not actual photographs of existing venues, goods or food. Five assets were edited with the built-in image generation tool to remove generated lettering; these remain conceptual imagery.
 The on-page figure captions and alt text were updated. Price, product, and venue labels remain native HTML text, never baked into images.
 
 ## Remaining: older site images (not completed)
