@@ -130,3 +130,9 @@ qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data
 
 const year=byId('park-year');
 if(year)year.textContent=String(new Date().getFullYear());
+
+type LucideLibrary={createIcons:()=>void};
+const renderIcons=()=>{(window as Window & {lucide?:LucideLibrary}).lucide?.createIcons();};
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',renderIcons);}
+else{renderIcons();}
+window.addEventListener('load',renderIcons);
