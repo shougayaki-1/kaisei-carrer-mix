@@ -8,7 +8,8 @@
     "build": "npm run typecheck && cf build",
     "deploy": "cf deploy",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:areas": "node --test scripts/check-area-map.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",
