@@ -117,8 +117,8 @@ qs<HTMLButtonElement>('#ticket-close')?.addEventListener('click',()=>qs<HTMLDial
 
 // Access explorer: only imaginary park-route descriptions, not real transit schedules.
 const routes:Record<string,{title:string,route:string,description:string,tip:string}>={
-  komatsu:{title:'小松空港から',route:'小松空港 → ダイナソー・スカイポート → ダイノシティ（福井駅エリア）',description:'空港到着後、巨大な恐竜型ライドで福井へ向かう特別な入園演出。飛行・移動は架空のアトラクション設定です。',tip:'設定上の発着時刻・運行間隔は未定です。現実の交通機関ではありません。'},
-  fukui:{title:'福井駅から',route:'福井駅 → ダイノシティ・ゲート → 各エリアへ',description:'駅前そのものが冒険の入り口。体内探検ライド、天空飛行、夜のショーを巡るメインゲートです。',tip:'福井駅は実在する駅ですが、本サイトの施設・シャトルは架空です。'},
+  komatsu:{title:'小松空港から',route:'小松空港 → ダイナソー・スカイポート → ダイノシティ（福井駅エリア）',description:'空港到着後、巨大な恐竜型ライドで福井へ。ダイノシティまでの空の旅をお楽しみください。',tip:'出発前にスカイポートの乗り場で受付をお済ませください。'},
+  fukui:{title:'福井駅から',route:'福井駅 → ダイノシティ・ゲート → 各エリアへ',description:'駅前そのものが冒険の入り口。体内探検ライド、天空飛行、夜のショーを巡るメインゲートです。',tip:'ダイノシティ・ゲートは福井駅の近くです。'},
   coast:{title:'若狭湾・越前海岸へ',route:'ダイノシティ → ディノ・トランジット → マリンワールド／ワイルドコースト',description:'県内を横断する想像上の恐竜交通ネットワークで、海のエリアへ。水中の古代生物や海岸の地形に出会います。',tip:'実際に訪れる場合の鉄道・道路の所要時間は、各交通事業者で確認してください。'}
 };
 const routeResult=byId('route-result');
@@ -131,9 +131,16 @@ qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data
 qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',()=>{
  const date=dateField?.value||'';
  if(!date||Object.values(quantity).every(v=>v===0))return;
- const code='FDC-'+Math.random().toString(36).slice(2,10).toUpperCase();
+ const numbers=new Uint8Array(5);crypto.getRandomValues(numbers);
+ const code='FDC-'+Array.from(numbers,n=>n.toString(16).padStart(2,'0')).join('').toUpperCase();
  const order=byId('ticket-order-number');if(order)order.textContent='受付番号 '+code;
- const details=byId('ticket-order-details');if(details)details.textContent=passes[activePass].label+' / '+date+' / '+Object.values(quantity).reduce((a,b)=>a+b,0)+'名 / '+yen.format(ticketTotal())+'円';
+ const details=byId('ticket-order-details');
+ const guests=Object.values(quantity).reduce((a,b)=>a+b,0);
+ if(details)details.textContent=passes[activePass].label+' / '+date+' / '+guests+'名 / '+yen.format(ticketTotal())+'円';
+ try{const current=JSON.parse(localStorage.getItem('fdc-tickets')||'[]') as object[];
+   current.unshift({code,date,pass:passes[activePass].label,guests,total:ticketTotal()});
+   localStorage.setItem('fdc-tickets',JSON.stringify(current.slice(0,20)));
+ }catch{/* Storage is optional; the issued ticket remains visible on screen. */}
  qs<HTMLDialogElement>('#ticket-dialog')?.close();qs<HTMLDialogElement>('#ticket-success')?.showModal();
 });
 qs<HTMLButtonElement>('#ticket-success-close')?.addEventListener('click',()=>qs<HTMLDialogElement>('#ticket-success')?.close());
