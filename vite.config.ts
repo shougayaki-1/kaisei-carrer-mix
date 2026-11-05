@@ -12,6 +12,8 @@ export default defineConfig({
         tickets: 'park/tickets.html',
         access: 'park/access.html',
         guide: 'park/guide.html',
+        dining: 'park/dining.html',
+        shops: 'park/shops.html',
       },
     },
   },
