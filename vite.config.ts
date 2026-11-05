@@ -68,6 +68,7 @@ export default defineConfig({
       input: {
         concept: 'index.html',
         ...parkInputs,
+
       },
     },
   },
