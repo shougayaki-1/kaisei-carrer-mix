@@ -132,7 +132,7 @@ qs<HTMLButtonElement>('#ticket-close')?.addEventListener('click',()=>qs<HTMLDial
 const routes:Record<string,{title:string,route:string,description:string,tip:string}>={
   komatsu:{title:'小松空港から',route:'小松空港 → ダイナソー・スカイポート → ダイノシティ（福井駅エリア）',description:'空港到着後、巨大な恐竜型ライドで福井へ。ダイノシティまでの空の旅をお楽しみください。',tip:'出発前にスカイポートの乗り場で受付をお済ませください。'},
   fukui:{title:'福井駅から',route:'福井駅 → ダイノシティ・ゲート → 各エリアへ',description:'駅前そのものが冒険の入り口。体内探検ライド、天空飛行、夜のショーを巡るメインゲートです。',tip:'ダイノシティ・ゲートは福井駅の近くです。'},
-  coast:{title:'若狭湾・越前海岸へ',route:'ダイノシティ → ディノ・トランジット → マリンワールド／ワイルドコースト',description:'県内を横断するディノ・トランジットで、海のエリアへ。水中の古代生物や海岸の景色に出会います。',tip:'海岸エリアまでの便はエリアゲートの案内をご確認ください。'}
+  coast:{title:'若狭湾・越前海岸へ',route:'ダイノシティ → ディノ・トランジット → マリンワールド／ワイルドコースト',description:'県内を横断するディノ・トランジットで、海のエリアへ。水中の古代生物や海岸の景色に出会います。',tip:'ディノ・トランジットは運行していない架空の移動演出です。'}
 };
 const routeResult=byId('route-result');
 qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data-route]').forEach(b=>b.addEventListener('click',()=>{
