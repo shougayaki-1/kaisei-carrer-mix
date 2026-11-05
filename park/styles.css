@@ -238,3 +238,61 @@ body{overflow-x:clip;background:#f5f7fa}
 .visual-coast{--bg:url("/park/assets/coast-ai.webp")}
 .visual-night{--bg:url("/park/assets/night-ai.webp")}
 .map-stage>.illustrated-map{object-position:center}
+
+/* Attraction details: dedicated, responsive story pages, Issue #2. */
+.card-page-link{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding:13px 14px;background:#edf4f9;border:1px solid #d3e0e8;border-radius:6px;color:#114563;font-size:12px;font-weight:800}
+.card-page-link:hover{background:#e1edf5}.attraction-content .card-foot button{text-decoration:underline;text-underline-offset:4px;min-height:36px}
+.ad-page{min-width:0;overflow:clip}.ad-breadcrumb{padding-block:18px}
+.ad-hero{position:relative;isolation:isolate;min-height:555px;display:flex;align-items:flex-end;background:#08243e;color:#fff;overflow:hidden}
+.ad-hero__image{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+.ad-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#061c30f2,#061c30aa 56%,#061c3026),linear-gradient(0deg,#061c3099,transparent 70%)}
+.ad-hero__inner{padding:90px 0 72px;min-width:0}
+.ad-hero__inner>.eyebrow,.ad-hero__english{color:#f0c66d}
+.ad-hero__inner h1{font-size:clamp(34px,5.3vw,75px);line-height:1.25;margin:16px 0 5px;max-width:900px;overflow-wrap:anywhere}
+.ad-hero__english{font:700 clamp(15px,2vw,23px) "Barlow Condensed",sans-serif;letter-spacing:.12em}
+.ad-hero__lead{font-size:clamp(15px,1.8vw,20px);font-weight:700;line-height:1.9;max-width:620px;margin:23px 0 28px}
+.ad-hero__actions{display:flex;flex-wrap:wrap;gap:12px}
+.ad-section{padding:65px 0 20px}.ad-section .eyebrow{color:#a58039}
+.ad-section h2{color:#13334d;font-size:clamp(26px,3.3vw,42px);line-height:1.4;margin:12px 0 24px;overflow-wrap:anywhere}
+.ad-overview{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.85fr);align-items:start;gap:38px}
+.ad-story p{color:#4e6575;font-size:15px;line-height:2.2;margin:0 0 20px}
+.ad-facts{background:#fff;border:1px solid #dce6ee;border-top:4px solid #cba04c;padding:27px 25px;box-shadow:0 15px 30px #0d34520e}
+.ad-facts h2{font-size:21px;margin:0 0 15px}
+.ad-facts dl{margin:0}.ad-facts dl div{border-top:1px solid #e5edf1;padding:13px 0}
+.ad-facts dt{font-size:11px;color:#627788}.ad-facts dd{font-size:14px;font-weight:800;color:#14334b;line-height:1.7;margin:5px 0 0;overflow-wrap:anywhere}
+.ad-facts__notice{font-size:11px;line-height:1.9;background:#fff5de;color:#6c552f;padding:13px;margin:18px 0 0}
+.ad-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.ad-gallery figure{margin:0;min-width:0;background:#fff;border:1px solid #dce6ed}
+.ad-gallery img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#0b3049}
+.ad-gallery figcaption{padding:17px 19px;font-size:12px;line-height:1.8;color:#587181}
+.ad-steps{list-style:none;counter-reset:adstep;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:0;margin:0}
+.ad-steps li{counter-increment:adstep;background:#fff;border:1px solid #dce6ed;padding:26px 24px;min-width:0}
+.ad-steps li:before{content:counter(adstep,decimal-leading-zero);display:block;font:800 36px "Barlow Condensed",sans-serif;color:#bd8c39;margin-bottom:15px}
+.ad-steps h3{font-size:19px;line-height:1.5;color:#17374d;margin:0 0 12px}.ad-steps p{color:#5a7180;font-size:13px;line-height:1.9;margin:0}
+.ad-safety{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;background:#eaf0f5;border-left:4px solid #cba04c;padding:26px 30px}
+.ad-safety h3{font-size:18px;color:#173850;margin:0 0 13px}
+.ad-safety ul{padding-left:20px;margin:0;color:#526a79;font-size:13px;line-height:2}
+.ad-safety p{color:#526a79;font-size:13px;line-height:2}
+.ad-related{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:0 0 80px}
+.ad-related a{display:grid;grid-template-columns:160px minmax(0,1fr);background:#fff;border:1px solid #dde6ec;min-width:0;transition:transform .2s}
+.ad-related a:hover{transform:translateY(-3px)}
+.ad-related img{width:100%;height:100%;min-height:160px;object-fit:cover}
+.ad-related__body{padding:19px;min-width:0}.ad-related__body .eyebrow{font-size:10px;color:#a07e41}
+.ad-related h3{font-size:18px;line-height:1.5;margin:9px 0;color:#13334b;overflow-wrap:anywhere}
+.ad-related p{font-size:12px;line-height:1.8;color:#587181;margin:0 0 9px}.ad-related__link{font-size:12px;font-weight:800;color:#166184}
+.ad-final{background:#092b46;padding:58px 0;color:#fff}
+.ad-final .wrap{display:flex;justify-content:space-between;align-items:center;gap:25px}
+.ad-final .eyebrow{color:#eec76c}.ad-final h2{color:#fff;font-size:clamp(25px,3vw,38px);margin:9px 0 0}
+.ad-footnote{font-size:11px;line-height:1.9;color:#5c7180;padding:18px 0;margin:0}
+@media(max-width:940px){.ad-overview{grid-template-columns:minmax(0,1fr)}.ad-related a{grid-template-columns:120px minmax(0,1fr)}}
+@media(max-width:700px){.ad-hero{min-height:510px}.ad-hero:before{background:linear-gradient(0deg,#061c30f5,#061c30a3 64%,#061c3055)}
+.ad-hero__inner{padding:80px 0 42px}.ad-hero__inner h1{font-size:clamp(32px,9vw,46px)}.ad-hero__english{font-size:16px}
+.ad-hero__lead{font-size:15px}.ad-hero__actions{flex-direction:column}.ad-hero__actions .button{width:100%}
+.ad-section{padding:46px 0 14px}.ad-section h2{font-size:clamp(25px,7vw,34px)}.ad-story p{font-size:14px}
+.ad-facts{padding:23px 19px}.ad-gallery,.ad-steps,.ad-safety,.ad-related{grid-template-columns:minmax(0,1fr)}
+.ad-steps li{padding:22px}.ad-safety{padding:23px 19px;gap:15px}
+.ad-related{margin-bottom:54px}.ad-related a{grid-template-columns:115px minmax(0,1fr)}.ad-related__body{padding:14px}.ad-related h3{font-size:16px}
+.ad-final .wrap{display:block}.ad-final .button{width:100%;margin-top:24px}
+}
+@media(max-width:390px){.ad-related a{grid-template-columns:98px minmax(0,1fr)}.ad-related__body{padding:12px}.ad-related h3{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.ad-related a{transition:none}}

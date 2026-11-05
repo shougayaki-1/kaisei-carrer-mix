@@ -1,8 +1,9 @@
+import type { AreaId } from './areas-data';
 /**
  * FUKUI DINO CITY: fictional dining and retail concepts.
  * Prices are tax-inclusive planning figures, not offers or reservations.
  */
-export type FoodArea = 'fukui' | 'katsuyama' | 'wakasa';
+export type FoodArea = Extract<AreaId, 'fukui' | 'katsuyama' | 'wakasa'>;
 export type VenueType = 'dining' | 'shops';
 export type VenueItem = {
   name: string;
@@ -120,7 +121,7 @@ export const shops: Venue[] = [
  * Integration contract for PR #19 park/areas-data.ts.
  * These three IDs are a strict subset of its five AreaId values:
  * komatsu | fukui | katsuyama | wakasa | echizen.
- * Do not import areas-data.ts until PR #19 is merged.
+ * AreaId is imported from the now-merged #19 area data contract.
  */
 export const foodAreaIds = ['fukui', 'katsuyama', 'wakasa'] as const satisfies readonly FoodArea[];
 export const allVenues: readonly Venue[] = [...restaurants, ...shops];

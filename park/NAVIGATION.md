@@ -35,7 +35,7 @@ desktop/mobile menus and footer. Keep the business/concept LP `/` separate.
 | PR / Issue | Files / scope | Action to perform **in that PR** |
 | --- | --- | --- |
 | #15 / #2 | `park/attractions/{skyport,inside,flight,ocean,fossil,coast,night}.html` | Replace seven legacy headers/footers with the two markers; keep both `app.ts` and `attraction-detail.ts` module scripts. `activePrefixes: ['/park/attractions/']` is already supported by the header. |
-| #16 / #3 | `park/dining.html`, `park/shops.html` | Converted to the two shared markers on PR #16. `food-pages.ts` imports its page CSS and uses `data-catalog`; the Vite shell injects `navigation-entry.ts`. The links are registered in `park/navigation.ts` because these files are now included in the PR branch. |
+| #16 / #3 | `park/dining.html`, `park/shops.html` | Replace two legacy headers/footers with markers; preserve `food-pages.ts` and `data-catalog`. The injected `navigation-entry.ts` supplies navigation CSS/JS/icons even though these pages do not import `app.ts`. |
 | #17 / #7 | `park/guide.html`, `park/tickets.html`, `park/app.ts`, `package.json` | Keep the shared markers, the navigation build/check scripts and the new schedule logic. Merge changes in `app.ts` around ticket scheduling; avoid reintroducing the old menu handlers. |
 | #19 / #5 | `park/access.html`, `package.json` | Keep shared markers and navigation checks while preserving area-map sections, styles, scripts and its own verification command. |
 
@@ -62,9 +62,9 @@ fail CI when integrated, instead of silently leaving duplicate headers.
 
 For future optional accessibility review, check Tab/Shift+Tab, Escape, outside-pointer click, focus, and visual overflow. These are **not** automated in this PR. Native `<details>` preserves menu links without JavaScript.
 
-## Issue #3 venue integration contracts (PR #16)
 
-- Dining: `/park/dining.html#venue-{id}`; retail: `/park/shops.html#venue-{id}`.
-- `park/food-data.ts` exports `venueHref`, `venuesByArea`, `relatedVenueIdsByAttraction`, `venuesForAttraction`.
-- Area IDs `fukui`, `katsuyama`, `wakasa` match the subset of `AreaId` from open PR #19. Avoid importing PR #19's module until that PR merges.
-- PR #15's attraction detail page can render related food/shop cards from `venuesForAttraction(attraction.id)` and `venueHref(venue)`. PR #15 is not merged or edited by this PR.
+## Issue #3 / PR #16 integration (2026-11-05)
+- `/park/dining.html` and `/park/shops.html` now use shared shell markers. Navigation entries are in `park/navigation.ts`.
+- `park/food-data.ts` exports `venueHref`, `venuesByArea`, `venuesForAttraction` for future venue crosslinks.
+- Food venue geographic IDs are a subset of the canonical `AreaId` in `park/areas-data.ts`. Fictional zone labels remain separate from geography labels.
+- The food area links in `park/access.html` and the detail page anchors must stay synchronized.

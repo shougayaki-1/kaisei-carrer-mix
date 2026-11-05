@@ -1,7 +1,10 @@
 import { renderIcons } from './icons';
 import './styles.css';
 import './food.css';
-import { attractions, categoryLabels, type Attraction, type AttractionCategory } from './attractions-data';
+import './schedule.css';
+import './schedule-page';
+import { getTicketScheduleStatus, isISODate, SCHEDULE_START } from './schedule-data';
+import { attractions, categoryLabels, attractionDetailHref, type Attraction, type AttractionCategory } from './attractions-data';
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);
 const byId = (id:string):HTMLElement|null => document.getElementById(id);
@@ -13,6 +16,7 @@ const modalDescription = byId('modal-description');
 const modalZone = byId('modal-zone');
 const modalDuration = byId('modal-duration');
 const modalCondition = byId('modal-condition');
+const modalPageLink = qs<HTMLAnchorElement>('#modal-page-link');
 function showAttraction(a:Attraction):void{
   if (!openModal) return;
   if(modalTitle)modalTitle.textContent=a.title;
@@ -20,6 +24,7 @@ function showAttraction(a:Attraction):void{
   if(modalZone)modalZone.textContent=a.zone;
   if(modalDuration)modalDuration.textContent=a.duration;
   if(modalCondition)modalCondition.textContent=a.condition;
+  if(modalPageLink)modalPageLink.href=attractionDetailHref(a);
   openModal.showModal();
 }
 qs<HTMLButtonElement>('#modal-close')?.addEventListener('click',()=>openModal?.close());
@@ -33,7 +38,7 @@ function renderAttractions():void{
   if(!grid)return;
   const q=search?.value.trim().toLocaleLowerCase('ja-JP')||'';
   const results=attractions.filter(a=>(category==='all'||a.category===category) && (a.title+' '+a.en+' '+a.zone+' '+a.description).toLocaleLowerCase('ja-JP').includes(q));
-  grid.innerHTML=results.map(a=>'<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(a)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p><div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+'の詳細を見る">詳細を見る ↗</button></div></div></article>').join('')||'<p class="no-results">該当するアトラクションがありません。条件を変更してください。</p>';
+  grid.innerHTML=results.map(a=>'<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(a)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p><div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+'の概要を見る">概要を見る</button></div><a class="card-page-link" href="'+attractionDetailHref(a)+'">体験の詳細・利用条件を見る <span aria-hidden="true">↗</span></a></div></article>').join('')||'<p class="no-results">該当するアトラクションがありません。条件を変更してください。</p>';
   if(count)count.textContent=String(results.length)+'つのアトラクション';
   grid.querySelectorAll<HTMLButtonElement>('[data-attr]').forEach(button=>button.addEventListener('click',()=>{
     const a=attractions.find(x=>x.id===button.dataset.attr);if(a)showAttraction(a);
@@ -48,6 +53,12 @@ qs<HTMLElement>('#category-filters')?.querySelectorAll<HTMLButtonElement>('butto
 });
 search?.addEventListener('input',renderAttractions);
 renderAttractions();
+// Allow a direct link to the existing detail modal until #2 adds a separate page.
+const linkedAttraction = new URLSearchParams(window.location.search).get('attraction');
+if (linkedAttraction === 'night' && grid) {
+  const night = attractions.find(a => a.id === 'night');
+  if (night) showAttraction(night);
+}
 
 // Client-side checkout simulation; no payment, booking or personal data is transmitted.
 const passes = {
@@ -60,12 +71,13 @@ type AgeType='adult'|'junior'|'child';
 let activePass:PassType='day';
 const quantity:Record<AgeType,number>={adult:1,junior:0,child:0};
 const dateField=qs<HTMLInputElement>('#visit-date');
-const validDate=():boolean=>dateField !== null && dateField.value !== '' && dateField.value >= (dateField.min || '0000-00-00');
+const ticketSchedule = () => getTicketScheduleStatus(dateField?.value || '', activePass);
+const validDate=():boolean=>dateField !== null && isISODate(dateField.value) && dateField.value >= (dateField.min || '0000-00-00') && ticketSchedule().allowed;
 if(dateField){
-  const today=new Date();today.setHours(0,0,0,0);
-  const start=new Date(Math.max(today.getTime(),new Date(2027,3,1).getTime()));
-  const dateStr=(d:Date):string=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
-  dateField.min=dateStr(start); dateField.value=dateStr(start);
+  // The simulator uses fictional model dates, independent of the visitor's current date.
+  dateField.value = SCHEDULE_START;
+  const linkedDate = new URLSearchParams(window.location.search).get('date') || '';
+  if (isISODate(linkedDate)) dateField.value = linkedDate;
 }
 function ticketTotal():number{
   return (Object.keys(quantity) as AgeType[]).reduce((sum,k)=>sum+quantity[k]*passes[activePass][k],0);
@@ -83,6 +95,14 @@ function updateTickets():void{
   if(byId('selected-date'))byId('selected-date')!.textContent=dateField?.value||'日付未選択';
   if(byId('total-price'))byId('total-price')!.textContent=yen.format(ticketTotal())+'円';
   if(byId('selected-count'))byId('selected-count')!.textContent=String(Object.values(quantity).reduce((a,b)=>a+b,0))+'名';
+  const schedule = ticketSchedule();
+  const scheduleNotice = byId('ticket-schedule-notice');
+  if (scheduleNotice) {
+    scheduleNotice.textContent = schedule.message + (schedule.warnings.length ? ' 注意：' + schedule.warnings.join(' ／ ') : '');
+    scheduleNotice.classList.toggle('is-unavailable', !schedule.allowed);
+  }
+  const scheduleLink = qs<HTMLAnchorElement>('#ticket-schedule-link');
+  if (scheduleLink && dateField) scheduleLink.href = '/park/guide.html?date=' + encodeURIComponent(dateField.value) + '#operating-calendar';
   const purchaseButton=qs<HTMLButtonElement>('#demo-purchase');
   if(purchaseButton)purchaseButton.disabled=Object.values(quantity).every(x=>x===0)||!validDate();
 }

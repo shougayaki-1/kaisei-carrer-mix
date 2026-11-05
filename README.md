@@ -10,12 +10,10 @@
 - `/park/` — 架空のテーマパーク公式サイト風トップページ
 - `/park/attractions.html` — アトラクション検索、カテゴリ別絞り込み、詳細表示
 - `/park/tickets.html` — 料金表、日時・券種・年齢・人数の**デモ計算**と確認ダイアログ
-- `/park/access.html` — 架空のエリアマップ・アクセスルート
+- `/park/access.html` — **実際の位置関係を示すSVG地理マップ**＋5エリアの選択式ガイドと、架空の世界観マップ・ルート演出
 - `/park/guide.html` — 仮の営業時間・サービス・よくある質問
-- `/park/dining.html` — 福井駅・若狭湾・勝山の3レストラン（エリアフィルタ、内装／メニューの構想図、税込参考価格、未確定の利用条件）
-- `/park/shops.html` — 福井駅・勝山の2ショップ（エリアフィルタ、商品ビジュアル、税込参考価格）
 
-チケット、料理、商品は購入できません。決済・予約・個人情報送信はありません。営業時間・価格・利用条件・運行情報は架空で、既存の自治体・映画作品・現実のテーマパークとの提携はありません。
+チケットは購入できません。決済・予約・個人情報送信はありません。営業時間・価格・利用条件・運行情報は架空で、既存の自治体・映画作品・現実のテーマパークとの提携はありません。
 
 **地学的な補足：** 福井県の海は若狭湾・越前海岸などです（玄界灘は福井県にはありません）。翼竜・首長竜・モササウルスは恐竜とは別の爬虫類です。恐竜化石が発見された地域として勝山を取り上げています。
 
@@ -35,19 +33,36 @@ npm run deploy
 - `src/main.ts` + `src/assumptions.ts`：収益シミュレーター（仮の値）
 - `park/*.html` + `park/styles.css`：架空の公式パークサイト
 - `park/attractions-data.ts`：アトラクション編集用データ
-- `park/food-data.ts`：レストラン・ショップの共通データ（店舗・エリア・料金・商品）
-- `park/food-pages.ts` / `park/food.css`：飲食・物販一覧、エリアフィルタ、詳細表示と専用スタイル
-- `park/assets/dining-*.svg` / `park/assets/shop-*.svg`：店舗内装・料理・グッズのオリジナル構想イラスト（**実際の店舗・商品の写真ではありません**）
 - `park/app.ts`：検索・詳細モーダル・チケット・アクセスの操作
 - `park/assets/scene.svg`：オリジナルの恐竜パノラマ
-- `vite.config.ts`：すべての `park/**/*.html` を自動検出するマルチページビルドと共通ナビ挿入
+- `vite.config.ts`：6つのHTMLエントリを同時ビルド
 - `cloudflare.config.ts`：Cloudflare Workersの設定
 
-実在の大型パークのWebサイトにおける、チケット情報・利用条件・アクセス・営業時間の案内構成を参考に、完全に架空のコンテンツとして実装しています。一部の既存ページには外部のUnsplash画像指定が残っています。追加した飲食・物販ページの画像は、リポジトリ内のオリジナル構想イラストと既存のローカル画像のみを使います。
+実在の大型パークのWebサイトにおける、チケット情報・利用条件・アクセス・営業時間の案内構成を参考に、完全に架空のコンテンツとして実装しています。写真にはUnsplashの外部画像を利用しています。
 
-## PR #16 / 他Issue統合メモ
+## エリアガイド・地理マップ（Issue #5）
 
-- PR #18 の共通テンプレートを取り込み済み。すべてのパークHTMLは `<!-- PARK_HEADER -->` と `<!-- PARK_FOOTER -->` を使い、リンクは `park/navigation.ts` で管理します。
-- PR #19 の `AreaId`（`komatsu`・`fukui`・`katsuyama`・`wakasa`・`echizen`）と店舗エリアIDは整合しています。PR #19 がマージされるまで型を直接importしません。
-- PR #15 のアトラクション詳細から `venuesForAttraction(id)` と `venueHref(venue)` で飲食・ショップへ接続できます。
-- 今回追加した店舗内装や商品の画像はオリジナルSVGの**構想イラスト**であり、写真調AI生成のWebPではありません。実際の施設写真との混同を避けるためキャプションに明記しています。
+`park/areas-data.ts` に5地域の共通ID（`komatsu`, `fukui`, `katsuyama`, `wakasa`, `echizen`）、代表地点の緯度経度、アトラクションID、フード・ショップ構想、サービス・周遊案、移動上の注意を定義しました。
+
+- `park/area-map.ts` / `park/area-map.css` — 地図ピン、テキストのエリア一覧、写真付き選択パネル、各エリアカードを連動させる表示・操作。
+- `park/assets/fukui-geography.svg` — 実際の福井県・石川県の行政界をもとに描画した位置図。出典は [JapanPrefGeoJson](https://github.com/amay077/JapanPrefGeoJson)（Public Domain）の県コード17（石川県）・18（福井県）で、地形の輪郭を図案化しローカル配信。
+- `park/assets/world-map-ai.webp` — 既存の**架空パークの演出用概念図**として引き続き使用。地理精度・移動経路を示さない。
+- 小松空港は**石川県**です。若狭湾・越前海岸のピンは実在地点を基準とする代表位置であり、架空施設の確定建設地ではありません。
+
+動作確認: `npm run test:areas`、`npm run typecheck`、`npm run build`。
+ブラウザは375 / 390 / 430px、タブレット、PCの幅でピン・代替リスト・画像とカード・アンカー遷移を確認してください。
+
+### 他Issueとのデータ連携
+
+- **#2 アトラクション**: `attractionIds` は既存の `park/attractions-data.ts` と同じID。#2の詳細ページがmainに統合されるまでは未作成URLへリンクしません。
+- **#3 フード＆ショップ**: `fukui` / `katsuyama` / `wakasa` は #3 の `FoodArea` と一致。未マージの店舗詳細ページはリンクせず、現時点では構想として名称のみ表示します。
+- **#4 モデルコース / #6 交通**: 共通エリアIDと代表位置を利用できます。現在の「周遊アイデア」はモデルコースの代替ではありません。交通時刻・所要時間・運賃の確定情報は掲載していません。
+
+
+## Dining & retail pages
+
+- `/park/dining.html`: three fictional restaurants with menu concepts, tax-inclusive planning prices, and area filters.
+- `/park/shops.html`: two fictional shops and merchandise concepts.
+- `park/food-data.ts`, `park/food-pages.ts`, `park/food.css`: common venue content and UI.
+- `park/assets/dining-*.svg`, `park/assets/shop-*.svg`: original concept illustrations rather than photo-realistic artwork; future image replacement remains open.
+- Displayed food and merchandise cannot be bought. There is no reservation, real payment, or personal information collection.
