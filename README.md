@@ -64,5 +64,11 @@ npm run deploy
 - `/park/dining.html`: three fictional restaurants with menu concepts, tax-inclusive planning prices, and area filters.
 - `/park/shops.html`: two fictional shops and merchandise concepts.
 - `park/food-data.ts`, `park/food-pages.ts`, `park/food.css`: common venue content and UI.
-- `park/assets/dining-*.svg`, `park/assets/shop-*.svg`: original concept illustrations rather than photo-realistic artwork; future image replacement remains open.
+- `park/assets/dining-*.jpg`, `park/assets/shop-*.jpg`: original photorealistic AI-generated concept images (1536×1024 JPEG). These depict fictional venues, meals and goods, not actual photographs or products.
 - Displayed food and merchandise cannot be bought. There is no reservation, real payment, or personal information collection.
+
+## Image assets (2026-11-05)
+
+- Issue #3: 10 photorealistic, original AI-generated 1536×1024 JPEG assets now cover three dining interiors, three featured menu photos, two retail interiors and two featured merchandise photos. No brand text, prices, or labels are baked into the imagery.
+- All venues, dishes, products and hours remain fictional concepts; the renderings are not real facility or product photographs.
+- Legacy park `.webp` imagery is still awaiting replacement with higher-resolution originals; see `docs/image-quality-audit.md` for the remaining image inventory and acceptance criteria.
