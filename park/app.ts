@@ -166,7 +166,9 @@ const routes:Record<string,{title:string,route:string,description:string,tip:str
 };
 const routeResult=byId('route-result');
 qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data-route]').forEach(b=>b.addEventListener('click',()=>{
-  const route=routes[b.dataset.route||'komatsu'];if(!route||!routeResult)return;
+  const routeId=b.dataset.route||'komatsu';
+  const enRoutes:typeof routes={komatsu:{title:'From Komatsu Airport',route:'Komatsu Airport → Dinosaur Skyport → Fukui Station',description:'A fictional simulator imagines a dinosaur journey from the airport.',tip:'This is not actual airport transport, a flight or shuttle.'},fukui:{title:'From Fukui Station',route:'Fukui Station → Dino City Gate → Other areas',description:'The station is the imagined gateway to the park.',tip:'The park gate and experiences are fictional.'},coast:{title:'To Wakasa Bay and Echizen Coast',route:'Dino City → Dino Transit → Coastal areas',description:'Imagine travelling to the coast and ancient marine world.',tip:'Dino Transit is fictional and does not operate.'}};
+  const route=(english?enRoutes:routes)[routeId];if(!route||!routeResult)return;
   qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',String(x===b));});
   routeResult.innerHTML='<p class="eyebrow">'+esc(route.title)+'</p><h3>'+esc(route.route)+'</h3><p>'+esc(route.description)+'</p><div class="access-tip">'+esc(route.tip)+'</div>';
 }));

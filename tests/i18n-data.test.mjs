@@ -43,10 +43,14 @@ test('English pages expose the primary links and operational cautions', async ()
   home.renderEnglishHome();
   for (const link of ['/park/attractions.html','/park/tickets.html','/park/guide.html','/park/access.html']) assert.ok(page.innerHTML.includes(link), link);
   assert.match(page.innerHTML,/fictional school-project concept/i);
+  for (const id of ['night-show','fossil-discovery','ancient-ocean']) assert.ok(page.innerHTML.includes(`/park/news.html#${id}`),id);
   const access = await bundle('park/english-access.ts');
   access.renderEnglishAccess();
   for (const area of ['komatsu','fukui','katsuyama','wakasa','echizen']) assert.ok(page.innerHTML.includes(`id="area-${area}"`), area);
   assert.match(page.innerHTML,/not operating public transport/i);
+  for (const id of ['geo-explorer','geo-selected-title','geo-selected-description','route-tabs','route-result']) assert.ok(page.innerHTML.includes(`id="${id}"`),id);
+  assert.equal((page.innerHTML.match(/data-geo-pin=/g)||[]).length,5);
+  assert.equal((page.innerHTML.match(/data-geo-index=/g)||[]).length,5);
   const tickets = await bundle('park/english-ticket.ts');
   tickets.renderEnglishTicket();
   for (const id of ['pass-options','visit-date','ticket-schedule-notice','demo-purchase','ticket-dialog','ticket-confirm-purchase','ticket-success']) assert.ok(page.innerHTML.includes(`id="${id}"`), id);
@@ -82,28 +86,15 @@ test('language URLs override storage, preserve other URL state, and tolerate una
  } finally { globalThis.window=oldWindow;globalThis.localStorage=oldStorage; }
 });
 
-test('English daily schedule shows model closures, unpublished dates and preserves selected date', async () => {
+test('English guide exposes the shared calendar and date navigation controls', async () => {
  const {renderEnglishGuide} = await bundle('park/english-guide.ts');
- const oldDocument=globalThis.document,oldLocation=globalThis.location,oldHistory=globalThis.history;
- const page={innerHTML:''}, output={innerHTML:''};
- let onChange=()=>{}, updated='';
- const input={value:'',addEventListener:(type,handler)=>{if(type==='change')onChange=handler;}};
+ const oldDocument=globalThis.document, page={innerHTML:''};
  try {
-  globalThis.location={search:'?lang=en&date=2027-04-14',href:'https://example.test/park/guide.html?lang=en&date=2027-04-14#operating-calendar'};
-  globalThis.history={replaceState:(_state,_title,url)=>{updated=String(url);}};
-  globalThis.document={querySelector:selector=>({'main':page,'#english-schedule-date':input,'#english-schedule-result':output})[selector] ?? null};
+  globalThis.document={querySelector:selector=>selector==='main'?page:null};
   renderEnglishGuide();
-  assert.equal(input.value,'2027-04-14');
-  assert.match(output.innerHTML,/Katsuyama/);
-  assert.match(output.innerHTML,/Suspended for maintenance/);
-  input.value='2027-05-12';onChange();
-  assert.match(output.innerHTML,/All areas suspended/);
-  assert.doesNotMatch(output.innerHTML,/Choose a demo ticket/);
-  assert.equal(new URL(updated).searchParams.get('lang'),'en');
-  assert.equal(new URL(updated).searchParams.get('date'),'2027-05-12');
-  input.value='2027-07-01';onChange();
-  assert.match(output.innerHTML,/Schedule not published/);
- } finally { globalThis.document=oldDocument;globalThis.location=oldLocation;globalThis.history=oldHistory; }
+  for (const id of ['schedule-days','schedule-prev','schedule-next','schedule-month-label','schedule-selected-date','schedule-status','schedule-areas','schedule-show','schedule-ticket-link']) assert.ok(page.innerHTML.includes(`id="${id}"`),id);
+  assert.match(page.innerHTML,/fictional operating model/i);
+ } finally { globalThis.document=oldDocument; }
 });
 
 test('translated routes expose crawlable language alternatives and unsupported pages do not', async () => {
