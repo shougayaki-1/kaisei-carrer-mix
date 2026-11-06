@@ -14,13 +14,15 @@
     "test:schedule": "node --experimental-strip-types --test tests/schedule-data.test.mjs",
     "test:tickets": "node --experimental-strip-types --test tests/ticket-data.test.mjs",
     "test:services": "node --experimental-strip-types --test tests/services-data.test.mjs",
-    "test:events": "node --experimental-strip-types --test tests/events-data.test.mjs"
+    "test:events": "node --experimental-strip-types --test tests/events-data.test.mjs",
+    "test:i18n": "node --test tests/i18n-data.test.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",
     "cf": "latest",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
-    "@types/node": "^22.15.0"
+    "@types/node": "^22.15.0",
+    "esbuild": "^0.28.2"
   }
 }

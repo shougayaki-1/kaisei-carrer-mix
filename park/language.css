@@ -1,0 +1,8 @@
+.park-language { flex: none; color: #fff; display: flex; flex-direction: column; gap: 2px; font-size: 10px; line-height: 1.2; }
+.park-language select { max-width: 90px; min-height: 38px; padding: 3px; border: 1px solid #eac575; border-radius: 4px; background: #082741; color: white; font: inherit; font-size: 12px; }
+.park-language select:focus-visible { outline: 3px solid #eac575; outline-offset: 2px; }
+.language-unavailable { padding: 1rem; background: #fff5db; color: #17344c; font-size: 14px; }
+@media(max-width: 940px) { .park-language { margin-left:auto; } }
+
+html[lang=en] h1,html[lang=en] h2,html[lang=en] h3 { overflow-wrap: anywhere; letter-spacing: -.025em; }
+@media (min-width: 941px) and (max-width: 1200px) { .park-header .header-inner { gap: 6px; } .park-header .park-search-link { font-size: 11px; } .park-language select { max-width: 78px; } }
