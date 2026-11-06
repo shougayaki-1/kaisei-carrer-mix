@@ -239,6 +239,17 @@ body{overflow-x:clip;background:#f5f7fa}
 /* Attraction details: dedicated, responsive story pages, Issue #2. */
 .card-page-link{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding:13px 14px;background:#edf4f9;border:1px solid #d3e0e8;border-radius:6px;color:#114563;font-size:12px;font-weight:800}
 .card-page-link:hover{background:#e1edf5}.attraction-content .card-foot button{text-decoration:underline;text-underline-offset:4px;min-height:36px}
+
+/* Issue #52: the existing details anchor provides the entire card's click target.
+   Favorite and overview buttons stay independent controls above that hit area. */
+.attraction-card{position:relative;isolation:isolate;transition:border-color .2s,box-shadow .2s}
+.attraction-card .card-page-link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:12px}
+.attraction-card .favorite-button,.attraction-card .card-foot button{position:relative;z-index:2}
+.attraction-card:hover,.attraction-card:focus-within{border-color:#c6ad67;box-shadow:0 12px 28px #0a27411a}
+.attraction-card .card-page-link:focus-visible{outline:none}
+.attraction-card .card-page-link:focus-visible::after{outline:3px solid #a2d653;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.attraction-card{transition:none}.attraction-card:hover .attraction-visual:before{transform:none}}
+
 .ad-page{min-width:0;overflow:clip}.ad-breadcrumb{padding-block:18px}
 .ad-hero{position:relative;isolation:isolate;min-height:555px;display:flex;align-items:flex-end;background:#08243e;color:#fff;overflow:hidden}
 .ad-hero__image{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
