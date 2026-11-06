@@ -1,3 +1,7 @@
+import { getLanguage } from './language';
+import { englishAttraction } from './attractions-en';
+import { englishTicketStatus } from './english-ticket';
+import { readTicketSelection, writeTicketSelection } from './ticket-selection';
 import { favoriteButton } from './favorites';
 import { attractionAreaId } from './areas-data';
 import { renderIcons } from './icons';
@@ -11,7 +15,9 @@ import { attractions, categoryLabels, attractionDetailHref, type Attraction, typ
 
 const qs = <T extends Element>(selector:string):T|null => document.querySelector<T>(selector);
 const byId = (id:string):HTMLElement|null => document.getElementById(id);
-const yen = new Intl.NumberFormat('ja-JP');
+const english = getLanguage() === 'en' && document.documentElement.lang === 'en';
+const tr = (ja:string,en:string):string => english ? en : ja;
+const yen = new Intl.NumberFormat(english ? 'en-US' : 'ja-JP');
 const esc = (s:string):string => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c));
 const openModal = qs<HTMLDialogElement>('#attraction-modal');
 const modalTitle = byId('modal-title');
@@ -20,8 +26,9 @@ const modalZone = byId('modal-zone');
 const modalDuration = byId('modal-duration');
 const modalCondition = byId('modal-condition');
 const modalPageLink = qs<HTMLAnchorElement>('#modal-page-link');
-function showAttraction(a:Attraction):void{
+function showAttraction(original:Attraction):void{
   if (!openModal) return;
+  const a=english ? englishAttraction(original) : original;
   if(modalTitle)modalTitle.textContent=a.title;
   if(modalDescription)modalDescription.textContent=a.description;
   if(modalZone)modalZone.textContent=a.zone;
@@ -45,9 +52,9 @@ function renderAttractions():void{
   const audience=qs<HTMLSelectElement>('#filter-audience')?.value || '';
   const theme=qs<HTMLSelectElement>('#filter-theme')?.value || '';
   const height=Number(qs<HTMLSelectElement>('#filter-height')?.value || 0);
-  const results=attractions.filter(a=>(!theme || (theme==='learning' && ['inside','ocean','fossil','coast'].includes(a.id)) || (theme==='thrill' && ['skyport','flight'].includes(a.id))) && (!height || (a.condition.includes('身長') && Number(a.condition.match(/\d+/)?.[0])<=height)) && (!area||attractionAreaId[a.id]===area) && (!setting||(setting==='indoor' && ['skyport','inside','flight','ocean'].includes(a.id))||(setting==='outdoor' && ['coast','night'].includes(a.id))) && (!audience||(audience==='no-age' && ['inside','ocean','fossil','night'].includes(a.id))||(audience==='height' && a.condition.includes('身長'))) && (category==='all'||a.category===category) && (a.title+' '+a.en+' '+a.zone+' '+a.description).toLocaleLowerCase('ja-JP').includes(q));
-  grid.innerHTML=results.map(a=>'<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(a)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p>'+favoriteButton('attraction:'+a.id,a.title)+'<div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+'の概要を見る">概要を見る</button></div><a class="card-page-link" href="'+attractionDetailHref(a)+'">体験の詳細・利用条件を見る <span aria-hidden="true">↗</span></a></div></article>').join('')||'<p class="no-results">該当するアトラクションがありません。条件を変更してください。</p>';
-  if(count)count.textContent=String(results.length)+'つのアトラクション';
+  const results=attractions.filter(a=>(!theme || (theme==='learning' && ['inside','ocean','fossil','coast'].includes(a.id)) || (theme==='thrill' && ['skyport','flight'].includes(a.id))) && (!height || (a.condition.includes('身長') && Number(a.condition.match(/\d+/)?.[0])<=height)) && (!area||attractionAreaId[a.id]===area) && (!setting||(setting==='indoor' && ['skyport','inside','flight','ocean'].includes(a.id))||(setting==='outdoor' && ['coast','night'].includes(a.id))) && (!audience||(audience==='no-age' && ['inside','ocean','fossil','night'].includes(a.id))||(audience==='height' && a.condition.includes('身長'))) && (category==='all'||a.category===category) && (a.title+' '+a.en+' '+a.zone+' '+a.description+(english ? ' '+englishAttraction(a).zone+' '+englishAttraction(a).description : '')).toLocaleLowerCase('ja-JP').includes(q));
+  grid.innerHTML=results.map(original=>{ const a=english ? englishAttraction(original) : original; return '<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(english ? ({ride:'Ride',discovery:'Discovery',ocean:'Ocean',show:'Show'} as const)[a.category] : categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(original)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p>'+favoriteButton('attraction:'+a.id,a.title)+'<div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+tr('の概要を見る',' overview')+'">'+tr('概要を見る','Overview')+'</button></div><a class="card-page-link" href="'+attractionDetailHref(a)+'">'+tr('体験の詳細・利用条件を見る','Full details and requirements')+' <span aria-hidden="true">↗</span></a></div></article>'; }).join('')||'<p class="no-results">'+tr('該当するアトラクションがありません。条件を変更してください。','No attractions match. Try changing the filters.')+'</p>';
+  if(count)count.textContent=String(results.length)+tr('つのアトラクション',' attractions');
   grid.querySelectorAll<HTMLButtonElement>('[data-attr]').forEach(button=>button.addEventListener('click',()=>{
     const a=attractions.find(x=>x.id===button.dataset.attr);if(a)showAttraction(a);
   }));
@@ -71,10 +78,16 @@ if (linkedAttraction === 'night' && grid) {
 
 // Client-side checkout simulation; no payment, booking or personal data is transmitted.
 type PassType = PassId;
-let activePass:PassType='day';
-const quantity:Record<AgeType,number>={adult:1,junior:0,child:0};
 const dateField=qs<HTMLInputElement>('#visit-date');
-const ticketSchedule = () => getTicketScheduleStatus(dateField?.value || '', activePass);
+const initialSelection = readTicketSelection(new URLSearchParams(dateField ? window.location.search : ''));
+let activePass:PassType=initialSelection.pass;
+const quantity:Record<AgeType,number>={...initialSelection.quantity};
+function saveTicketSelection():void {
+  if (!dateField) return;
+  const url=writeTicketSelection(new URL(window.location.href), {pass:activePass,quantity});
+  window.history.replaceState(null,'',url);
+}
+const ticketSchedule = () => english ? englishTicketStatus(dateField?.value || '', activePass) : getTicketScheduleStatus(dateField?.value || '', activePass);
 const validDate=():boolean=>dateField !== null && isISODate(dateField.value) && dateField.value >= (dateField.min || '0000-00-00') && ticketSchedule().allowed;
 if(dateField){
   // The simulator uses fictional model dates, independent of the visitor's current date.
@@ -95,15 +108,15 @@ function updateTickets():void{
   });
   const current=passes[activePass];
   if(byId('selected-pass'))byId('selected-pass')!.textContent=current.label;
-  if(byId('selected-date'))byId('selected-date')!.textContent=dateField?.value||'日付未選択';
-  if(byId('total-price'))byId('total-price')!.textContent=yen.format(ticketTotal())+'円';
-  if(byId('selected-count'))byId('selected-count')!.textContent=String(Object.values(quantity).reduce((a,b)=>a+b,0))+'名';
+  if(byId('selected-date'))byId('selected-date')!.textContent=dateField?.value||tr('日付未選択','No date selected');
+  if(byId('total-price'))byId('total-price')!.textContent=tr(yen.format(ticketTotal())+'円','¥'+yen.format(ticketTotal()));
+  if(byId('selected-count'))byId('selected-count')!.textContent=String(Object.values(quantity).reduce((a,b)=>a+b,0))+(english?'':'名');
   const breakdown=byId('ticket-breakdown');
-  if(breakdown)breakdown.textContent=(Object.keys(quantity) as AgeType[]).filter(age=>quantity[age]>0).map(age=>`${ageLabels[age]} ${yen.format(current.prices[age])}円 × ${quantity[age]}名 = ${yen.format(current.prices[age]*quantity[age])}円`).join(' / ') || '人数を選択してください。';
+  if(breakdown)breakdown.textContent=(Object.keys(quantity) as AgeType[]).filter(age=>quantity[age]>0).map(age=>english ? `${({adult:'Adult',junior:'Youth',child:'Child'} as const)[age]} ¥${yen.format(current.prices[age])} × ${quantity[age]} = ¥${yen.format(current.prices[age]*quantity[age])}` : `${ageLabels[age]} ${yen.format(current.prices[age])}円 × ${quantity[age]}名 = ${yen.format(current.prices[age]*quantity[age])}円`).join(' / ') || tr('人数を選択してください。','Choose at least one guest.');
   const schedule = ticketSchedule();
   const scheduleNotice = byId('ticket-schedule-notice');
   if (scheduleNotice) {
-    scheduleNotice.textContent = schedule.message + (schedule.warnings.length ? ' 注意：' + schedule.warnings.join(' ／ ') : '');
+    scheduleNotice.textContent = schedule.message + (schedule.warnings.length ? tr(' 注意：',' Warning: ') + schedule.warnings.join(' / ') : '');
     scheduleNotice.classList.toggle('is-unavailable', !schedule.allowed);
   }
   const scheduleLink = qs<HTMLAnchorElement>('#ticket-schedule-link');
@@ -111,24 +124,36 @@ function updateTickets():void{
   const purchaseButton=qs<HTMLButtonElement>('#demo-purchase');
   if(purchaseButton)purchaseButton.disabled=Object.values(quantity).every(x=>x===0)||!validDate();
 }
-qs<HTMLElement>('#pass-options')?.querySelectorAll<HTMLButtonElement>('[data-pass]').forEach(b=>b.addEventListener('click',()=>{
+qs<HTMLElement>('#pass-options')?.querySelectorAll<HTMLButtonElement>('[data-pass]').forEach(b=>{
+  const selected=b.dataset.pass===activePass;
+  b.classList.toggle('selected',selected);
+  b.setAttribute('aria-pressed',String(selected));
+  b.addEventListener('click',()=>{
   activePass=b.dataset.pass as PassType;
   qs<HTMLElement>('#pass-options')?.querySelectorAll<HTMLButtonElement>('[data-pass]').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',String(x===b));});
+  saveTicketSelection();
   updateTickets();
-}));
+});
+});
 document.querySelectorAll<HTMLButtonElement>('[data-age][data-delta]').forEach(b=>b.addEventListener('click',()=>{
   const age=b.dataset.age as AgeType;
   const delta=Number(b.dataset.delta);
-  quantity[age]=Math.min(9,Math.max(0,quantity[age]+delta));updateTickets();
+  quantity[age]=Math.min(9,Math.max(0,quantity[age]+delta));saveTicketSelection();updateTickets();
 }));
-dateField?.addEventListener('change',updateTickets);
+dateField?.addEventListener('change',()=>{
+  const url=new URL(window.location.href);
+  if (dateField.value) url.searchParams.set('date',dateField.value);
+  else url.searchParams.delete('date');
+  window.history.replaceState(null,'',url);
+  updateTickets();
+});
 updateTickets();
 qs<HTMLButtonElement>('#demo-purchase')?.addEventListener('click',()=>{
   const total=Object.values(quantity).reduce((a,b)=>a+b,0);
   if(total<1||!validDate())return;
   const dialog=qs<HTMLDialogElement>('#ticket-dialog');
   const content=byId('ticket-confirmation');
-  if(content)content.textContent=passes[activePass].label+'｜'+(dateField?.value ?? '')+'｜'+total+'名｜'+(byId('ticket-breakdown')?.textContent || '')+'｜合計 '+yen.format(ticketTotal())+'円。'+ticketSchedule().warnings.join(' ／ ');
+  if(content)content.textContent=passes[activePass].label+'｜'+(dateField?.value ?? '')+'｜'+total+tr('名｜',' guests | ')+(byId('ticket-breakdown')?.textContent || '')+tr('｜合計 ',' | Total ')+(english?'¥':'')+yen.format(ticketTotal())+tr('円。','.')+ticketSchedule().warnings.join(' ／ ');
   dialog?.showModal();
 });
 qs<HTMLButtonElement>('#ticket-close')?.addEventListener('click',()=>qs<HTMLDialogElement>('#ticket-dialog')?.close());
@@ -141,7 +166,9 @@ const routes:Record<string,{title:string,route:string,description:string,tip:str
 };
 const routeResult=byId('route-result');
 qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data-route]').forEach(b=>b.addEventListener('click',()=>{
-  const route=routes[b.dataset.route||'komatsu'];if(!route||!routeResult)return;
+  const routeId=b.dataset.route||'komatsu';
+  const enRoutes:typeof routes={komatsu:{title:'From Komatsu Airport',route:'Komatsu Airport → Dinosaur Skyport → Fukui Station',description:'A fictional simulator imagines a dinosaur journey from the airport.',tip:'This is not actual airport transport, a flight or shuttle.'},fukui:{title:'From Fukui Station',route:'Fukui Station → Dino City Gate → Other areas',description:'The station is the imagined gateway to the park.',tip:'The park gate and experiences are fictional.'},coast:{title:'To Wakasa Bay and Echizen Coast',route:'Dino City → Dino Transit → Coastal areas',description:'Imagine travelling to the coast and ancient marine world.',tip:'Dino Transit is fictional and does not operate.'}};
+  const route=(english?enRoutes:routes)[routeId];if(!route||!routeResult)return;
   qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',String(x===b));});
   routeResult.innerHTML='<p class="eyebrow">'+esc(route.title)+'</p><h3>'+esc(route.route)+'</h3><p>'+esc(route.description)+'</p><div class="access-tip">'+esc(route.tip)+'</div>';
 }));
@@ -151,10 +178,10 @@ qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',()=>
  if(!validDate()||Object.values(quantity).every(v=>v===0))return;
  const numbers=new Uint8Array(5);crypto.getRandomValues(numbers);
  const code='DEMO-FDC-'+Array.from(numbers,n=>n.toString(16).padStart(2,'0')).join('').toUpperCase();
- const order=byId('ticket-order-number');if(order)order.textContent='体験用受付番号 '+code;
+ const order=byId('ticket-order-number');if(order)order.textContent=tr('体験用受付番号 ','Demo reference: ')+code;
  const details=byId('ticket-order-details');
  const guests=Object.values(quantity).reduce((a,b)=>a+b,0);
- if(details)details.textContent=passes[activePass].label+' / '+date+' / '+guests+'名 / '+yen.format(ticketTotal())+'円';
+ if(details)details.textContent=passes[activePass].label+' / '+date+' / '+guests+tr('名 / ',' guests / ')+tr(yen.format(ticketTotal())+'円','¥'+yen.format(ticketTotal()));
  try{const current=JSON.parse(localStorage.getItem('fdc-tickets')||'[]') as object[];
    current.unshift({code,date,pass:passes[activePass].label,guests,total:ticketTotal()});
    localStorage.setItem('fdc-tickets',JSON.stringify(current.slice(0,20)));

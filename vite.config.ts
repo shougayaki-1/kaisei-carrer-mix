@@ -7,6 +7,7 @@ import { renderParkHeader, renderParkFooter } from './park/navigation';
 import { renderServices, renderFAQs, renderFAQIndex } from './park/services-data';
 import { renderEventCards, renderEventDetails, renderNewsHeadline } from './park/events-data';
 import { renderTicketOptions, renderTicketComparison } from './park/ticket-data';
+import { renderLanguageAlternates } from './park/locale-routes';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 
@@ -54,7 +55,7 @@ function renderParkShell(html: string, pathname: string): string {
   }
   // Inject the shared JS/CSS entry even on pages that do not import app.ts.
   return rendered.replace(/<\/head\s*>/i,
-    '<script type="module" src="/park/navigation-entry.ts"></script>\n</head>');
+    renderLanguageAlternates(pathname) + '\n<script type="module" src="/park/navigation-entry.ts"></script>\n</head>');
 }
 
 export default defineConfig({
