@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cf dev",
-    "build": "npm run typecheck && npm run check:links && cf build",
+    "build": "npm run typecheck && npm run check:links && cf build && npm run check:i18n-output",
     "deploy": "cf deploy",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",

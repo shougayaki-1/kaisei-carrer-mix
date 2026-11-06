@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 // Check the built HTML, not only the source renderer, so a Vite plugin ordering
@@ -31,3 +31,13 @@ for (const page of ['stay.html','plans.html','transport.html','services.html']) 
  if (/\bhreflang=/i.test(headOf(page))) throw new Error(`${page}: untranslated page has language alternates`);
 }
 console.log(`Verified language alternatives in ${pages.length} built pages.`);
+
+// The English views and shared data construct image URLs at runtime, so Vite
+// cannot rewrite them as it does image URLs in the source HTML.
+for (const entry of readdirSync(resolve('park/assets'), { withFileTypes: true })) {
+ if (!entry.isFile()) continue;
+ const source = readFileSync(resolve('park/assets', entry.name));
+ const output = readFileSync(resolve(assets, 'park/assets', entry.name));
+ if (!source.equals(output)) throw new Error(`Runtime asset differs from source: ${entry.name}`);
+}
+console.log('Verified runtime asset URLs in the built site.');
