@@ -45,7 +45,7 @@ export const attractions: Attraction[] = [
     ],
     "gallery": [
         {
-            "src": "/park/assets/skyport-ai.webp",
+            "src": "/park/assets/skyport.webp",
             "alt": "恐竜型ライドが空港から出発する演出イメージ",
             "caption": "巨大な恐竜とともに始まる空の旅"
         },
@@ -97,12 +97,12 @@ export const attractions: Attraction[] = [
     ],
     "gallery": [
         {
-            "src": "/park/assets/inside-ai.webp",
+            "src": "/park/assets/inside.webp",
             "alt": "巨大恐竜の体内を探検する没入型空間のイメージ",
             "caption": "巨大な内部構造を歩いて探る"
         },
         {
-            "src": "/park/assets/inside.webp",
+            "src": "/park/assets/inside-alt.webp",
             "alt": "恐竜の体内展示の別カットのイメージ",
             "caption": "光と造形によるウォークスルー体験"
         }
@@ -149,12 +149,12 @@ export const attractions: Attraction[] = [
     ],
     "gallery": [
         {
-            "src": "/park/assets/flight-ai.webp",
+            "src": "/park/assets/flight.webp",
             "alt": "翼竜と一緒に飛ぶ空中アトラクションのイメージ",
             "caption": "翼竜の背から見渡す景観"
         },
         {
-            "src": "/park/assets/flight.webp",
+            "src": "/park/assets/flight-alt.webp",
             "alt": "山並みと空の広がりを表す風景イメージ",
             "caption": "福井の地形を空から見渡す気分"
         }
@@ -201,12 +201,12 @@ export const attractions: Attraction[] = [
     ],
     "gallery": [
         {
-            "src": "/park/assets/ocean-ai.webp",
+            "src": "/park/assets/ocean.webp",
             "alt": "海棲爬虫類が泳ぐ映像展示のイメージ",
             "caption": "水中を再現した太古の世界"
         },
         {
-            "src": "/park/assets/ocean.webp",
+            "src": "/park/assets/ocean-alt.webp",
             "alt": "深い海を表した展示イメージ",
             "caption": "水中の奥行きを感じる空間"
         }
@@ -253,12 +253,12 @@ export const attractions: Attraction[] = [
     ],
     "gallery": [
         {
-            "src": "/park/assets/fossil-ai.webp",
+            "src": "/park/assets/fossil.webp",
             "alt": "化石の模擬発掘を楽しむラボのイメージ",
             "caption": "勝山を舞台に化石を探す"
         },
         {
-            "src": "/park/assets/fossil.webp",
+            "src": "/park/assets/fossil-alt.webp",
             "alt": "地層や化石を思わせる景観イメージ",
             "caption": "地層が伝える過去の環境"
         }
@@ -305,12 +305,12 @@ export const attractions: Attraction[] = [
     ],
     "gallery": [
         {
-            "src": "/park/assets/coast-ai.webp",
+            "src": "/park/assets/coast.webp",
             "alt": "越前海岸とARを組み合わせた散策のイメージ",
             "caption": "現在と過去を重ねる海岸の冒険"
         },
         {
-            "src": "/park/assets/coast.webp",
+            "src": "/park/assets/coast-alt.webp",
             "alt": "岩の続く海岸地形のイメージ",
             "caption": "波が作る景観を見つめる"
         }
@@ -357,7 +357,7 @@ export const attractions: Attraction[] = [
     ],
     "gallery": [
         {
-            "src": "/park/assets/night-ai.webp",
+            "src": "/park/assets/night.webp",
             "alt": "恐竜を映し出すナイトショーのイメージ",
             "caption": "福井駅エリアの夜の演出"
         },

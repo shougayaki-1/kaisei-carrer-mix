@@ -1,5 +1,11 @@
 # FUKUI DINO CITY — Image quality audit (2026-11-05)
 
+## Current image filename convention (2026-11-06)
+
+Primary park artwork now uses subject-based filenames without an `-ai` suffix: `skyport.webp`, `inside.webp`, `flight.webp`, `ocean.webp`, `fossil.webp`, `coast.webp`, `night.webp`, and `world-map.webp`. The distinct original images formerly at `inside.webp`, `flight.webp`, `ocean.webp`, `fossil.webp`, and `coast.webp` remain in the second gallery position as `inside-alt.webp`, `flight-alt.webp`, `ocean-alt.webp`, `fossil-alt.webp`, and `coast-alt.webp`. All `-ai.webp` paths were retired.
+
+Images were transferred using their existing Git blobs (no re-encoding, upscaling, or quality change). The 2026-11-05 audit inventory below is historical and retains its earlier filenames for traceability.
+
 ## Completed: Issue #3 dining and retail
 
 10 concept SVG illustrations used by three fictional restaurants and two fictional shops have been replaced with original, photorealistic AI-generated JPEGs (1536 × 1024 px):

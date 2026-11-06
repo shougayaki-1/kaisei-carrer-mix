@@ -46,7 +46,7 @@ npm run deploy
 
 - `park/area-map.ts` / `park/area-map.css` — 地図ピン、テキストのエリア一覧、写真付き選択パネル、各エリアカードを連動させる表示・操作。
 - `park/assets/fukui-geography.svg` — 実際の福井県・石川県の行政界をもとに描画した位置図。出典は [JapanPrefGeoJson](https://github.com/amay077/JapanPrefGeoJson)（Public Domain）の県コード17（石川県）・18（福井県）で、地形の輪郭を図案化しローカル配信。
-- `park/assets/world-map-ai.webp` — 既存の**架空パークの演出用概念図**として引き続き使用。地理精度・移動経路を示さない。
+- `park/assets/world-map.webp` — 既存の**架空パークの演出用概念図**として引き続き使用。地理精度・移動経路を示さない。
 - 小松空港は**石川県**です。若狭湾・越前海岸のピンは実在地点を基準とする代表位置であり、架空施設の確定建設地ではありません。
 
 動作確認: `npm run test:areas`、`npm run typecheck`、`npm run build`。
@@ -72,3 +72,7 @@ npm run deploy
 - Issue #3: 10 photorealistic, original AI-generated 1536×1024 JPEG assets now cover three dining interiors, three featured menu photos, two retail interiors and two featured merchandise photos. No brand text, prices, or labels are baked into the imagery.
 - All venues, dishes, products and hours remain fictional concepts; the renderings are not real facility or product photographs.
 - Legacy park `.webp` imagery is still awaiting replacement with higher-resolution originals; see `docs/image-quality-audit.md` for the remaining image inventory and acceptance criteria.
+
+### Asset filename convention (2026-11-06)
+
+The primary park artwork is named by subject, not generation method: `skyport.webp`, `inside.webp`, `flight.webp`, `ocean.webp`, `fossil.webp`, `coast.webp`, `night.webp`, and `world-map.webp`. Distinct older images used as secondary gallery artwork are retained as `*-alt.webp`. No active assets use an `-ai.webp` suffix. The files were renamed without recompression or upscaling.
