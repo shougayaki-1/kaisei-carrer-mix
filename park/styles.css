@@ -224,7 +224,7 @@ body{overflow-x:clip;background:#f5f7fa}
 @media(prefers-reduced-motion:reduce){.destination-card,.destination-image img{transition:none}}
 
 /* Dedicated AI-generated attraction artwork; bundled local WebP assets. */
-.park-hero:before{background:linear-gradient(90deg,#061e33 0%,rgba(6,30,51,.85) 38%,rgba(6,30,51,.22) 100%),url("/park/assets/world-map.webp") center/cover}
+.park-hero:before{background-image:linear-gradient(90deg,#061e33 0%,rgba(6,30,51,.85) 38%,rgba(6,30,51,.22) 100%),url("/park/assets/hero.webp")}
 .photo-main{--photo:url("/park/assets/inside.webp")}
 .photo-skyport{--photo:url("/park/assets/skyport.webp")}
 .photo-ocean{--photo:url("/park/assets/ocean.webp")}
