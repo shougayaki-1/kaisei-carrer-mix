@@ -1,6 +1,6 @@
 /* Issue #3: restaurants and shops; scoped to the new catalog pages. */
-.food-subpage-hero{background:linear-gradient(90deg,#071e34 0%,#071e34ed 45%,#0b2e47b0),url('/park/assets/dining-forest-room.svg') center/cover}
-body[data-catalog="shops"] .food-subpage-hero{background:linear-gradient(90deg,#071e34 0%,#071e34e0 50%,#0b2e47a5),url('/park/assets/shop-city-goods.svg') center/cover}
+.food-subpage-hero{background:linear-gradient(90deg,#071e34 0%,#071e34ed 45%,#0b2e47b0),url('/park/assets/dining-forest-room.jpg') center/cover}
+body[data-catalog="shops"] .food-subpage-hero{background:linear-gradient(90deg,#071e34 0%,#071e34e0 50%,#0b2e47a5),url('/park/assets/shop-city-goods.jpg') center/cover}
 .food-subpage-hero .wrap{padding:clamp(58px,7vw,110px) 0}
 .food-subpage-hero h1{letter-spacing:-.035em}
 .food-page-lead{background:#fff;border-bottom:1px solid #d9e4ec}

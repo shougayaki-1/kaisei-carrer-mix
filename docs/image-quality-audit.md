@@ -45,3 +45,11 @@ Keep the accurate vector graphic `fukui-geography.svg` and iconography as vector
 5. Run `npm run typecheck` and `npm run build` and confirm no missing asset paths.
 
 These remaining site-wide raster replacements were not completed in this PR.
+
+## Update (2026-11-06): asset cleanup
+
+- `map.webp` was identified as unused in the active site and removed, rather than upscaled or replaced with an inaccurate AI-generated map (see Issue #42). Its CSS references were superseded by later, active attraction image rules.
+- `scene.svg` was removed because its initial and mobile park-hero background declarations were superseded by the later shared hero rule and had no active usage.
+- The accurate geographical SVG `fukui-geography.svg` and the separate illustrative concept map `world-map-ai.webp` remain untouched.
+- Restaurant and retail hero background URLs in `park/food.css` now point to their existing `.jpg` images, rather than missing `.svg` files.
+- The inventory above is a historical snapshot from 2026-11-05, not a current list of unresolved image work.

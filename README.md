@@ -34,7 +34,7 @@ npm run deploy
 - `park/*.html` + `park/styles.css`：架空の公式パークサイト
 - `park/attractions-data.ts`：アトラクション編集用データ
 - `park/app.ts`：検索・詳細モーダル・チケット・アクセスの操作
-- `park/assets/scene.svg`：オリジナルの恐竜パノラマ
+- `park/assets/`：パーク・アトラクション・店舗に使用するWebP/JPEG画像と地理SVGを収録
 - `vite.config.ts`：6つのHTMLエントリを同時ビルド
 - `cloudflare.config.ts`：Cloudflare Workersの設定
 
