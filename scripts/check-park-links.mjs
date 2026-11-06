@@ -62,6 +62,26 @@ for (const href of links) {
   }
 }
 
+
+/* Keep the stay-area CTA meaningful and consistently placed. */
+for (const page of ['index.html', 'plans.html', 'access.html']) {
+  const html = readFileSync(join(parkRoot, page), 'utf8');
+  if (!/<section class="stay-cta" aria-labelledby="stay-cta-title">/.test(html)) {
+    errors.push(page + ': stay-area CTA section is missing');
+  }
+  if (!/<a class="button stay-cta__button" href="\/park\/stay\.html">/.test(html)) {
+    errors.push(page + ': stay-area CTA destination or button is missing');
+  }
+  if (/<p class="wrap"><a href="\/park\/stay\.html">/.test(html)) {
+    errors.push(page + ': bare stay-area link remains');
+  }
+  const banner = html.indexOf('<section class="bottom-banner">');
+  const cta = html.indexOf('<section class="stay-cta"');
+  if (banner !== -1 && cta >= banner) {
+    errors.push(page + ': stay-area CTA must precede the closing banner');
+  }
+}
+
 if (errors.length) {
   console.error('Park navigation checks failed:\n' + errors.join('\n'));
   process.exitCode = 1;
