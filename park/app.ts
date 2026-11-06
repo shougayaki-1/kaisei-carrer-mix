@@ -1,6 +1,7 @@
 import { getLanguage } from './language';
 import { englishAttraction } from './attractions-en';
 import { englishTicketStatus } from './english-ticket';
+import { readTicketSelection, writeTicketSelection } from './ticket-selection';
 import { favoriteButton } from './favorites';
 import { attractionAreaId } from './areas-data';
 import { renderIcons } from './icons';
@@ -77,9 +78,15 @@ if (linkedAttraction === 'night' && grid) {
 
 // Client-side checkout simulation; no payment, booking or personal data is transmitted.
 type PassType = PassId;
-let activePass:PassType='day';
-const quantity:Record<AgeType,number>={adult:1,junior:0,child:0};
 const dateField=qs<HTMLInputElement>('#visit-date');
+const initialSelection = readTicketSelection(new URLSearchParams(dateField ? window.location.search : ''));
+let activePass:PassType=initialSelection.pass;
+const quantity:Record<AgeType,number>={...initialSelection.quantity};
+function saveTicketSelection():void {
+  if (!dateField) return;
+  const url=writeTicketSelection(new URL(window.location.href), {pass:activePass,quantity});
+  window.history.replaceState(null,'',url);
+}
 const ticketSchedule = () => english ? englishTicketStatus(dateField?.value || '', activePass) : getTicketScheduleStatus(dateField?.value || '', activePass);
 const validDate=():boolean=>dateField !== null && isISODate(dateField.value) && dateField.value >= (dateField.min || '0000-00-00') && ticketSchedule().allowed;
 if(dateField){
@@ -117,15 +124,21 @@ function updateTickets():void{
   const purchaseButton=qs<HTMLButtonElement>('#demo-purchase');
   if(purchaseButton)purchaseButton.disabled=Object.values(quantity).every(x=>x===0)||!validDate();
 }
-qs<HTMLElement>('#pass-options')?.querySelectorAll<HTMLButtonElement>('[data-pass]').forEach(b=>b.addEventListener('click',()=>{
+qs<HTMLElement>('#pass-options')?.querySelectorAll<HTMLButtonElement>('[data-pass]').forEach(b=>{
+  const selected=b.dataset.pass===activePass;
+  b.classList.toggle('selected',selected);
+  b.setAttribute('aria-pressed',String(selected));
+  b.addEventListener('click',()=>{
   activePass=b.dataset.pass as PassType;
   qs<HTMLElement>('#pass-options')?.querySelectorAll<HTMLButtonElement>('[data-pass]').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',String(x===b));});
+  saveTicketSelection();
   updateTickets();
-}));
+});
+});
 document.querySelectorAll<HTMLButtonElement>('[data-age][data-delta]').forEach(b=>b.addEventListener('click',()=>{
   const age=b.dataset.age as AgeType;
   const delta=Number(b.dataset.delta);
-  quantity[age]=Math.min(9,Math.max(0,quantity[age]+delta));updateTickets();
+  quantity[age]=Math.min(9,Math.max(0,quantity[age]+delta));saveTicketSelection();updateTickets();
 }));
 dateField?.addEventListener('change',()=>{
   const url=new URL(window.location.href);

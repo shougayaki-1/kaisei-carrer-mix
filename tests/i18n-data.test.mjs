@@ -125,3 +125,19 @@ test('translated routes expose crawlable language alternatives and unsupported p
   assert.equal(renderLanguageAlternates(path),'');
  }
 });
+
+test('ticket selections survive a language change and malformed parameters are ignored', async () => {
+ const {readTicketSelection,writeTicketSelection}=await bundle('park/ticket-selection.ts');
+ const selection={pass:'two',quantity:{adult:2,junior:3,child:1}};
+ const original=new URL('https://example.test/park/tickets?lang=ja&date=2027-04-15#visit-date');
+ const saved=writeTicketSelection(original,selection);
+ assert.equal(original.searchParams.has('pass'),false);
+ saved.searchParams.set('lang','en');
+ assert.deepEqual(readTicketSelection(saved.searchParams),selection);
+ assert.equal(saved.searchParams.get('date'),'2027-04-15');
+ assert.equal(saved.hash,'#visit-date');
+ assert.deepEqual(readTicketSelection(new URLSearchParams('pass=bad&adult=-1&junior=10&child=NaN')),
+  {pass:'day',quantity:{adult:1,junior:0,child:0}});
+ assert.deepEqual(readTicketSelection(new URLSearchParams('pass=night&adult=0&junior=9&child=0')),
+  {pass:'night',quantity:{adult:0,junior:9,child:0}});
+});
