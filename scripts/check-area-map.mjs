@@ -30,7 +30,7 @@ test('map is geographical, locally bundled and distinguishes concept illustratio
   assert.match(map, /<title id="map-title">福井県と小松空港周辺の位置図/);
   assert.match(map, /<path d="M[0-9.,LMZ-]{100,}"/); // polygon coordinates, including negative off-canvas values
   assert.match(html, /src="\/park\/assets\/fukui-geography\.svg"/);
-  assert.match(html, /src="\/park\/assets\/world-map-ai\.webp"/);
+  assert.match(html, /src="\/park\/assets\/world-map\.webp"/);
   assert.match(html, /小松空港は石川県/);
   assert.match(html, /概念図/);
   assert.match(html, /id="area-journeys"/);
@@ -43,8 +43,8 @@ test('area selection is keyboard accessible and does not depend on raster artwor
   assert.match(js, /data-geo-select/);
   assert.match(css, /@media\(max-width:700px\)/);
   assert.match(css, /\.geo-map-pin:focus-visible/);
-  assert.ok(!html.includes('href="/park/dining.html"'), 'unmerged #3 route should not be linked yet');
-  assert.ok(!html.includes('href="/park/attractions/'), 'unmerged #2 route should not be linked yet');
+  assert.match(html, /href="\/park\/dining\.html#/); // merged #3 dining route
+  assert.match(html, /href="\/park\/attractions\.html"/); // merged #2 attraction index
 });
 
 test('representative coordinates are within the expected geographical bounds', () => {
