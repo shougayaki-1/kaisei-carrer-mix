@@ -157,14 +157,14 @@ body{overflow-x:clip;background:#f5f7fa}
 .home-destination-grid .destination-link{font-size:11px}
 .destination-action{text-align:center;margin-top:30px}
 .map-panel{padding:12px;border:1px solid #d5e2ea;background:#e8f0f6}
-.map-stage{position:relative;isolation:isolate;overflow:hidden;border-radius:12px;min-height:390px;background:#0a2e47}
-.map-stage>.illustrated-map{display:block;width:100%;height:100%;min-height:390px;object-fit:cover;filter:saturate(.9)}
+.map-stage{position:relative;isolation:isolate;overflow:hidden;border-radius:12px;background:#0a2e47}
+.map-stage>.illustrated-map{display:block;width:100%;height:auto;filter:saturate(.9)}
 .map-stage:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#06203466,transparent 40%);pointer-events:none}
 .map-overlay{position:absolute;inset:0;z-index:2}
 .map-pin{position:absolute;display:block;padding:8px 10px;background:#071f36e8;color:#fff;border:1px solid #f4ce79a8;border-radius:9px;font-size:11px;font-weight:800;box-shadow:0 4px 18px #001b3099}
 .map-pin:hover,.map-pin:focus-visible{background:#164764;color:#fff}
-.pin-komatsu{top:10%;right:7%}.pin-katsuyama{top:31%;right:2%}.pin-fukui{top:50%;right:23%}.pin-echizen{top:40%;left:4%}.pin-wakasa{bottom:9%;left:12%}
-.map-compass{position:absolute;top:15px;left:15px;z-index:3;padding:7px 9px;border-radius:6px;background:#fff;color:#183b52;font-size:11px;font-weight:900}
+.pin-komatsu{top:3%;left:3%}.pin-katsuyama{top:6%;right:2%}.pin-fukui{top:31%;left:40%}.pin-echizen{top:48%;left:3%}.pin-wakasa{bottom:7%;left:25%}
+.map-compass{position:absolute;bottom:8px;right:8px;z-index:3;padding:7px 9px;border-radius:6px;background:#fff;color:#183b52;font-size:11px;font-weight:900}
 .map-footnote{display:flex;gap:8px;margin:12px 6px 5px;color:#536c7b;font-size:11px;line-height:1.75}
 .map-footnote svg{width:16px;height:16px;flex-shrink:0}
 .service-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
@@ -206,8 +206,7 @@ body{overflow-x:clip;background:#f5f7fa}
  .zone-deck .feature-card:first-child,.feature-card{min-height:295px}
  .home-destination-grid,.destination-grid,.service-grid{grid-template-columns:1fr}
  .destination-grid{gap:16px}.destination-image{aspect-ratio:16/9}.destination-body{padding:19px 19px 22px}
- .map-stage,.map-stage>.illustrated-map{min-height:320px}
- .map-pin{padding:6px;font-size:10px}.pin-fukui{right:22%}.pin-echizen{left:2%}
+ .map-pin{padding:6px;font-size:10px}
  .service-card{padding:22px}
  .ticket-panel,.summary-box{padding:20px 17px}
  .pass-option{padding:17px 13px}.pass-option.selected{padding:16px 12px}
@@ -261,7 +260,7 @@ body{overflow-x:clip;background:#f5f7fa}
 .ad-facts__notice{font-size:11px;line-height:1.9;background:#fff5de;color:#6c552f;padding:13px;margin:18px 0 0}
 .ad-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .ad-gallery figure{margin:0;min-width:0;background:#fff;border:1px solid #dce6ed}
-.ad-gallery img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#0b3049}
+.ad-gallery img{display:block;width:100%;height:auto;background:#0b3049}
 .ad-gallery figcaption{padding:17px 19px;font-size:12px;line-height:1.8;color:#587181}
 .ad-steps{list-style:none;counter-reset:adstep;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:0;margin:0}
 .ad-steps li{counter-increment:adstep;background:#fff;border:1px solid #dce6ed;padding:26px 24px;min-width:0}
@@ -284,6 +283,7 @@ body{overflow-x:clip;background:#f5f7fa}
 .ad-footnote{font-size:11px;line-height:1.9;color:#5c7180;padding:18px 0;margin:0}
 @media(max-width:940px){.ad-overview{grid-template-columns:minmax(0,1fr)}.ad-related a{grid-template-columns:120px minmax(0,1fr)}}
 @media(max-width:700px){.ad-hero{min-height:510px}.ad-hero:before{background:linear-gradient(0deg,#061c30f5,#061c30a3 64%,#061c3055)}
+.ad-hero__image[src$="/ocean.webp"]{object-position:right center}
 .ad-hero__inner{padding:80px 0 42px}.ad-hero__inner h1{font-size:clamp(32px,9vw,46px)}.ad-hero__english{font-size:16px}
 .ad-hero__lead{font-size:15px}.ad-hero__actions{flex-direction:column}.ad-hero__actions .button{width:100%}
 .ad-section{padding:46px 0 14px}.ad-section h2{font-size:clamp(25px,7vw,34px)}.ad-story p{font-size:14px}

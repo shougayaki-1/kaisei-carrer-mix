@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { cloudflare } from '@cloudflare/vite-plugin';
-import { readdirSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderParkHeader, renderParkFooter } from './park/navigation';
@@ -60,6 +60,19 @@ function renderParkShell(html: string, pathname: string): string {
 
 export default defineConfig({
   plugins: [
+    {
+      // Runtime-rendered HTML uses stable /park/assets/... URLs from shared data.
+      // Vite rewrites static HTML imports, but cannot rewrite those JS strings.
+      name: 'park-runtime-assets',
+      apply: 'build',
+      generateBundle() {
+        for (const entry of readdirSync(join(root, 'park/assets'), { withFileTypes: true })) {
+          if (!entry.isFile()) continue;
+          this.emitFile({ type: 'asset', fileName: 'park/assets/' + entry.name,
+            source: readFileSync(join(root, 'park/assets', entry.name)) });
+        }
+      },
+    },
     {
       name: 'park-shared-navigation',
       enforce: 'pre',

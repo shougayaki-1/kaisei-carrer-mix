@@ -103,7 +103,7 @@ export const attractions: Attraction[] = [
         },
         {
             "src": "/park/assets/inside-alt.webp",
-            "alt": "恐竜の体内展示の別カットのイメージ",
+            "alt": "骨格や筋肉の模型に沿って歩く、架空の体内展示のイメージ",
             "caption": "光と造形によるウォークスルー体験"
         }
     ],
@@ -155,8 +155,8 @@ export const attractions: Attraction[] = [
         },
         {
             "src": "/park/assets/flight-alt.webp",
-            "alt": "山並みと空の広がりを表す風景イメージ",
-            "caption": "福井の地形を空から見渡す気分"
+            "alt": "山、平野、海岸を空から見渡す架空の風景イメージ",
+            "caption": "福井に着想を得た架空の空からの眺め"
         }
     ],
     "relatedIds": [
@@ -202,12 +202,12 @@ export const attractions: Attraction[] = [
     "gallery": [
         {
             "src": "/park/assets/ocean.webp",
-            "alt": "海棲爬虫類が泳ぐ映像展示のイメージ",
+            "alt": "海棲爬虫類の映像を観客が眺める、架空の展示イメージ",
             "caption": "水中を再現した太古の世界"
         },
         {
             "src": "/park/assets/ocean-alt.webp",
-            "alt": "深い海を表した展示イメージ",
+            "alt": "海中トンネルと遠くを泳ぐ海棲爬虫類を描いた架空の展示イメージ",
             "caption": "水中の奥行きを感じる空間"
         }
     ],
@@ -254,13 +254,13 @@ export const attractions: Attraction[] = [
     "gallery": [
         {
             "src": "/park/assets/fossil.webp",
-            "alt": "化石の模擬発掘を楽しむラボのイメージ",
+            "alt": "ヘルメット姿の参加者が骨格を模擬発掘する架空の施設イメージ",
             "caption": "勝山を舞台に化石を探す"
         },
         {
             "src": "/park/assets/fossil-alt.webp",
-            "alt": "地層や化石を思わせる景観イメージ",
-            "caption": "地層が伝える過去の環境"
+            "alt": "地層の壁と化石標本、研究道具を描いた架空の展示イメージ",
+            "caption": "架空の地層・標本展示。特定の産地の記録ではありません"
         }
     ],
     "relatedIds": [
@@ -306,12 +306,12 @@ export const attractions: Attraction[] = [
     "gallery": [
         {
             "src": "/park/assets/coast.webp",
-            "alt": "越前海岸とARを組み合わせた散策のイメージ",
+            "alt": "岩の海岸で散策者が古生物のAR演出を眺める架空の体験イメージ",
             "caption": "現在と過去を重ねる海岸の冒険"
         },
         {
             "src": "/park/assets/coast-alt.webp",
-            "alt": "岩の続く海岸地形のイメージ",
+            "alt": "岩礁に波が打ち寄せる海岸のイメージ",
             "caption": "波が作る景観を見つめる"
         }
     ],
@@ -358,7 +358,7 @@ export const attractions: Attraction[] = [
     "gallery": [
         {
             "src": "/park/assets/night.webp",
-            "alt": "恐竜を映し出すナイトショーのイメージ",
+            "alt": "建物の壁に恐竜の映像を投影する架空の夜のショーのイメージ",
             "caption": "福井駅エリアの夜の演出"
         },
         {
