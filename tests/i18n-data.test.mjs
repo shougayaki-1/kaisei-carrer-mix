@@ -56,3 +56,52 @@ test('English pages expose the primary links and operational cautions', async ()
   for (const id of ['category-filters','attraction-search','filter-height','attraction-grid','attraction-modal']) assert.ok(page.innerHTML.includes(`id="${id}"`), id);
  } finally { globalThis.document = previousDocument; }
 });
+
+test('language URLs override storage, preserve other URL state, and tolerate unavailable storage', async () => {
+ const {getLanguage,setLanguage} = await bundle('park/language.ts');
+ const oldWindow = globalThis.window, oldStorage = globalThis.localStorage;
+ const values = new Map([['fdc-language','ja']]);
+ let assigned = '';
+ try {
+  globalThis.localStorage = {getItem:key=>values.get(key) ?? null,setItem:(key,value)=>values.set(key,value)};
+  globalThis.window = {location:{search:'?date=2027-04-14&lang=en',href:'https://example.test/park/guide.html?date=2027-04-14&lang=en#operating-calendar',assign:value=>{assigned=value;}}};
+  assert.equal(getLanguage(),'en');
+  assert.equal(values.get('fdc-language'),'en');
+  setLanguage('ja');
+  const url=new URL(assigned);
+  assert.equal(url.searchParams.get('lang'),'ja');
+  assert.equal(url.searchParams.get('date'),'2027-04-14');
+  assert.equal(url.hash,'#operating-calendar');
+  globalThis.window.location.search='';
+  assert.equal(getLanguage(),'ja');
+  globalThis.localStorage={getItem:()=>{throw new Error('storage unavailable');},setItem:()=>{throw new Error('storage unavailable');}};
+  assert.equal(getLanguage(),'ja');
+  globalThis.window.location.search='?lang=en';
+  assert.equal(getLanguage(),'en');
+  assert.doesNotThrow(()=>setLanguage('en'));
+ } finally { globalThis.window=oldWindow;globalThis.localStorage=oldStorage; }
+});
+
+test('English daily schedule shows model closures, unpublished dates and preserves selected date', async () => {
+ const {renderEnglishGuide} = await bundle('park/english-guide.ts');
+ const oldDocument=globalThis.document,oldLocation=globalThis.location,oldHistory=globalThis.history;
+ const page={innerHTML:''}, output={innerHTML:''};
+ let onChange=()=>{}, updated='';
+ const input={value:'',addEventListener:(type,handler)=>{if(type==='change')onChange=handler;}};
+ try {
+  globalThis.location={search:'?lang=en&date=2027-04-14',href:'https://example.test/park/guide.html?lang=en&date=2027-04-14#operating-calendar'};
+  globalThis.history={replaceState:(_state,_title,url)=>{updated=String(url);}};
+  globalThis.document={querySelector:selector=>({'main':page,'#english-schedule-date':input,'#english-schedule-result':output})[selector] ?? null};
+  renderEnglishGuide();
+  assert.equal(input.value,'2027-04-14');
+  assert.match(output.innerHTML,/Katsuyama/);
+  assert.match(output.innerHTML,/Suspended for maintenance/);
+  input.value='2027-05-12';onChange();
+  assert.match(output.innerHTML,/All areas suspended/);
+  assert.doesNotMatch(output.innerHTML,/Choose a demo ticket/);
+  assert.equal(new URL(updated).searchParams.get('lang'),'en');
+  assert.equal(new URL(updated).searchParams.get('date'),'2027-05-12');
+  input.value='2027-07-01';onChange();
+  assert.match(output.innerHTML,/Schedule not published/);
+ } finally { globalThis.document=oldDocument;globalThis.location=oldLocation;globalThis.history=oldHistory; }
+});
