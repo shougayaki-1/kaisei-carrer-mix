@@ -12,7 +12,7 @@
     "test:areas": "node --test scripts/check-area-map.mjs",
     "check:links": "node scripts/check-park-links.mjs",
     "test:schedule": "node --experimental-strip-types --test tests/schedule-data.test.mjs",
-    "test:tickets": "node --experimental-strip-types --test tests/ticket-data.test.mjs",
+    "test:tickets": "node --experimental-strip-types --test tests/ticket-data.test.mjs tests/ticket-artwork.test.mjs",
     "test:services": "node --experimental-strip-types --test tests/services-data.test.mjs",
     "test:events": "node --experimental-strip-types --test tests/events-data.test.mjs",
     "test:i18n": "node --test tests/i18n-data.test.mjs",

@@ -2,6 +2,7 @@ import { getLanguage } from './language';
 import { englishAttraction } from './attractions-en';
 import { englishTicketStatus } from './english-ticket';
 import { readTicketSelection, writeTicketSelection } from './ticket-selection';
+import { initTicketArtwork, presentIssuedTicket } from './ticket-artwork';
 import { favoriteButton } from './favorites';
 import { attractionAreaId } from './areas-data';
 import { renderIcons } from './icons';
@@ -173,22 +174,25 @@ qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data
   routeResult.innerHTML='<p class="eyebrow">'+esc(route.title)+'</p><h3>'+esc(route.route)+'</h3><p>'+esc(route.description)+'</p><div class="access-tip">'+esc(route.tip)+'</div>';
 }));
 
+initTicketArtwork(english);
 qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',()=>{
  const date=dateField?.value||'';
  if(!validDate()||Object.values(quantity).every(v=>v===0))return;
  const numbers=new Uint8Array(5);crypto.getRandomValues(numbers);
  const code='DEMO-FDC-'+Array.from(numbers,n=>n.toString(16).padStart(2,'0')).join('').toUpperCase();
- const order=byId('ticket-order-number');if(order)order.textContent=tr('体験用受付番号 ','Demo reference: ')+code;
- const details=byId('ticket-order-details');
  const guests=Object.values(quantity).reduce((a,b)=>a+b,0);
- if(details)details.textContent=passes[activePass].label+' / '+date+' / '+guests+tr('名 / ',' guests / ')+tr(yen.format(ticketTotal())+'円','¥'+yen.format(ticketTotal()));
+ const ticket={code,date,pass:passes[activePass].label,guests,total:ticketTotal()};
+ presentIssuedTicket(ticket,english);
  try{const current=JSON.parse(localStorage.getItem('fdc-tickets')||'[]') as object[];
-   current.unshift({code,date,pass:passes[activePass].label,guests,total:ticketTotal()});
+   current.unshift(ticket);
    localStorage.setItem('fdc-tickets',JSON.stringify(current.slice(0,20)));
  }catch{/* Storage is optional; the issued ticket remains visible on screen. */}
- qs<HTMLDialogElement>('#ticket-dialog')?.close();qs<HTMLDialogElement>('#ticket-success')?.showModal();
+ qs<HTMLDialogElement>('#ticket-dialog')?.close();
+ qs<HTMLDialogElement>('#ticket-success')?.showModal();
 });
-qs<HTMLButtonElement>('#ticket-success-close')?.addEventListener('click',()=>qs<HTMLDialogElement>('#ticket-success')?.close());
+const successDialog=qs<HTMLDialogElement>('#ticket-success');
+qs<HTMLButtonElement>('#ticket-success-close')?.addEventListener('click',()=>successDialog?.close());
+successDialog?.addEventListener('close',()=>qs<HTMLButtonElement>('#demo-purchase')?.focus());
 const year=byId('park-year');
 if(year)year.textContent=String(new Date().getFullYear());
 

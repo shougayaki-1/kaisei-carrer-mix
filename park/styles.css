@@ -57,7 +57,6 @@ body{background:#f4f8fa;color:#132b3a}.park-header{background:#06233a;box-shadow
 @media(max-width:940px){.header-links{display:none}.header-ticket{margin-left:auto}.menu-button{display:grid;place-items:center}}@media(max-width:680px){.park-hero,.hero-inner{min-height:600px}.park-hero:before{background-position:62% center}.header-ticket{padding:12px}.header-ticket svg:last-child{display:none}}
 
 /* Ticket artwork and finishing details */
-.issued-ticket-code{width:min(100%,310px);height:66px;margin:22px auto 18px;background:repeating-linear-gradient(90deg,#18354c 0 2px,transparent 2px 5px,#18354c 5px 6px,transparent 6px 10px,#18354c 10px 15px,transparent 15px 20px);mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 85%,transparent)}
 .checkout-dialog .modal-inner{padding:38px}
 .checkout-dialog .success-icon{display:grid;place-items:center;margin-bottom:18px}
 .checkout-dialog #ticket-order-number{padding:16px 20px;background:#eff5f8;border:1px solid #d2e0e8;color:#153854;font:800 21px "Barlow Condensed",sans-serif;letter-spacing:.1em;border-radius:8px}
@@ -364,4 +363,65 @@ body{overflow-x:clip;background:#f5f7fa}
   .stay-cta{padding:52px 0}
   .stay-cta__panel{padding:28px 22px}
   .stay-cta__button{width:100%}
+}
+
+/* Issue #54: local, shareable souvenir ticket. QR is informational, not an admission code. */
+.ticket-success-dialog{width:min(780px,calc(100% - 24px));max-width:780px}
+.ticket-success-dialog .modal-inner{padding:30px;max-height:90vh;overflow-y:auto;overscroll-behavior:contain}
+.ticket-success-dialog .modal-inner>h2{font-size:clamp(23px,3vw,29px);margin:9px 0 6px}
+.ticket-success-dialog .ticket-artwork-intro{margin:0 0 20px;color:#4d6575;font-size:12px;line-height:1.75}
+.issued-ticket-card{overflow:hidden;max-width:100%;background:#fff;border:1px solid #c9d8e3;border-radius:14px;box-shadow:0 8px 24px #163b5612;color:#1a3a50}
+.issued-ticket-header{padding:20px 25px 19px;background:#092b45;color:#fff;border-top:5px solid #e0b75c;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.issued-ticket-header>div{min-width:0}
+.issued-ticket-series{display:block;font:800 10px "Barlow Condensed",sans-serif;letter-spacing:.19em;color:#e6c57b;margin-bottom:6px}
+.issued-ticket-header strong{display:block;font:800 clamp(21px,3.6vw,30px) "Barlow Condensed",sans-serif;letter-spacing:.02em;line-height:1.05;white-space:normal}
+.issued-ticket-demo{padding:8px 12px;border-radius:3px;background:#e0b75c;color:#122d45;font:800 12px "Barlow Condensed",sans-serif;letter-spacing:.08em;flex-shrink:0}
+.issued-ticket-body{display:grid;grid-template-columns:minmax(0,1fr) 198px;gap:22px;padding:26px 24px 24px;align-items:start}
+.issued-ticket-info{min-width:0}
+.issued-ticket-label{font-size:10px;font-weight:800;letter-spacing:.1em;color:#637d90}
+.issued-ticket-info h3{font:800 clamp(21px,3vw,30px) "Barlow Condensed","Noto Sans JP",sans-serif;line-height:1.25;margin:6px 0 19px;letter-spacing:0;overflow-wrap:anywhere;color:#112e47}
+.issued-ticket-facts{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.issued-ticket-facts>div{min-width:0}
+.issued-ticket-facts dt,.issued-ticket-reference small{font-size:10px;font-weight:800;letter-spacing:.03em;color:#668096}
+.issued-ticket-facts dd{margin:4px 0 0;font-weight:800;font-size:15px;color:#153851;overflow-wrap:anywhere}
+.issued-ticket-reference{margin-top:20px;border-top:1px dashed #b8cbd7;padding-top:14px}
+.issued-ticket-reference small{display:block;margin-bottom:4px}
+.issued-ticket-reference strong{display:block;font:800 18px "Barlow Condensed",sans-serif;letter-spacing:.04em;overflow-wrap:anywhere}
+.issued-ticket-qr-area{display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center;gap:6px}
+.issued-ticket-qr-area .ticket-site-qr{width:min(100%,190px);height:auto;aspect-ratio:1;background:#fff;flex-shrink:0}
+.issued-ticket-qr-area strong{font-size:12px;color:#1b3e54}
+.issued-ticket-qr-area span{font-size:10px;color:#577387;line-height:1.45}
+.issued-ticket-qr-area a{color:#285b7b;font-size:10px;text-decoration:underline;overflow-wrap:anywhere;max-width:100%}
+.issued-ticket-footer{background:#092b45;padding:14px 23px;color:#e5c06c;font:800 12px "Barlow Condensed",sans-serif;letter-spacing:.09em}
+.issued-ticket-footer span{display:block;color:#e1edf3;font:500 10px "Noto Sans JP",sans-serif;line-height:1.6;letter-spacing:0;margin-top:3px}
+.ticket-artwork-actions{margin-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.ticket-artwork-actions .button{padding:12px 8px;font-size:12px;min-height:48px;border-radius:8px;gap:5px;min-width:0}
+.ticket-artwork-status{margin:10px 0 0;min-height:1.8em;font-size:12px!important;color:#406179!important;line-height:1.7!important}
+.ticket-image-preview{margin:14px 0;padding:12px;background:#edf4f7;border:1px solid #d6e5ec;border-radius:8px}
+.ticket-image-preview p,.ticket-share-fallback p{font-size:12px;line-height:1.7;color:#436376}
+.ticket-image-preview img{display:block;width:100%;height:auto;max-width:100%;background:#fff}
+.ticket-image-preview img:focus{outline:3px solid #c59d49;outline-offset:3px}
+.ticket-share-fallback{margin:12px 0;background:#f5f8fa;border:1px solid #d8e5ed;border-radius:8px;padding:14px}
+.ticket-share-fallback label{display:block;font-size:11px;font-weight:800;margin-bottom:8px}
+.ticket-share-copy{display:flex;gap:8px;min-width:0}
+.ticket-share-copy input{flex:1;min-width:0;padding:8px 9px;border:1px solid #bacdda;border-radius:6px;background:#fff;font-size:12px}
+.ticket-share-copy .button{min-height:40px;padding:9px 12px;border-radius:7px;white-space:nowrap}
+.ticket-success-dialog .checkout-footnote{margin-top:18px}
+.ticket-success-close{display:block;margin-top:16px;width:100%;border-radius:8px}
+@media(max-width:650px){
+ .ticket-success-dialog .modal-inner{padding:22px 18px}
+ .issued-ticket-body{grid-template-columns:minmax(0,1fr);gap:18px;padding:20px 17px}
+ .issued-ticket-header{padding:16px 17px}
+ .issued-ticket-qr-area{border-top:1px dashed #d0dce4;padding-top:12px}
+ .issued-ticket-qr-area .ticket-site-qr{width:175px}
+ .issued-ticket-footer{padding:13px 17px}
+ .ticket-artwork-actions{grid-template-columns:1fr}
+ .ticket-artwork-actions .button{width:100%}
+}
+@media(max-width:390px){
+ .issued-ticket-facts{gap:10px}
+ .issued-ticket-facts dd{font-size:13px}
+ .issued-ticket-reference strong{font-size:16px}
+ .ticket-share-copy{flex-wrap:wrap}
+ .ticket-share-copy input,.ticket-share-copy button{width:100%}
 }
