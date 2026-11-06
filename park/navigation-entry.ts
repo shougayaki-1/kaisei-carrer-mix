@@ -4,6 +4,7 @@
  */
 import './styles.css';
 import './navigation.css';
+import './search.css';
 import './navigation-client';
 import { renderIcons } from './icons';
 

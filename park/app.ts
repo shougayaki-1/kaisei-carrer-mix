@@ -1,3 +1,5 @@
+import { favoriteButton } from './favorites';
+import { attractionAreaId } from './areas-data';
 import { renderIcons } from './icons';
 import './styles.css';
 import './food.css';
@@ -38,8 +40,13 @@ let category:AttractionCategory|'all'='all';
 function renderAttractions():void{
   if(!grid)return;
   const q=search?.value.trim().toLocaleLowerCase('ja-JP')||'';
-  const results=attractions.filter(a=>(category==='all'||a.category===category) && (a.title+' '+a.en+' '+a.zone+' '+a.description).toLocaleLowerCase('ja-JP').includes(q));
-  grid.innerHTML=results.map(a=>'<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(a)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p><div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+'の概要を見る">概要を見る</button></div><a class="card-page-link" href="'+attractionDetailHref(a)+'">体験の詳細・利用条件を見る <span aria-hidden="true">↗</span></a></div></article>').join('')||'<p class="no-results">該当するアトラクションがありません。条件を変更してください。</p>';
+  const area=qs<HTMLSelectElement>('#filter-area')?.value || '';
+  const setting=qs<HTMLSelectElement>('#filter-setting')?.value || '';
+  const audience=qs<HTMLSelectElement>('#filter-audience')?.value || '';
+  const theme=qs<HTMLSelectElement>('#filter-theme')?.value || '';
+  const height=Number(qs<HTMLSelectElement>('#filter-height')?.value || 0);
+  const results=attractions.filter(a=>(!theme || (theme==='learning' && ['inside','ocean','fossil','coast'].includes(a.id)) || (theme==='thrill' && ['skyport','flight'].includes(a.id))) && (!height || (a.condition.includes('身長') && Number(a.condition.match(/\d+/)?.[0])<=height)) && (!area||attractionAreaId[a.id]===area) && (!setting||(setting==='indoor' && ['skyport','inside','flight','ocean'].includes(a.id))||(setting==='outdoor' && ['coast','night'].includes(a.id))) && (!audience||(audience==='no-age' && ['inside','ocean','fossil','night'].includes(a.id))||(audience==='height' && a.condition.includes('身長'))) && (category==='all'||a.category===category) && (a.title+' '+a.en+' '+a.zone+' '+a.description).toLocaleLowerCase('ja-JP').includes(q));
+  grid.innerHTML=results.map(a=>'<article class="attraction-card"><div class="attraction-visual visual-'+esc(a.visual)+'"><div class="attraction-badges"><span>'+esc(categoryLabels[a.category])+'</span><span>'+esc(a.tag)+'</span></div><span class="photo-index">'+String(attractions.indexOf(a)+1).padStart(2,'0')+' / 07</span></div><div class="attraction-content"><span class="eyebrow">'+esc(a.en)+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.tagline)+'</p>'+favoriteButton('attraction:'+a.id,a.title)+'<div class="card-foot"><span>'+esc(a.zone)+'</span><button type="button" data-attr="'+esc(a.id)+'" aria-label="'+esc(a.title)+'の概要を見る">概要を見る</button></div><a class="card-page-link" href="'+attractionDetailHref(a)+'">体験の詳細・利用条件を見る <span aria-hidden="true">↗</span></a></div></article>').join('')||'<p class="no-results">該当するアトラクションがありません。条件を変更してください。</p>';
   if(count)count.textContent=String(results.length)+'つのアトラクション';
   grid.querySelectorAll<HTMLButtonElement>('[data-attr]').forEach(button=>button.addEventListener('click',()=>{
     const a=attractions.find(x=>x.id===button.dataset.attr);if(a)showAttraction(a);
@@ -53,6 +60,7 @@ qs<HTMLElement>('#category-filters')?.querySelectorAll<HTMLButtonElement>('butto
   });
 });
 search?.addEventListener('input',renderAttractions);
+document.querySelectorAll<HTMLSelectElement>('.attraction-conditions select').forEach(el=>el.addEventListener('change',renderAttractions));
 renderAttractions();
 // Allow a direct link to the existing detail modal until #2 adds a separate page.
 const linkedAttraction = new URLSearchParams(window.location.search).get('attraction');

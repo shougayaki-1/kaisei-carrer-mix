@@ -119,6 +119,7 @@ export function renderParkHeader(path: string): string {
     '<nav class="park-desktop-nav" aria-label="パークのメインナビゲーション">' +
     '<a class="park-home-link" href="/park/"' + homeCurrent + '>パークTOP</a>' +
     desktopCategories + '</nav>' +
+    '<a class="park-search-link" href="/park/search.html">検索・お気に入り</a>' +
     '<a class="header-ticket" href="/park/tickets.html">' +
     '<i data-lucide="ticket" aria-hidden="true"></i><span>チケットを選ぶ</span>' +
     '<i data-lucide="arrow-right" aria-hidden="true"></i></a>' +
@@ -127,6 +128,7 @@ export function renderParkHeader(path: string): string {
     '<span>メニュー</span></summary>' +
     '<nav class="park-mobile-nav" aria-label="モバイルナビゲーション">' +
     '<a class="park-mobile-home" href="/park/"' + homeCurrent + '>パークTOP</a>' +
+    '<a class="park-mobile-search" href="/park/search.html">検索・お気に入り</a>' +
     mobileCategories +
     '<a class="park-mobile-ticket" href="/park/tickets.html">チケットを選ぶ' +
     '<i data-lucide="arrow-right" aria-hidden="true"></i></a>' +
