@@ -41,11 +41,15 @@ test('English pages expose the primary links and operational cautions', async ()
  try {
   const home = await bundle('park/english-home.ts');
   home.renderEnglishHome();
+  assert.match(page.innerHTML, /class="stay-cta"/);
+  assert.match(page.innerHTML, /stay-cta__button" href="\/park\/stay\.html"/);
   for (const link of ['/park/attractions.html','/park/tickets.html','/park/guide.html','/park/access.html']) assert.ok(page.innerHTML.includes(link), link);
   assert.match(page.innerHTML,/fictional school-project concept/i);
   for (const id of ['night-show','fossil-discovery','ancient-ocean']) assert.ok(page.innerHTML.includes(`/park/news.html#${id}`),id);
   const access = await bundle('park/english-access.ts');
   access.renderEnglishAccess();
+  assert.match(page.innerHTML, /class="stay-cta"/);
+  assert.match(page.innerHTML, /stay-cta__button" href="\/park\/stay\.html"/);
   for (const area of ['komatsu','fukui','katsuyama','wakasa','echizen']) assert.ok(page.innerHTML.includes(`id="area-${area}"`), area);
   assert.match(page.innerHTML,/not operating public transport/i);
   for (const id of ['geo-explorer','geo-selected-title','geo-selected-description','route-tabs','route-result']) assert.ok(page.innerHTML.includes(`id="${id}"`),id);
