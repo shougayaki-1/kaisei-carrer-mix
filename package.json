@@ -15,7 +15,8 @@
     "test:tickets": "node --experimental-strip-types --test tests/ticket-data.test.mjs",
     "test:services": "node --experimental-strip-types --test tests/services-data.test.mjs",
     "test:events": "node --experimental-strip-types --test tests/events-data.test.mjs",
-    "test:i18n": "node --test tests/i18n-data.test.mjs"
+    "test:i18n": "node --test tests/i18n-data.test.mjs",
+    "check:i18n-output": "node scripts/check-i18n-output.mjs"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "beta",

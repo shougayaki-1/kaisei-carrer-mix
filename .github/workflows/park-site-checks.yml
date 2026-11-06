@@ -7,6 +7,7 @@ on:
       - 'vite.config.ts'
       - 'package.json'
       - 'scripts/check-park-links.mjs'
+      - 'scripts/check-i18n-output.mjs'
       - 'tests/i18n-data.test.mjs'
       - '.github/workflows/park-site-checks.yml'
   workflow_dispatch:
@@ -25,3 +26,4 @@ jobs:
       - run: npm run check:links
       - run: npm run test:i18n
       - run: npm run build
+      - run: npm run check:i18n-output
