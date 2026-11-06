@@ -105,3 +105,23 @@ test('English daily schedule shows model closures, unpublished dates and preserv
   assert.match(output.innerHTML,/Schedule not published/);
  } finally { globalThis.document=oldDocument;globalThis.location=oldLocation;globalThis.history=oldHistory; }
 });
+
+test('translated routes expose crawlable language alternatives and unsupported pages do not', async () => {
+ const {englishPagePath,renderLanguageAlternates}=await bundle('park/locale-routes.ts');
+ for (const [input, expected] of [
+  ['/park/index.html','/park/'], ['/park/','/park/'], ['/park/tickets.html','/park/tickets'],
+  ['/park/access','/park/access'], ['/park/guide.html','/park/guide'], ['/park/attractions.html','/park/attractions'],
+  ['/park/attractions/skyport.html','/park/attractions/skyport'], ['/park/attractions/ocean','/park/attractions/ocean']
+ ]) {
+  assert.equal(englishPagePath(input),expected);
+  const html=renderLanguageAlternates(input);
+  assert.match(html,/hreflang="ja"/);
+  assert.match(html,/hreflang="en"/);
+  assert.match(html,/hreflang="x-default"/);
+  assert.ok(html.includes(`https://mix.kaisei.shoug.org${expected}?lang=en`));
+ }
+ for(const path of ['/park/stay.html','/park/plans.html','/park/attractions/unknown.html','/']) {
+  assert.equal(englishPagePath(path),null);
+  assert.equal(renderLanguageAlternates(path),'');
+ }
+});

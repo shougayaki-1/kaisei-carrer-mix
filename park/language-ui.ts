@@ -1,4 +1,5 @@
 import { getLanguage, setLanguage } from './language';
+import { englishPagePath } from './locale-routes';
 import './language.css';
 
 const englishNavigation: Record<string, string> = {
@@ -17,7 +18,7 @@ const englishNavigation: Record<string, string> = {
 
 /** Pages without a complete translation remain explicitly Japanese. */
 export function hasEnglishPage(path = location.pathname): boolean {
- return /^\/park(?:\/|\/index(?:\.html)?)?$/.test(path) || /^\/park\/(access|guide)(?:\.html)?\/?$/.test(path) || /^\/park\/attractions(?:\.html)?\/?$/.test(path) || /^\/park\/tickets(?:\.html)?\/?$/.test(path) || /^\/park\/attractions\/(skyport|inside|flight|ocean|fossil|coast|night)(?:\.html)?\/?$/.test(path);
+ return englishPagePath(path) !== null;
 }
 function translateNavigation(): void {
  for (const root of document.querySelectorAll('.park-header, .site-footer')) {
@@ -62,17 +63,12 @@ function initLanguageUI():void {
   link.href = url.href;
  }, {capture:true});
  if (available) {
-  // The language-specific query identifies the translated version of the same route.
-  const canonical = new URL(location.pathname, location.origin);
-  for (const [rel, lang, value] of [['canonical', '', english ? 'en' : 'ja'], ['alternate', 'ja', 'ja'], ['alternate', 'en', 'en'], ['alternate', 'x-default', 'ja']]) {
-   const url = new URL(canonical);
-   url.searchParams.set('lang', value);
-   const link = document.createElement('link');
-   link.rel = rel;
-   if (lang) link.hreflang = lang;
-   link.href = url.href;
-   document.head.append(link);
-  }
+  const canonical = new URL(englishPagePath(location.pathname)!, location.origin);
+  canonical.searchParams.set('lang', english ? 'en' : 'ja');
+  const link = document.createElement('link');
+  link.rel = 'canonical';
+  link.href = canonical.href;
+  document.head.append(link);
  }
  if(english && available) translateNavigation();
  if(english && !available) {
