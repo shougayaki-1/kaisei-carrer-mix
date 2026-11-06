@@ -305,3 +305,60 @@ body{overflow-x:clip;background:#f5f7fa}
 }
 @media(max-width:390px){.ad-related a{grid-template-columns:98px minmax(0,1fr)}.ad-related__body{padding:12px}.ad-related h3{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.ad-related a{transition:none}}
+
+/* Shared overnight-planning call to action (home, routes and map). */
+.stay-cta{
+  padding:clamp(48px,6vw,84px) 0;
+  background:#eaf1f5;
+}
+.stay-cta__panel{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:clamp(22px,4vw,56px);
+  min-width:0;
+  padding:clamp(28px,4vw,52px);
+  border-left:5px solid #f0c66d;
+  border-radius:14px;
+  background:linear-gradient(115deg,#0b2944,#124363);
+  box-shadow:0 16px 38px #0a263b1c;
+  color:#fff;
+}
+.stay-cta__copy{min-width:0;max-width:660px}
+.stay-cta .eyebrow{color:#f0c66d;margin:0 0 12px}
+.stay-cta h2{
+  color:#fff;
+  font-size:clamp(25px,3vw,39px);
+  line-height:1.4;
+  letter-spacing:-.035em;
+  margin:0 0 12px;
+  overflow-wrap:anywhere;
+}
+.stay-cta__copy>p:last-child{
+  margin:0;
+  color:#d5e6ee;
+  font-size:clamp(13px,1.3vw,15px);
+  line-height:1.9;
+}
+.stay-cta__button{
+  flex:none;
+  max-width:100%;
+  min-height:52px;
+  padding:15px 22px;
+  border-radius:6px;
+  background:#f0c66d;
+  color:#0b2944;
+  gap:14px;
+  white-space:normal;
+  text-align:center;
+  line-height:1.6;
+}
+.stay-cta__button:hover{background:#ffe1a0}
+@media(max-width:800px){
+  .stay-cta__panel{flex-direction:column;align-items:stretch;gap:24px}
+}
+@media(max-width:700px){
+  .stay-cta{padding:52px 0}
+  .stay-cta__panel{padding:28px 22px}
+  .stay-cta__button{width:100%}
+}
