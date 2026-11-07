@@ -99,7 +99,7 @@ export function ticketCardMarkup(ticket: IssuedTicketArtwork, english: boolean):
     '<span>' + copy('サイト案内用QR・入場スキャン不可', 'Website QR only — not an entry code', english) + '</span>' +
     '<a href="' + PARK_SITE_URL + '" target="_blank" rel="noopener noreferrer">' + PARK_SITE_URL + '</a></div></div>' +
     '<footer class="issued-ticket-footer">SAMPLE / NOT VALID FOR ENTRY<span>' +
-    copy('架空のパークの記念画像です。購入・予約・入場には使えません。', 'Fictional souvenir only. No purchase, booking or admission.', english) +
+    copy('WEB記念チケット画像です。実際の購入・予約・入場には対応していません。', 'Fictional souvenir only. No purchase, booking or admission.', english) +
     '</span></footer></article>';
 }
 
@@ -184,7 +184,7 @@ export function ticketCanvas(ticket: IssuedTicketArtwork, english: boolean): HTM
   ctx.fillStyle = GOLD;
   drawText(ctx, 'SAMPLE / NOT VALID FOR ENTRY', 92, 900, 1200, 30, true);
   ctx.fillStyle = '#ecf3f7';
-  drawText(ctx, copy('架空のパークの記念画像です。購入・予約・入場には使えません。', 'Fictional souvenir. No purchase, booking or admission.', english), 92, 939, 1210, 21);
+  drawText(ctx, copy('WEB記念チケット画像です。実際の購入・予約・入場には対応していません。', 'Fictional souvenir. No purchase, booking or admission.', english), 92, 939, 1210, 21);
   return canvas;
 }
 
@@ -246,7 +246,7 @@ export function initTicketArtwork(english: boolean): void {
     void nav.share({
       files: [pngFile],
       title: 'FUKUI DINO CITY',
-      text: copy('架空のパークの記念チケットです。入場用ではありません。', 'Fictional park souvenir — not valid for admission.', english)
+      text: copy('WEB記念チケットです。実際のパーク入場にはご利用いただけません。', 'Park souvenir ticket — not valid for admission.', english)
     }).catch((error: unknown) => {
       if (error instanceof DOMException && error.name === 'AbortError') return;
       fallback(english);

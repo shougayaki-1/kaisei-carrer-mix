@@ -23,7 +23,7 @@ function show(from: AreaId, to: AreaId): void {
   });
   result.append(list);
   const note = document.createElement('p');
-  note.textContent = '福井駅経由の計画例です。より適した経路は行き先や運行状況で変わります。架空施設の所在地は未定です。'; result.append(note);
+  note.textContent = '※福井駅経由のルート計画例です。実際の運行ダイヤや最適な経路は各交通事業者・施設公式サイトにてご確認ください。'; result.append(note);
 }
 if (form && result) {
   const from = form.elements.namedItem('from') as HTMLSelectElement;

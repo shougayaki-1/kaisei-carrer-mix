@@ -154,7 +154,7 @@ export function renderParkFooter(): string {
     '<li><a href="/">事業構想について</a></li>' +
     '</ul></nav></div>' +
     '<div class="wrap park-footer-bottom">' +
-    '<p class="park-footer-notice">授業で制作した架空のパーク構想です。実際の予約・決済には対応していません。</p>' +
+    '<p class="park-footer-notice">本サイトは体験モデルサイトです。実際の予約・決済およびパークへの入場には対応していません。</p>' +
     '<p>© <span id="park-year">' + String(new Date().getFullYear()) +
     '</span> FUKUI DINO CITY</p></div></footer>';
 }

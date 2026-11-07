@@ -13,7 +13,7 @@ const englishNavigation: Record<string, string> = {
  'よくある質問':'FAQ','疑問を解決する':'Common questions','学校団体向け':'School groups','学びを深める体験':'Learning experiences',
  '検索・お気に入り':'Search & favorites','チケットを選ぶ':'Choose tickets','メニュー':'Menu','パークについて':'About the park',
  'アクセシビリティ':'Accessibility','事業構想について':'About the concept',
- '授業で制作した架空のパーク構想です。実際の予約・決済には対応していません。':'This is a fictional park concept created for a school project. No actual bookings or payments are available.'
+ '本サイトは体験モデルサイトです。実際の予約・決済およびパークへの入場には対応していません。':'This is a concept experience website. No actual bookings, payments, or park admissions are available.'
 };
 
 /** Pages without a complete translation remain explicitly Japanese. */
