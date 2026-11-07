@@ -102,7 +102,9 @@ const conceptLinks = [...conceptHtml.matchAll(/\\bhref="(\\/[^"]+)"/g)].map((mat
 for (const href of conceptLinks) {
   const url = new URL(href, 'https://park.example');
   const path = url.pathname.endsWith('/') ? url.pathname.slice(1) + 'index.html' : url.pathname.slice(1);
-  if (!existsSync(join(root, path))) errors.push('Missing concept link target: ' + href);
+  if (!existsSync(join(root, path)) && !existsSync(join(root, 'public', path))) {
+    errors.push('Missing concept link target: ' + href);
+  }
   if (url.hash && url.pathname === '/concept/' &&
       !conceptHtml.includes('id="' + decodeURIComponent(url.hash.slice(1)) + '"')) {
     errors.push('Missing concept link fragment: ' + href);
