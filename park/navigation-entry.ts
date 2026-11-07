@@ -17,7 +17,7 @@ import { renderEnglishGuide } from './english-guide';
 if (getLanguage() === 'en' && /^\/park\/tickets(?:\.html)?\/?$/.test(location.pathname)) {
   document.documentElement.lang = 'en';
   document.title = 'Tickets and prices | FUKUI DINO CITY';
-  document.querySelector('meta[name=description]')?.setAttribute('content', 'Compare fictional passes and try the FUKUI DINO CITY ticket demo.');
+  document.querySelector('meta[name=description]')?.setAttribute('content', 'Compare ticket options and simulate ticket pricing for FUKUI DINO CITY.');
   renderEnglishTicket();
 }
 import { renderIcons } from './icons';
@@ -25,7 +25,7 @@ import { renderIcons } from './icons';
 if (getLanguage() === 'en' && /^\/park\/attractions(?:\.html)?\/?$/.test(location.pathname)) {
   document.documentElement.lang = 'en';
   document.title = 'Attractions | FUKUI DINO CITY';
-  document.querySelector('meta[name=description]')?.setAttribute('content', 'Explore fictional attractions across Fukui and learn about their requirements.');
+  document.querySelector('meta[name=description]')?.setAttribute('content', 'Explore exciting attractions across Fukui and learn about their requirements.');
   renderEnglishAttractions();
 }
 
@@ -38,7 +38,7 @@ const page = pages.find(item => item.path.test(location.pathname));
 if (getLanguage() === 'en' && page) {
   document.documentElement.lang = 'en';
   document.title = page.title + ' | FUKUI DINO CITY';
-  document.querySelector('meta[name=description]')?.setAttribute('content', page.title + ' for the fictional FUKUI DINO CITY concept.');
+  document.querySelector('meta[name=description]')?.setAttribute('content', page.title + ' for FUKUI DINO CITY.');
   page.render();
 }
 

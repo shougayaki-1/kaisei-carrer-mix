@@ -39,14 +39,14 @@ function renderDay(day:DaySchedule|null):void {
   if (!day) {
     status.textContent = tr('日程未発表','Schedule not published');
     status.className = 'schedule-status unpublished';
-    areaGrid.append(el('p','schedule-unpublished',tr('この日付の営業時間・ショー予定は未発表のため、デモチケットを選べません。モデル日程は2027年4月1日〜6月30日です。未発表は休園・満席を意味しません。','No demo ticket is available for an unpublished date. The model covers April 1 through June 30, 2027; unpublished does not mean closed or sold out.')));
+    areaGrid.append(el('p','schedule-unpublished',tr('この日付の営業時間・ショー予定は未発表のため、チケットをお選びいただけません。公開日程は2027年4月1日〜6月30日です。未発表は休園・満席を意味しません。','Tickets are not available for unpublished dates. The published schedule covers April 1 through June 30, 2027; unpublished does not mean closed or sold out.')));
     ticketLink.hidden = true;
     return;
   }
   const closed = day.areas.every(a => a.status === 'suspended');
-  status.textContent = closed ? tr('全エリア休止予定（モデル設定）','All areas suspended (model)') : tr('日別モデルスケジュール','Daily model schedule');
+  status.textContent = closed ? tr('全エリア休止予定','All areas closed') : tr('本日の運営スケジュール','Today’s schedule');
   status.className = 'schedule-status ' + (closed ? 'suspended' : 'scheduled');
-  if (closed) areaGrid.append(el('p','schedule-day-note',tr('全エリア休止予定のため、この日のデモチケットは発行できません。','All areas are suspended; a demo ticket cannot be issued.')));
+  if (closed) areaGrid.append(el('p','schedule-day-note',tr('全エリア休止予定のため、この日のチケットは発行できません。','All areas are suspended; tickets cannot be issued for this date.')));
   else if (day.areas.some(area => area.status === 'suspended')) areaGrid.append(el('p','schedule-day-note',tr('一部エリアは休止予定です。各エリアの案内をご確認ください。','Some areas are suspended. Please check each area.')));
   if(day.note) areaGrid.append(el('p','schedule-day-note',en ? 'All areas are suspended for model maintenance.' : day.note));
   for (const area of day.areas) {
@@ -54,14 +54,14 @@ function renderDay(day:DaySchedule|null):void {
     const name = el('h4','',en ? areaNames[area.id] : area.name);
     const time = el('strong','schedule-area-hours',area.hours || tr('休止予定','Suspended'));
     const program = el('p','schedule-area-program',en ? programs[area.id] : area.program);
-    const note = el('p','schedule-area-note',en ? (area.status === 'suspended' ? 'Suspended for model maintenance.' : area.id === 'komatsu' ? 'Fictional concept, not real airport transport.' : area.id === 'echizen' ? 'Outdoor activities may change with weather and local conditions.' : 'Fictional model setting.') : area.note);
+    const note = el('p','schedule-area-note',en ? (area.status === 'suspended' ? 'Suspended for maintenance.' : area.id === 'komatsu' ? 'Themed flight attraction, not actual airport transport.' : area.id === 'echizen' ? 'Outdoor activities may change with weather and local conditions.' : 'Main park area.') : area.note);
     card.append(name,time,program,note);
     areaGrid.append(card);
   }
   const eyebrow = el('p','eyebrow highlight','NIGHT SHOW / FUKUI');
   const showTitle = el('h4','',en ? 'Night of the Giants' : day.show.title);
   const showHours = el('strong','schedule-show-hours',day.show.startsAt ? day.show.startsAt + (en ? ' · about ' : ' 開演予定・約') + day.show.durationMinutes + (en ? ' minutes' : '分') : tr('休演予定','Suspended'));
-  const note = el('p','',en ? (day.show.status === 'suspended' ? 'Suspended for model maintenance.' : 'A fictional show of light, sound and images in Fukui.') : day.show.note);
+  const note = el('p','',en ? (day.show.status === 'suspended' ? 'Suspended for maintenance.' : 'A dramatic spectacle of light, sound and images in Fukui.') : day.show.note);
   const weather = el('p','schedule-weather-note',en ? 'Outdoor effects may change or be cancelled due to weather. This is not a forecast or live information.' : day.show.weatherNote);
   const detailLink = el('a','schedule-show-link',tr('ショーの体験内容を見る','Show details')) as HTMLAnchorElement;
   detailLink.href = '/park/attractions/night.html';
@@ -99,7 +99,7 @@ function render():void {
   }
   calendar.replaceChildren(body);
   monthInfo.textContent = (iso(year,month,1)>SCHEDULE_END || iso(year,month,last)<SCHEDULE_START)
-    ? tr('この月は日程未発表です。モデル公開期間は2027年4月1日〜6月30日です。日付を選んで案内を確認できます。','This month is unpublished. The model covers April 1 through June 30, 2027.') : tr('日付を選ぶと5エリアとショーの予定を表示します。矢印キー、Home、Endでも移動できます。','Select a date for all five areas and the show. Use arrow keys, Home and End to navigate.');
+    ? tr('この月は日程未発表です。公開中の営業期間は2027年4月1日〜6月30日です。日付を選んで案内を確認できます。','This month is unpublished. The published operating period is April 1 through June 30, 2027.') : tr('日付を選ぶと5エリアとショーの予定を表示します。矢印キー、Home、Endでも移動できます。','Select a date for all five areas and the show. Use arrow keys, Home and End to navigate.');
   renderDay(getDaySchedule(selected));
 }
 function selectDate(date:string, focus=false):void {

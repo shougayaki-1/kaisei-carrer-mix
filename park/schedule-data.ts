@@ -41,24 +41,24 @@ export interface TicketScheduleStatus {
 export const PARK_AREAS: ReadonlyArray<{
   id: AreaId; name: string; program: string; hours: string; note: string;
 }> = [
-  { id:'fukui', name:'福井駅・ダイノシティ', program:'インサイド・ザ・ダイナソー／スカイ・オーバー・フクイ／ナイトショー', hours:'09:00–21:00', note:'福井駅周辺のメインエリア（構想設定）' },
-  { id:'katsuyama', name:'勝山・ディスカバリー', program:'フォッシル・フロンティア', hours:'10:00–18:00', note:'化石・地学体験エリア（構想設定）' },
-  { id:'wakasa', name:'若狭湾・マリンワールド', program:'ダイノ・オーシャン', hours:'10:00–18:00', note:'海棲爬虫類の展示・学習エリア（構想設定）' },
+  { id:'fukui', name:'福井駅・ダイノシティ', program:'インサイド・ザ・ダイナソー／スカイ・オーバー・フクイ／ナイトショー', hours:'09:00–21:00', note:'福井駅周辺のメインエリア' },
+  { id:'katsuyama', name:'勝山・ディスカバリー', program:'フォッシル・フロンティア', hours:'10:00–18:00', note:'化石・地学体験エリア' },
+  { id:'wakasa', name:'若狭湾・マリンワールド', program:'ダイノ・オーシャン', hours:'10:00–18:00', note:'海棲爬虫類の展示・学習エリア' },
   { id:'echizen', name:'越前海岸・ワイルドコースト', program:'ジュラシック・コースト', hours:'10:00–18:00', note:'屋外散策は気象・現地状況により変更の可能性あり' },
-  { id:'komatsu', name:'小松空港・スカイポート', program:'ダイナソー・スカイポート', hours:'09:00–19:00', note:'石川県の小松空港を入口とする架空演出。実際の空港運行とは無関係' },
+  { id:'komatsu', name:'小松空港・スカイポート', program:'ダイナソー・スカイポート', hours:'09:00–19:00', note:'小松空港を旅の起点とするフライト体験。実際の航空便・空港運行とは異なります' },
 ] as const;
 
 // Static editorial examples. These dates are NOT real facility closures or forecasts.
 const areaExceptions: Partial<Record<string, Partial<Record<AreaId, string>>>> = {
-  '2027-04-14': { katsuyama:'発掘ラボ機材点検のため休止予定（モデル設定）' },
-  '2027-05-19': { wakasa:'展示設備の点検のため休止予定（モデル設定）' },
-  '2027-06-18': { echizen:'海岸遊歩道の保守点検のため休止予定（モデル設定）' },
+  '2027-04-14': { katsuyama:'発掘ラボ機材点検のため休止予定' },
+  '2027-05-19': { wakasa:'展示設備の点検のため休止予定' },
+  '2027-06-18': { echizen:'海岸遊歩道の保守点検のため休止予定' },
 };
 const fullClosure: Readonly<Record<string,string>> = {
-  '2027-05-12': '全エリアの設備点検日（モデル設定）',
+  '2027-05-12': '全エリアの設備総点検日',
 };
 const showExceptions: Readonly<Record<string,string>> = {
-  '2027-06-04': '演出設備の定期点検により休演予定（モデル設定）',
+  '2027-06-04': '演出設備の定期点検により休演予定',
 };
 const WEATHER_NOTE = '屋外演出のため、雨天・強風などの状況によって変更・休演する場合があります。天気予報やリアルタイム運行情報ではありません。';
 
@@ -114,19 +114,19 @@ export function getTicketScheduleStatus(date:string, pass:PassId):TicketSchedule
   if (days.some(day => day === null)) {
     return {
       allowed:false,
-      message:pass === 'two' ? '2DAYパスは初日・翌日とも予定が発表された日付を選んでください。' : '選択した日付は日程未発表です。モデルスケジュールの公開期間を選んでください。',
+      message:pass === 'two' ? '2DAYパスは初日・翌日とも予定が発表された日付を選んでください。' : '選択した日付は営業日程が未発表です。カレンダーの公開期間（2027年4月1日〜6月30日）からお選びください。',
       warnings:[],
     };
   }
   const confirmed = days.filter((day):day is DaySchedule => day !== null);
   if (confirmed.some(day => day.areas.every(area => area.status === 'suspended'))) {
-    return {allowed:false, message:'選択期間に全エリア休止予定日が含まれるため、デモ券発行の対象外です。', warnings:[]};
+    return {allowed:false, message:'選択期間に全エリア休止日が含まれるため、チケットを発行できません。', warnings:[]};
   }
   if (confirmed.some(day => day.areas.find(area => area.id === 'fukui')?.status !== 'scheduled')) {
-    return {allowed:false, message:'福井駅メインエリアが休止予定のため、この券種のデモ発行はできません。', warnings:[]};
+    return {allowed:false, message:'福井駅メインエリアが休止予定のため、この券種は選択できません。', warnings:[]};
   }
   if (pass === 'night' && confirmed[0].show.status === 'suspended') {
-    return {allowed:false, message:'ナイトショー休演予定のため、NIGHTパスはデモ発行の対象外です。', warnings:[]};
+    return {allowed:false, message:'ナイトショー休演予定のため、NIGHTパスは発行できません。', warnings:[]};
   }
   const warnings:string[] = [];
   for (const day of confirmed) {
@@ -137,7 +137,7 @@ export function getTicketScheduleStatus(date:string, pass:PassId):TicketSchedule
   }
   return {
     allowed:true,
-    message:'モデル営業予定を確認しました。実際の購入・予約・入場はできません。',
+    message:'営業予定を確認しました（※本サイトでの実際の購入・決済および入園には対応していません）。',
     warnings,
   };
 }

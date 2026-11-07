@@ -14,7 +14,7 @@ const yen = new Intl.NumberFormat('ja-JP');
 const escapeHtml = (value: string): string => value.replace(/[&<>"']/g, c => ({
   '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
 }[c] || c));
-const price = (value:number):string => '¥' + yen.format(value) + '（税込・構想価格）';
+const price = (value:number):string => '¥' + yen.format(value) + '（税込）';
 let activeArea: FoodArea | 'all' = 'all';
 
 function card(venue:Venue):string {
@@ -55,19 +55,19 @@ function detail(venue: Venue,index:number): string {
       <i data-lucide="map" aria-hidden="true"></i> エリア案内を見る
     </a></div>
     <div class="food-gallery">
-      <figure class="food-gallery-scene"><img src="${escapeHtml(venue.sceneImage)}" alt="${escapeHtml(venue.sceneAlt)}" loading="lazy" decoding="async"><figcaption>${isDining?'店舗内装の構想イメージ':'販売エリアのコンセプトイメージ'}（実際の施設写真ではありません）</figcaption></figure>
-      <figure class="food-gallery-focus"><img src="${escapeHtml(venue.focusImage)}" alt="${escapeHtml(venue.focusAlt)}" loading="lazy" decoding="async"><figcaption>${isDining?'メニュー':'商品の'}写真調AI生成イメージ（実物写真ではありません）</figcaption></figure>
+      <figure class="food-gallery-scene"><img src="${escapeHtml(venue.sceneImage)}" alt="${escapeHtml(venue.sceneAlt)}" loading="lazy" decoding="async"><figcaption>${isDining?'店舗内装イメージ':'店内イメージ'}</figcaption></figure>
+      <figure class="food-gallery-focus"><img src="${escapeHtml(venue.focusImage)}" alt="${escapeHtml(venue.focusAlt)}" loading="lazy" decoding="async"><figcaption>${isDining?'おすすめメニュー':'注目アイテム'}</figcaption></figure>
     </div>
     <div class="food-venue-content">
       <div class="food-venue-menu">
-        <div class="food-subhead"><p class="eyebrow">${isDining?'FEATURED MENU':'FEATURED GOODS'}</p><h3>${isDining?'おすすめメニュー':'主な商品'}</h3><p>価格はすべて税込の企画段階の設定です。</p></div>
+        <div class="food-subhead"><p class="eyebrow">${isDining?'FEATURED MENU':'FEATURED GOODS'}</p><h3>${isDining?'おすすめメニュー':'主な商品'}</h3><p>価格はすべて税込です。</p></div>
         <ul class="food-item-list">${rows}</ul>
       </div>
       <aside class="food-venue-aside" aria-label="${escapeHtml(venue.name)} の利用案内">
         <p class="eyebrow">STORE GUIDE</p><h3>店舗情報・ご案内</h3>
         <dl><div><dt>エリア</dt><dd>${escapeHtml(venue.areaLabel)}</dd></div>
         <div><dt>営業時間</dt><dd>${escapeHtml(venue.hours)}</dd></div>
-        <div><dt>利用スタイル</dt><dd>${escapeHtml(venue.style)}（未確定）</dd></div></dl>
+        <div><dt>利用スタイル</dt><dd>${escapeHtml(venue.style)}</dd></div></dl>
         <ul class="food-information">${notices}</ul>
         <a class="food-aside-link" href="/park/attractions.html">近くの体験：${escapeHtml(venue.related)} <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
       </aside>
