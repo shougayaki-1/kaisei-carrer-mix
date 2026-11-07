@@ -3,6 +3,7 @@ import { englishAttraction } from './attractions-en';
 import { englishTicketStatus } from './english-ticket';
 import { readTicketSelection, writeTicketSelection } from './ticket-selection';
 import { initTicketArtwork, presentIssuedTicket } from './ticket-artwork';
+import { showTicketIssuing } from './ticket-issuing';
 import { favoriteButton } from './favorites';
 import { attractionAreaId } from './areas-data';
 import { renderIcons } from './icons';
@@ -175,9 +176,15 @@ qs<HTMLElement>('#route-tabs')?.querySelectorAll<HTMLButtonElement>('button[data
 }));
 
 initTicketArtwork(english);
-qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',()=>{
+let issuingState:'idle'|'issuing'|'issued'|'error'='idle';
+qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',async()=>{
+ if(issuingState==='issuing')return;
  const date=dateField?.value||'';
  if(!validDate()||Object.values(quantity).every(v=>v===0))return;
+ issuingState='issuing';
+ const confirmation=qs<HTMLDialogElement>('#ticket-dialog');
+ const success=qs<HTMLDialogElement>('#ticket-success');
+ try {
  const numbers=new Uint8Array(5);crypto.getRandomValues(numbers);
  const code='DEMO-FDC-'+Array.from(numbers,n=>n.toString(16).padStart(2,'0')).join('').toUpperCase();
  const guests=Object.values(quantity).reduce((a,b)=>a+b,0);
@@ -187,8 +194,16 @@ qs<HTMLButtonElement>('#ticket-confirm-purchase')?.addEventListener('click',()=>
    current.unshift(ticket);
    localStorage.setItem('fdc-tickets',JSON.stringify(current.slice(0,20)));
  }catch{/* Storage is optional; the issued ticket remains visible on screen. */}
- qs<HTMLDialogElement>('#ticket-dialog')?.close();
- qs<HTMLDialogElement>('#ticket-success')?.showModal();
+ confirmation?.close();
+ await showTicketIssuing(english);
+ issuingState='issued';
+ success?.showModal();
+ } catch {
+   issuingState='error';
+   if (!confirmation?.open) confirmation?.showModal();
+   const content=byId('ticket-confirmation');
+   if(content) content.textContent=tr('発券できませんでした。もう一度お試しください。','The ticket could not be issued. Please try again.');
+ }
 });
 const successDialog=qs<HTMLDialogElement>('#ticket-success');
 qs<HTMLButtonElement>('#ticket-success-close')?.addEventListener('click',()=>successDialog?.close());

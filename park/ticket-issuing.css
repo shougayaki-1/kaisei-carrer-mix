@@ -1,0 +1,13 @@
+.ticket-issuing{position:fixed;inset:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;margin:0;padding:0;border:0;color:#fff;background:radial-gradient(ellipse at center,#173c49,#07141e 75%);overflow:hidden}
+.ticket-issuing::backdrop{background:#07141e}
+.issuing-scenes,.issuing-scenes::after{position:absolute;inset:0;pointer-events:none}
+.issuing-scenes::after{content:'';background:radial-gradient(ellipse at center,rgba(5,18,27,.92) 0%,rgba(5,18,27,.7) 35%,rgba(5,18,27,.2) 100%);transition:opacity .5s}
+.issuing-photo{position:absolute;width:28%;height:31%;object-fit:cover;border-radius:12px;opacity:0;box-shadow:0 18px 55px #0008;animation:issuing-float 3.5s ease-out forwards}
+.issuing-photo-1{left:3%;top:7%}.issuing-photo-2{right:4%;top:8%}.issuing-photo-3{left:1%;bottom:6%}.issuing-photo-4{right:3%;bottom:5%}.issuing-photo-5{left:36%;top:2%;width:24%;height:22%}
+.issuing-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));box-sizing:border-box}
+.issuing-brand{font-weight:800;letter-spacing:.16em;font-size:clamp(18px,3vw,30px);margin:0 0 28px}.issuing-kicker{font-size:10px;letter-spacing:.18em;color:#9edbd4;margin:0 0 12px}.issuing-content h2{font-size:clamp(20px,3vw,28px);margin:0;min-height:2em}.issuing-skip{margin-top:36px;padding:12px 20px;border:1px solid #ffffff99;border-radius:99px;background:#081b27aa;color:#fff;font:inherit;cursor:pointer}.issuing-skip:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.is-complete .issuing-scenes{opacity:0;transition:opacity .7s}
+@keyframes issuing-float{0%{opacity:0;transform:translateY(22px) scale(.94);filter:blur(5px)}25%{opacity:.8;filter:blur(0)}100%{opacity:.6;transform:translateY(-12px) scale(1.04);filter:blur(0)}}
+.ticket-success-dialog[open] .modal-inner{animation:ticket-rise .55s ease-out both}@keyframes ticket-rise{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:600px){.issuing-photo{width:44%;height:24%}.issuing-photo-5{display:none}.issuing-photo-1,.issuing-photo-2{top:8%}.issuing-photo-3,.issuing-photo-4{bottom:8%}.issuing-scenes::after{background:radial-gradient(ellipse at center,rgba(5,18,27,.96) 10%,rgba(5,18,27,.72) 50%,rgba(5,18,27,.25) 100%)}}
+@media(prefers-reduced-motion:reduce){.issuing-photo,.ticket-success-dialog[open] .modal-inner{animation:none}.issuing-scenes{display:none}}
