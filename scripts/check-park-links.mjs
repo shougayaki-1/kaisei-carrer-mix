@@ -94,11 +94,11 @@ if (conceptHtml.includes('LOST<span>ERA</span>')) {
   errors.push('Concept page still uses the obsolete LOST ERA brand');
 }
 const parkIcons = readFileSync(join(parkRoot, 'icons.ts'), 'utf8');
-const supportedIcons = new Set([...parkIcons.matchAll(/^\\s+"([a-z0-9-]+)":/gm)].map((match) => match[1]));
+const supportedIcons = new Set([...parkIcons.matchAll(/^\s+"([a-z0-9-]+)":/gm)].map((match) => match[1]));
 for (const match of conceptHtml.matchAll(/data-lucide="([^"]+)"/g)) {
   if (!supportedIcons.has(match[1])) errors.push('Unrecognized concept icon: ' + match[1]);
 }
-const conceptLinks = [...conceptHtml.matchAll(/\\bhref="(\\/[^"]+)"/g)].map((match) => match[1]);
+const conceptLinks = [...conceptHtml.matchAll(/\bhref="(\/[^"]+)"/g)].map((match) => match[1]);
 for (const href of conceptLinks) {
   const url = new URL(href, 'https://park.example');
   const path = url.pathname.endsWith('/') ? url.pathname.slice(1) + 'index.html' : url.pathname.slice(1);
@@ -112,8 +112,8 @@ for (const href of conceptLinks) {
 }
 const conceptAssumptions = readFileSync(join(root, 'src/assumptions.ts'), 'utf8');
 const parkTickets = readFileSync(join(parkRoot, 'ticket-data.ts'), 'utf8');
-const simulationPrice = Number(conceptAssumptions.match(/ticketPriceYen:\\s*(\\d+)/)?.[1]);
-const dayPassAdultPrice = Number(parkTickets.match(/day:\\{[^\\n]*prices:\\{adult:(\\d+)/)?.[1]);
+const simulationPrice = Number(conceptAssumptions.match(/ticketPriceYen:\s*(\d+)/)?.[1]);
+const dayPassAdultPrice = Number(parkTickets.match(/day:\{[^\n]*prices:\{adult:(\d+)/)?.[1]);
 if (!simulationPrice || simulationPrice !== dayPassAdultPrice) {
   errors.push('Concept simulator must use the park 1DAY adult price (simplified assumption)');
 }
