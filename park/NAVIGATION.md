@@ -1,7 +1,8 @@
 # Park navigation integration contract (Issue #12)
 
 This is the **single source of truth** for the FUKUI DINO CITY park header,
-desktop/mobile menus and footer. Keep the business/concept LP `/` separate.
+desktop/mobile menus and footer. Keep the business/concept LP at `/concept/` separate.
+`/` redirects to `/park/` via `public/_redirects` (local Vite fallback: `index.html`).
 
 ## Adding a new park page
 
