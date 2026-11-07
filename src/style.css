@@ -49,7 +49,7 @@ img, svg { display: block; max-width: 100%; }
 .mobile-nav a { display: block; padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 14px; }
 .hero { color: #f7f9ef; position: relative; min-height: 760px; overflow: hidden; background: #071410; }
 .hero-background, .hero-haze { position: absolute; inset: 0; pointer-events: none; }
-.hero-background { background: linear-gradient(95deg, #071410 0%,rgba(7,20,16,.96) 34%,rgba(7,20,16,.7) 68%,rgba(7,20,16,.8) 100%), url("https://images.unsplash.com/photo-1448375240586-882707db888b?w=1800&q=85&auto=format&fit=crop") center/cover; opacity: .85; transform: scale(1.03); }
+.hero-background { background: linear-gradient(95deg, #071410 0%,rgba(7,20,16,.96) 34%,rgba(7,20,16,.7) 68%,rgba(7,20,16,.8) 100%), url("/park/assets/hero.webp") center/cover; opacity: .85; transform: scale(1.03); }
 .hero-haze { background: radial-gradient(ellipse at 75% 40%, rgba(112,153,83,.18), transparent 40%), linear-gradient(0deg, #071410 0%, transparent 25%); }
 .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.12fr 1fr; gap: 20px; align-items: center; min-height: 690px; padding-top: 126px; }
 .hero-copy { padding: 28px 0 76px; }
@@ -86,7 +86,7 @@ h1, h2, h3, p { margin-top: 0; }
 .section-heading h2, .science h2 { font-size: clamp(34px,4.1vw,55px); font-weight: 800; letter-spacing: -.06em; line-height: 1.47; margin: 0; }
 .section-heading h2 span, .science h2 span { color: #588060; }
 .idea-layout { display: grid; grid-template-columns: 1.02fr .98fr; gap: 74px; align-items: center; }
-.idea-photo { position: relative; min-height: 500px; background: linear-gradient(0deg, rgba(4,19,14,.72),transparent 48%),url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1100&q=85&auto=format&fit=crop") center/cover; }
+.idea-photo { position: relative; min-height: 500px; background: linear-gradient(0deg, rgba(4,19,14,.72),transparent 48%),url("/park/assets/fossil.webp") center/cover; }
 .idea-photo:before { content: ""; position: absolute; z-index: -1; top: 24px; left: 24px; right: -24px; bottom: -24px; border: 1px solid #b1bead; }
 .photo-stamp { position: absolute; top: 25px; left: 26px; background: #c7e68f; color: #15251b; padding: 9px 13px; font: 800 12px "Barlow Condensed",sans-serif; letter-spacing: .11em; }
 .photo-caption { position: absolute; bottom: 30px; left: 30px; color: white; font-size: 15px; letter-spacing: .03em; font-weight: 700; }
@@ -117,9 +117,9 @@ h1, h2, h3, p { margin-top: 0; }
 .zone-card:hover { transform: translateY(-5px); }
 .zone-image { height: 270px; background-size: cover; background-position: center; position: relative; }
 .zone-image:after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg,rgba(12,30,21,.35),rgba(7,18,15,.05)); }
-.zone-card-forest .zone-image { background-image: url("https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80&auto=format&fit=crop"); }
-.zone-card-fossil .zone-image { background-image: url("https://images.unsplash.com/photo-1500534623283-312aade485b7?w=800&q=80&auto=format&fit=crop"); }
-.zone-card-time .zone-image { background-image: url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80&auto=format&fit=crop"); }
+.zone-card-forest .zone-image { background-image: url("/park/assets/inside.webp"); }
+.zone-card-fossil .zone-image { background-image: url("/park/assets/fossil.webp"); }
+.zone-card-time .zone-image { background-image: url("/park/assets/flight.webp"); }
 .zone-number, .zone-symbol { position: absolute; z-index: 2; top: 22px; color: white; }
 .zone-number { left: 22px; padding: 8px 11px; background: rgba(10,31,22,.72); border: 1px solid rgba(255,255,255,.4); font: 800 13px "Barlow Condensed",sans-serif; letter-spacing: .14em; }
 .zone-symbol { right: 25px; font-size: 30px; font-weight: 300; }
@@ -204,7 +204,7 @@ input[type=range] { display: block; width: 100%; margin: 29px 0 10px; cursor: po
 .roadmap-grid h3 { font-size: 21px; margin: 0 0 15px; letter-spacing: -.04em; }
 .roadmap-grid p { font-size: 13px; color: #b3c5b5; line-height: 2; margin: 0; }
 .closing { min-height: 605px; background: #081a13; color: white; position: relative; overflow: hidden; }
-.closing-backdrop { position: absolute; inset: 0; background: linear-gradient(90deg,rgba(6,19,13,.93),rgba(6,19,13,.78)), url("https://images.unsplash.com/photo-1511497584788-876760111969?w=1800&q=82&auto=format&fit=crop") center/cover; }
+.closing-backdrop { position: absolute; inset: 0; background: linear-gradient(90deg,rgba(6,19,13,.93),rgba(6,19,13,.78)), url("/park/assets/city.webp") center/cover; }
 .closing-inner { position: relative; z-index: 1; text-align: center; padding: 112px 0 105px; }
 .closing .section-eyebrow { color: var(--lime); margin-bottom: 25px; }
 .closing h2 { font-size: clamp(35px,4.7vw,64px); letter-spacing: -.06em; line-height: 1.4; margin-bottom: 28px; }
@@ -333,8 +333,8 @@ input[type=range] { display: block; width: 100%; margin: 29px 0 10px; cursor: po
 /* --- FUKUI DINO CITY concept extensions --- */
 .new-zones{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:20px}
 .new-zones .zone-body>p:not(.zone-en){min-height:112px}
-.zone-card-airport .zone-image{background:url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=880&q=80&auto=format&fit=crop") center/cover}
-.zone-card-ocean .zone-image{background:url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=880&q=80&auto=format&fit=crop") center/cover}
+.zone-card-airport .zone-image{background:url("/park/assets/skyport.webp") center/cover}
+.zone-card-ocean .zone-image{background:url("/park/assets/ocean.webp") center/cover}
 .concept-park-cta{display:flex;gap:24px;justify-content:space-between;align-items:center;margin-top:35px;padding:25px 30px;border:1px solid #5d7d65}
 .concept-park-cta strong{display:block;font-size:19px}
 .concept-park-cta p{margin:11px 0 0;color:#bfcec0;font-size:12px;line-height:1.8}
@@ -364,3 +364,72 @@ input[type=range] { display: block; width: 100%; margin: 29px 0 10px; cursor: po
 @media(max-width:680px){.new-zones{grid-template-columns:1fr}.new-zones .zone-body>p:not(.zone-en){min-height:0}.concept-park-cta{flex-direction:column;align-items:stretch;padding:22px}.concept-park-cta .button{justify-content:center}.region-layout{grid-template-columns:1fr;gap:44px}.region-text>p{font-size:13px}.hero h1{white-space:normal}}
 
 .hero-background{background-image:linear-gradient(90deg,#051416d9,#05141626),url("/park/assets/hero.webp")!important;background-size:cover;background-position:center}.idea-photo{background-image:linear-gradient(0deg,#061c1a90,transparent),url("/park/assets/fossil-alt.webp")!important;background-size:cover;background-position:center}.zone-card-airport .zone-image{background-image:url("/park/assets/flight-alt.webp")!important}.zone-card-forest .zone-image{background-image:url("/park/assets/inside-alt.webp")!important}.zone-card-time .zone-image{background-image:url("/park/assets/flight-alt.webp")!important}.zone-card-ocean .zone-image{background-image:url("/park/assets/ocean-alt.webp")!important}.zone-card-fossil .zone-image{background-image:url("/park/assets/fossil-alt.webp")!important}.closing-backdrop{background-image:linear-gradient(90deg,#071c20c9,#071c2055),url("/park/assets/city.webp")!important;background-size:cover;background-position:center}
+
+/* Concept refresh: shared FUKUI DINO CITY imagery and Lucide icon language. */
+.logo { min-width: 210px; }
+.logo-mark { width: 34px; height: 34px; display: grid; place-items: center; transform: none; border: 1px solid rgba(197,230,140,.7); color: var(--lime); flex: none; }
+.logo-mark svg { width: 23px; height: 23px; }
+.logo-text { font-size: 23px; letter-spacing: -.015em; line-height: 1; }
+.logo-text small { font-size: 8px; letter-spacing: .14em; }
+.desktop-nav { gap: clamp(12px, 1.6vw, 25px); }
+.header-cta { display: inline-flex; align-items: center; gap: 13px; }
+.header-cta svg { width: 15px; height: 15px; }
+.button svg, .site-footer a svg { width: 18px; height: 18px; flex: none; }
+.site-footer a { display: inline-flex; align-items: center; gap: 9px; }
+.hero-visual-image { position: absolute; width: 100%; height: 100%; inset: 0; object-fit: cover; object-position: center; }
+.hero-visual::after { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(0deg,rgba(3,18,16,.82),transparent 45%,rgba(3,18,16,.48)); pointer-events: none; }
+.hero-visual .visual-grid { z-index: 2; }
+.hero-visual .era-label, .hero-visual .visual-bottom { z-index: 3; }
+.note-star svg { width: 22px; height: 22px; }
+.experience-intro { max-width: 800px; margin: -12px 0 34px; color: #c2d3c2; font-size: 14px; line-height: 2; }
+.new-zones .zone-card { display: flex; flex-direction: column; }
+.new-zones .zone-body { display: flex; flex: 1; flex-direction: column; }
+.new-zones .zone-body > p:not(.zone-en) { min-height: 0; }
+.new-zones .zone-tags { margin-top: auto; }
+.zone-card-airport .zone-image { background-image: url("/park/assets/skyport.webp") !important; }
+.zone-card-forest .zone-image { background-image: url("/park/assets/inside.webp") !important; }
+.zone-card-time .zone-image { background-image: url("/park/assets/flight.webp") !important; }
+.zone-card-night .zone-image { background-image: url("/park/assets/night.webp"); }
+.zone-card-fossil .zone-image { background-image: url("/park/assets/fossil.webp") !important; }
+.zone-card-ocean .zone-image { background-image: url("/park/assets/ocean.webp") !important; }
+.zone-card-coast .zone-image { background-image: url("/park/assets/coast.webp"); }
+.zone-detail { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; margin-top: 22px; color: #cef396; border-bottom: 1px solid #8eb46b; padding-bottom: 5px; font-size: 12px; font-weight: 700; }
+.zone-detail svg { width: 15px; height: 15px; }
+.zone-detail:hover { color: white; }
+.operation-section { background: #f0f1e9; }
+.operation-lead { max-width: 835px; margin: -17px 0 42px; color: #526757; font-size: 14px; line-height: 2.15; }
+.operation-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.operation-grid article { padding: 30px 27px; border: 1px solid #c8d6c4; background: #f9fbf5; display: flex; flex-direction: column; align-items: flex-start; }
+.operation-icon { width: 51px; height: 51px; display: grid; place-items: center; background: #e5eedc; color: #275c41; border: 1px solid #bbd3aa; margin-bottom: 25px; }
+.operation-icon svg { width: 25px; height: 25px; }
+.operation-grid .section-eyebrow { margin-bottom: 7px; font-size: 11px; }
+.operation-grid h3 { font-size: 20px; line-height: 1.5; margin-bottom: 12px; }
+.operation-grid article > p:not(.section-eyebrow) { color: #536756; font-size: 13px; line-height: 2; margin-bottom: 22px; flex: 1; }
+.operation-grid article > a { display: inline-flex; align-items: center; gap: 5px; margin-top: 11px; padding-bottom: 4px; border-bottom: 1px solid #8caa7a; color: #2b6241; font-size: 12px; font-weight: 700; }
+.operation-grid article > a svg { width: 15px; height: 15px; }
+.operation-grid article > a:hover { color: #111; }
+.operation-disclaimer { display: flex; align-items: flex-start; gap: 12px; margin: 24px 0 0; font-size: 12px; line-height: 2; color: #58705e; }
+.operation-disclaimer svg { flex: none; width: 19px; height: 19px; margin-top: 2px; }
+.pillar-icon svg { width: 38px; height: 38px; }
+.science-highlight svg { width: 27px; height: 27px; }
+.fossil svg { width: 21px; height: 21px; }
+.step-arrow svg { width: 26px; height: 26px; margin: 0 auto; }
+.roadmap-top svg { width: 22px; height: 22px; }
+@media (max-width: 1080px) {
+  .logo { min-width: 195px; }
+  .logo-text { font-size: 21px; }
+  .desktop-nav { gap: 11px; }
+  .desktop-nav a { font-size: 12px; }
+  .operation-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 680px) {
+  .logo { min-width: 0; }
+  .logo-mark { width: 29px; height: 29px; }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .logo-text { font-size: 20px; }
+  .experience-intro, .operation-lead { font-size: 13px; }
+  .operation-grid { grid-template-columns: 1fr; gap: 12px; }
+  .operation-grid article { padding: 24px 22px; }
+  .operation-grid h3 { font-size: 19px; }
+  .hero-visual-image { object-position: 55% center; }
+}

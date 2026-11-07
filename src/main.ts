@@ -1,5 +1,9 @@
 import './style.css';
 import { assumptions } from './assumptions';
+import { renderIcons } from '../park/icons';
+
+// Reuse the same Lucide SVG set as the park navigation and guest pages.
+renderIcons();
 
 const yenFormatter = new Intl.NumberFormat('ja-JP');
 
