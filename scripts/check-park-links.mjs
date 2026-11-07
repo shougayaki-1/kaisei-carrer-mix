@@ -80,6 +80,45 @@ const conceptHtml = readFileSync(join(root, 'concept/index.html'), 'utf8');
 if (!conceptHtml.includes('id="business"') || !conceptHtml.includes('/src/main.ts')) {
   errors.push('Concept presentation or revenue simulator entry is missing');
 }
+/* Keep the project presentation aligned with the public-facing park. */
+const expectedAttractions = ['skyport', 'inside', 'flight', 'night', 'fossil', 'ocean', 'coast'];
+const conceptDetails = [...conceptHtml.matchAll(/class="zone-detail" href="([^"]+)"/g)].map((match) => match[1]);
+if (conceptDetails.length !== expectedAttractions.length ||
+    expectedAttractions.some((id) => !conceptDetails.includes('/park/attractions/' + id + '.html'))) {
+  errors.push('Concept presentation must show all seven current park experiences, with links');
+}
+for (const anchor of ['idea', 'experience', 'region', 'operation', 'science', 'business']) {
+  if (!conceptHtml.includes('id="' + anchor + '"')) errors.push('Missing concept section: ' + anchor);
+}
+if (conceptHtml.includes('LOST<span>ERA</span>')) {
+  errors.push('Concept page still uses the obsolete LOST ERA brand');
+}
+const parkIcons = readFileSync(join(parkRoot, 'icons.ts'), 'utf8');
+const supportedIcons = new Set([...parkIcons.matchAll(/^\\s+"([a-z0-9-]+)":/gm)].map((match) => match[1]));
+for (const match of conceptHtml.matchAll(/data-lucide="([^"]+)"/g)) {
+  if (!supportedIcons.has(match[1])) errors.push('Unrecognized concept icon: ' + match[1]);
+}
+const conceptLinks = [...conceptHtml.matchAll(/\\bhref="(\\/[^"]+)"/g)].map((match) => match[1]);
+for (const href of conceptLinks) {
+  const url = new URL(href, 'https://park.example');
+  const path = url.pathname.endsWith('/') ? url.pathname.slice(1) + 'index.html' : url.pathname.slice(1);
+  if (!existsSync(join(root, path))) errors.push('Missing concept link target: ' + href);
+  if (url.hash && url.pathname === '/concept/' &&
+      !conceptHtml.includes('id="' + decodeURIComponent(url.hash.slice(1)) + '"')) {
+    errors.push('Missing concept link fragment: ' + href);
+  }
+}
+const conceptAssumptions = readFileSync(join(root, 'src/assumptions.ts'), 'utf8');
+const parkTickets = readFileSync(join(parkRoot, 'ticket-data.ts'), 'utf8');
+const simulationPrice = Number(conceptAssumptions.match(/ticketPriceYen:\\s*(\\d+)/)?.[1]);
+const dayPassAdultPrice = Number(parkTickets.match(/day:\\{[^\\n]*prices:\\{adult:(\\d+)/)?.[1]);
+if (!simulationPrice || simulationPrice !== dayPassAdultPrice) {
+  errors.push('Concept simulator must use the park 1DAY adult price (simplified assumption)');
+}
+if (!conceptHtml.includes('実際のチケット購入や予約はできません')) {
+  errors.push('Concept park design must disclose that tickets and bookings are fictional');
+}
+
 const parkHome = readFileSync(join(parkRoot, 'index.html'), 'utf8');
 if (!parkHome.includes('href="/concept/"') || !navigation.includes('href="/concept/"')) {
   errors.push('Park entry links to /concept/ are missing');
