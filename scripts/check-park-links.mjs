@@ -84,6 +84,13 @@ const parkHome = readFileSync(join(parkRoot, 'index.html'), 'utf8');
 if (!parkHome.includes('href="/concept/"') || !navigation.includes('href="/concept/"')) {
   errors.push('Park entry links to /concept/ are missing');
 }
+const englishHome = readFileSync(join(parkRoot, 'english-home.ts'), 'utf8');
+if (!/href="\/concept\/" class="button button-bright">Read the project presentation/.test(englishHome)) {
+  errors.push('English park presentation link must target /concept/');
+}
+if (/href="\/" class="button button-bright">Read the project presentation/.test(englishHome)) {
+  errors.push('English park presentation must not link to the redirected root');
+}
 
 /* Keep the stay-area CTA meaningful and consistently placed. */
 for (const page of ['index.html', 'plans.html', 'access.html']) {
