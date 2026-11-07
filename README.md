@@ -6,8 +6,9 @@
 
 ## 2つのWebサイト
 
-- `/` — プレゼンテーション用のビジネス構想ランディングページ
-- `/park/` — 架空のテーマパーク公式サイト風トップページ
+- `/` — QRコード・ドメイン直下から `/park/` にリダイレクト（Cloudflare `_redirects`、302）
+- `/park/` — 架空のテーマパーク公式サイト風トップページ（メイン入口）
+- `/concept/` — 発表用ビジネス構想ランディングページ（パーク内の「事業構想」リンクからアクセス）
 - `/park/attractions.html` — アトラクション検索、カテゴリ別絞り込み、詳細表示
 - `/park/tickets.html` — 料金表、日時・券種・年齢・人数の**デモ計算**と確認ダイアログ
 - `/park/access.html` — **実際の位置関係を示すSVG地理マップ**＋5エリアの選択式ガイドと、架空の世界観マップ・ルート演出
@@ -29,13 +30,14 @@ npm run build
 npm run deploy
 ```
 
-- `index.html` + `src/style.css`：発表用ランディングページ
+- `index.html`：開発環境向けのルート転送フォールバック（公開環境は `public/_redirects`）
+- `concept/index.html` + `src/style.css`：発表用ランディングページ
 - `src/main.ts` + `src/assumptions.ts`：収益シミュレーター（仮の値）
 - `park/*.html` + `park/styles.css`：架空の公式パークサイト
 - `park/attractions-data.ts`：アトラクション編集用データ
 - `park/app.ts`：検索・詳細モーダル・チケット・アクセスの操作
 - `park/assets/`：パーク・アトラクション・店舗に使用するWebP/JPEG画像と地理SVGを収録
-- `vite.config.ts`：6つのHTMLエントリを同時ビルド
+- `vite.config.ts`：ルート転送・構想紹介とパーク各ページのHTMLエントリを同時ビルド
 - `cloudflare.config.ts`：Cloudflare Workersの設定
 
 実在の大型パークのWebサイトにおける、チケット情報・利用条件・アクセス・営業時間の案内構成を参考に、完全に架空のコンテンツとして実装しています。写真にはUnsplashの外部画像を利用しています。

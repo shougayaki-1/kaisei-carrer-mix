@@ -35,7 +35,7 @@ for (const file of pages) {
 // Links are defined as string literals on ParkNavGroup entries in navigation.ts.
 // The header/footer also contain the fixed home and concept URLs.
 const links = [...navigation.matchAll(/\bhref:\s*['"]([^'"]+)['"]/g)].map((match) => match[1]);
-links.push('/park/', '/');
+links.push('/park/', '/concept/');
 
 for (const href of links) {
   let url;
@@ -46,7 +46,7 @@ for (const href of links) {
     continue;
   }
   const relativePath = url.pathname === '/' ? 'index.html'
-    : url.pathname === '/park/' ? 'park/index.html'
+    : url.pathname.endsWith('/') ? url.pathname.slice(1) + 'index.html'
     : url.pathname.slice(1);
   const file = join(root, relativePath);
   if (!existsSync(file)) {
@@ -62,6 +62,28 @@ for (const href of links) {
   }
 }
 
+
+/* Verify the QR entrypoint and preserve the original business pitch. */
+const redirects = readFileSync(join(root, 'public/_redirects'), 'utf8');
+const redirectRules = redirects.split(/\r?\n/).map((line) => line.trim().split(/\s+/));
+for (const source of ['/', '/index.html']) {
+  if (!redirectRules.some(([from, to, status]) =>
+    from === source && to === '/park/' && status === '302')) {
+    errors.push('Missing Cloudflare redirect: ' + source + ' -> /park/');
+  }
+}
+const rootHtml = readFileSync(join(root, 'index.html'), 'utf8');
+if (!rootHtml.includes('url=/park/')) {
+  errors.push('Local root fallback must redirect to /park/');
+}
+const conceptHtml = readFileSync(join(root, 'concept/index.html'), 'utf8');
+if (!conceptHtml.includes('id="business"') || !conceptHtml.includes('/src/main.ts')) {
+  errors.push('Concept presentation or revenue simulator entry is missing');
+}
+const parkHome = readFileSync(join(parkRoot, 'index.html'), 'utf8');
+if (!parkHome.includes('href="/concept/"') || !navigation.includes('href="/concept/"')) {
+  errors.push('Park entry links to /concept/ are missing');
+}
 
 /* Keep the stay-area CTA meaningful and consistently placed. */
 for (const page of ['index.html', 'plans.html', 'access.html']) {

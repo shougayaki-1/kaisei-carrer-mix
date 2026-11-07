@@ -52,6 +52,7 @@ export const parkNavGroups: readonly ParkNavGroup[] = [
       { label: 'ゲストサービス', href: '/park/services.html', description: '設備と安心のサポート' },
       { label: 'よくある質問', href: '/park/services.html#faq', description: '疑問を解決する' },
       { label: '学校団体向け', href: '/park/guide.html#school-program', description: '学びを深める体験' },
+      { label: 'パークの事業構想', href: '/concept/', description: '企画の背景とビジネスモデル' },
     ],
   },
 ];
@@ -151,7 +152,7 @@ export function renderParkFooter(): string {
     '<h2>パークについて</h2><ul>' +
     '<li><a href="/park/">パークTOP</a></li>' +
     '<li><a href="/park/services.html">アクセシビリティ</a></li>' +
-    '<li><a href="/">事業構想について</a></li>' +
+    '<li><a href="/concept/">事業構想について</a></li>' +
     '</ul></nav></div>' +
     '<div class="wrap park-footer-bottom">' +
     '<p class="park-footer-notice">本サイトは体験モデルサイトです。実際の予約・決済およびパークへの入場には対応していません。</p>' +
