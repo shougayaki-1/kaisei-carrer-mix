@@ -13,7 +13,7 @@ const root = fileURLToPath(new URL('.', import.meta.url));
 
 /**
  * Include every park HTML page (also nested attraction details) without editing
- * this file for each new route. The concept landing page stays separate.
+ * this file for each new route. The concept landing page lives at /concept/.
  */
 function parkHtmlFiles(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true })
@@ -91,7 +91,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        concept: 'index.html',
+        homeRedirect: 'index.html',
+        concept: 'concept/index.html',
         ...parkInputs,
 
       },
